@@ -9,6 +9,7 @@ public class Item : MonoBehaviour
     public int level;
     public Weapon weapon;
     public Gear gear;
+    public GameObject itemUI;
 
     Image icon;
     Text textLevel;
@@ -70,6 +71,7 @@ public class Item : MonoBehaviour
                     weapon.LevelUp(nextDamage, nextCount);
                 }
                 level++;
+                SetUI(level);
                 break;
             case ItemData.ItemType.Glove:
             case ItemData.ItemType.Shoe:
@@ -85,6 +87,7 @@ public class Item : MonoBehaviour
                     gear.LevelUp(nextRate);
                 }
                 level++;
+                SetUI(level);
                 break;
             case ItemData.ItemType.Heal:
                 GameManager.instance.health = GameManager.instance.maxhealth;
@@ -95,5 +98,13 @@ public class Item : MonoBehaviour
         {
             GetComponent<Button>().interactable = false;
         }
+    }
+
+    public void SetUI(int lv)
+    {
+        Transform childTransform = itemUI.transform.GetChild(1);
+        Text childText = childTransform.GetComponent<Text>();
+
+        childText.text = "Lv. " + lv;
     }
 }
