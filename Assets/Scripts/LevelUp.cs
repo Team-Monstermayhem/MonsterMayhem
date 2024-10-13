@@ -13,6 +13,7 @@ public class LevelUp : MonoBehaviour
     public Text timer;
     int min;
     int sec;
+    bool isCountDownActive = false;
 
     // Start is called before the first frame update
     void Awake()
@@ -35,6 +36,10 @@ public class LevelUp : MonoBehaviour
 
     IEnumerator StartCountdown()
     {
+        if (isCountDownActive)
+            yield break;
+        isCountDownActive = true;
+
         while (remainingTime > 0)
         {
             remainingTime -= Time.unscaledDeltaTime;
@@ -44,6 +49,7 @@ public class LevelUp : MonoBehaviour
             yield return null;
         }
         Hide();
+        isCountDownActive = false;
     }
 
     public void Hide()
