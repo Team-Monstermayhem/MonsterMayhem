@@ -32,7 +32,9 @@ public class Enemy : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		if (!isLive || anim.GetCurrentAnimatorStateInfo(0).IsName("Hit"))
+        if (!GameManager.instance.isLive)
+            return;
+        if (!isLive || anim.GetCurrentAnimatorStateInfo(0).IsName("Hit"))
 			return;
 		Vector2 dirVec = target.position - rigid.position;
 		Vector2 nextVec = dirVec.normalized * speed * Time.fixedDeltaTime;
@@ -42,7 +44,9 @@ public class Enemy : MonoBehaviour
 
 	private void LateUpdate()
 	{
-		spriteRenderer.flipX = target.position.x < rigid.position.x;
+        if (!GameManager.instance.isLive)
+            return;
+        spriteRenderer.flipX = target.position.x < rigid.position.x;
 	}
 
 	private void OnEnable()
@@ -77,7 +81,8 @@ public class Enemy : MonoBehaviour
 		if (health > 0)
 		{
 			anim.SetTrigger("Hit");
-		} else
+            AudioManager.instance.PlaySfx(AudioManager.Sfx.Hit);
+        } else
 		{
 			isLive = false;
 			coll.enabled = false;
@@ -86,13 +91,15 @@ public class Enemy : MonoBehaviour
 			anim.SetBool("Dead", true);
 			GameManager.instance.kill++;
 			GameManager.instance.GetExp();
-			//Dead();
-		}
+            //Dead();
+			if (GameManager.instance.isLive)
+				AudioManager.instance.PlaySfx(AudioManager.Sfx.Dead);
+        }
 	}
 
 	private void OnCollisionEnter2D(Collision2D collision)
 	{
-		// Ãæµ¹ÇÑ ¿ÀºêÁ§Æ®°¡ º®ÀÏ °æ¿ì
+		// ì¶©ëŒí•œ ì˜¤ë¸Œì íŠ¸ê°€ ë²½ì¼ ê²½ìš°
 		if (collision.gameObject.CompareTag("Wall") && isLive)
 			health -= collision.gameObject.GetComponent<SkillProjectiles>().curDamage;
 		else
@@ -118,12 +125,12 @@ public class Enemy : MonoBehaviour
 
 	IEnumerator KnockBack()
 	{
-		yield return wait; // ´ÙÀ½ ÇÏ³ªÀÇ ¹°¸® ÇÁ·¹ÀÓ µô·¹ÀÌ.
+		yield return wait; // ë‹¤ìŒ í•˜ë‚˜ì˜ ë¬¼ë¦¬ í”„ë ˆì„ ë”œë ˆì´.
 		Vector3 playerPos = GameManager.instance.transform.position;
 		Vector3 dirVec = transform.position - playerPos;
 		rigid.AddForce(dirVec.normalized * 3, ForceMode2D.Impulse);
 
-		//yield return new WaitForSeconds(2f); // 2ÃÊ½¬±â
+		//yield return new WaitForSeconds(2f); // 2ì´ˆì‰¬ê¸°
 	}
 
 	void Dead()

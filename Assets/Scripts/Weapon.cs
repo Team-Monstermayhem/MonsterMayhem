@@ -1,4 +1,4 @@
-/*using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.U2D.Sprites;
 using UnityEngine;
@@ -23,7 +23,10 @@ public class Weapon : MonoBehaviour
 
 	void Update()
 	{
-		switch (id)
+        if (!GameManager.instance.isLive)
+            return;
+
+        switch (id)
 		{
 			case 0:
 				transform.Rotate(Vector3.back * speed * Time.deltaTime);
@@ -52,37 +55,35 @@ public class Weapon : MonoBehaviour
 
 		if (id == 0)
 			Batch();
-		Debug.Log("level : " + level);
-		Animator anim = curBullet.GetComponent<Animator>();
-		anim.SetInteger("level", level);
-	}
+    player.BroadcastMessage("ApplyGear", SendMessageOptions.DontRequireReceiver);
 
-	public void Init(SkillData data)
+   }
+
+	public void Init(ItemData data)
 	{
-		// Basic Set
-		name = "Skill " + data.skillId;
+		//Basic Set
+		name = "Weapon " + data.itemId;
 		transform.parent = player.transform;
 		transform.localPosition = Vector3.zero;
 
-
-		// Property Set
-		id = data.skillId;
+		//Property Set
+		id = data.itemId;
 		damage = data.baseDamage;
 		count = data.baseCount;
 
-		for (int i = 0; i < GameManager.instance.poolManager.prefabs.Length; i++)
+		for (int index=0; index < GameManager.instance.poolManager.prefabs.Length; index++)
 		{
-			if (data.projectiles[i] == GameManager.instance.poolManager.prefabs[i])
+			if(data.projectile == GameManager.instance.poolManager.prefabs[index])
 			{
-				prefabId = i;
+				prefabId = index;
 				break;
 			}
 		}
-		
+
 		switch (id)
 		{
 			case 0:
-				speed = -150;
+				speed = 150;
 				Batch();
 				break;
 
@@ -95,6 +96,8 @@ public class Weapon : MonoBehaviour
 				speed = 0.3f;
 				break;
 		}
+
+		player.BroadcastMessage("ApplyGear", SendMessageOptions.DontRequireReceiver);
 	}
 
 	void Batch()
@@ -135,6 +138,7 @@ public class Weapon : MonoBehaviour
 		bullet.position = transform.position;
 		bullet.rotation = Quaternion.FromToRotation(Vector3.up, dir);
 		bullet.GetComponent<Bullet>().Init(damage, count, dir);
-	}
+
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Range);
+    }
 }
-*/
