@@ -41,21 +41,16 @@ public class Weapon : MonoBehaviour
 				}
 				break;
 		}
-
-*//*		if (Input.GetButtonDown("Jump"))
-		{
-			LevelUp(10, 1);
-		}*//*
 	}
 
-	public void LevelUp(float damage, int count, int level)
+	public void LevelUp(float damage, int countl)
 	{
 		this.damage += damage;
 		this.count += count;
 
 		if (id == 0)
 			Batch();
-    player.BroadcastMessage("ApplyGear", SendMessageOptions.DontRequireReceiver);
+		player.BroadcastMessage("ApplyGear", SendMessageOptions.DontRequireReceiver);
 
    }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.PlayerSettings;
 
-public class Bullet : SkillProjectiles
+public class SkillBullet : SkillProjectiles
 {
     public RuntimeAnimatorController[] animCon;
 	Animator animator;
