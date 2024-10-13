@@ -31,7 +31,9 @@ public class Enemy : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		if (!isLive || anim.GetCurrentAnimatorStateInfo(0).IsName("Hit"))
+        if (!GameManager.instance.isLive)
+            return;
+        if (!isLive || anim.GetCurrentAnimatorStateInfo(0).IsName("Hit"))
 			return;
 		Vector2 dirVec = target.position - rigid.position;
 		Vector2 nextVec = dirVec.normalized * speed * Time.fixedDeltaTime;
@@ -41,7 +43,9 @@ public class Enemy : MonoBehaviour
 
 	private void LateUpdate()
 	{
-		spriteRenderer.flipX = target.position.x < rigid.position.x;
+        if (!GameManager.instance.isLive)
+            return;
+        spriteRenderer.flipX = target.position.x < rigid.position.x;
 	}
 
 	private void OnEnable()
@@ -75,7 +79,8 @@ public class Enemy : MonoBehaviour
 		if (health > 0)
 		{
 			anim.SetTrigger("Hit");
-		} else
+            AudioManager.instance.PlaySfx(AudioManager.Sfx.Hit);
+        } else
 		{
 			isLive = false;
 			coll.enabled = false;
@@ -84,8 +89,10 @@ public class Enemy : MonoBehaviour
 			anim.SetBool("Dead", true);
 			GameManager.instance.kill++;
 			GameManager.instance.GetExp();
-			//Dead();
-		}
+            //Dead();
+			if (GameManager.instance.isLive)
+				AudioManager.instance.PlaySfx(AudioManager.Sfx.Dead);
+        }
 	}
 
 	IEnumerator KnockBack()

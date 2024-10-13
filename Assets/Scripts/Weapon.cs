@@ -16,18 +16,15 @@ public class Weapon : MonoBehaviour
 
 	private void Awake()
 	{
-		player = GetComponentInParent<Player>();
-	}
-
-
-	private void Start()
-	{
-		Init();
+		player = GameManager.instance.player;
 	}
 
 	void Update()
 	{
-		switch (id)
+        if (!GameManager.instance.isLive)
+            return;
+
+        switch (id)
 		{
 			case 0:
 				transform.Rotate(Vector3.back * speed * Time.deltaTime);
@@ -57,20 +54,43 @@ public class Weapon : MonoBehaviour
 		if (id == 0)
 			Batch();
 
-	}
+        player.BroadcastMessage("ApplyGear", SendMessageOptions.DontRequireReceiver);
 
-	public void Init()
+    }
+
+	public void Init(ItemData data)
 	{
+		//Basic Set
+		name = "Weapon " + data.itemId;
+		transform.parent = player.transform;
+		transform.localPosition = Vector3.zero;
+
+		//Property Set
+		id = data.itemId;
+		damage = data.baseDamage;
+		count = data.baseCount;
+
+		for (int index=0; index < GameManager.instance.poolManager.prefabs.Length; index++)
+		{
+			if(data.projectile == GameManager.instance.poolManager.prefabs[index])
+			{
+				prefabId = index;
+				break;
+			}
+		}
+
 		switch (id)
 		{
 			case 0:
-				speed = -150;
+				speed = 150;
 				Batch();
 				break;
 			default:
 				speed = 0.3f;
 				break;
 		}
+
+		player.BroadcastMessage("ApplyGear", SendMessageOptions.DontRequireReceiver);
 	}
 
 	void Batch()
@@ -110,5 +130,7 @@ public class Weapon : MonoBehaviour
 		bullet.position = transform.position;
 		bullet.rotation = Quaternion.FromToRotation(Vector3.up, dir);
 		bullet.GetComponent<Bullet>().Init(damage, count, dir);
-	}
+
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Range);
+    }
 }
