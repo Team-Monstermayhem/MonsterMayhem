@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -71,11 +72,12 @@ public class Enemy : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		if (!collision.CompareTag("Bullet") || !isLive)
+		if (collision.CompareTag("Bullet") && isLive)
+			health -= collision.GetComponent<SkillProjectiles>().curDamage;
+		else
 			return;
-		health -= collision.GetComponent<Bullet>().damage;
 		StartCoroutine(KnockBack());
-
+		//Debug.Log("Name : " + collision);
 		if (health > 0)
 		{
 			anim.SetTrigger("Hit");
@@ -95,14 +97,40 @@ public class Enemy : MonoBehaviour
         }
 	}
 
+	private void OnCollisionEnter2D(Collision2D collision)
+	{
+		// ì¶©ëŒí•œ ì˜¤ë¸Œì íŠ¸ê°€ ë²½ì¼ ê²½ìš°
+		if (collision.gameObject.CompareTag("Wall") && isLive)
+			health -= collision.gameObject.GetComponent<SkillProjectiles>().curDamage;
+		else
+			return;
+		StartCoroutine(KnockBack());
+
+		if (health > 0)
+		{
+			anim.SetTrigger("Hit");
+		}
+		else
+		{
+			isLive = false;
+			coll.enabled = false;
+			rigid.simulated = false;
+			spriteRenderer.sortingOrder = 1;
+			anim.SetBool("Dead", true);
+			GameManager.instance.kill++;
+			GameManager.instance.GetExp();
+			//Dead();
+		}
+	}
+
 	IEnumerator KnockBack()
 	{
-		yield return wait; // ´ÙÀ½ ÇÏ³ªÀÇ ¹°¸® ÇÁ·¹ÀÓ µô·¹ÀÌ.
+		yield return wait; // ë‹¤ìŒ í•˜ë‚˜ì˜ ë¬¼ë¦¬ í”„ë ˆì„ ë”œë ˆì´.
 		Vector3 playerPos = GameManager.instance.transform.position;
 		Vector3 dirVec = transform.position - playerPos;
 		rigid.AddForce(dirVec.normalized * 3, ForceMode2D.Impulse);
 
-		//yield return new WaitForSeconds(2f); // 2ÃÊ½¬±â
+		//yield return new WaitForSeconds(2f); // 2ì´ˆì‰¬ê¸°
 	}
 
 	void Dead()

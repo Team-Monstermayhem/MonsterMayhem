@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67564415cfc5dc344a5879c9f3432a6b, type: 3}
+  m_Name: Skill 0
+  m_EditorClassIdentifier: 
+  skillType: 0
+  skillId: 0
+  skillName: "\uC18D\uC131 \uC2A4\uD0AC"
+  skillDescription: 
+  skillIcon: {fileID: -201829820, guid: d71a3dc7aa20fad4f9a99fc76a9254ba, type: 3}
+  maxLevel: 5
+  projectiles:
+  - {fileID: 315679571703926430, guid: 8b27b93c0d834e84eb9c113b65930d60, type: 3}
+  - {fileID: 315679571703926430, guid: 109c7b7cdbbe7ed418c33c318505700d, type: 3}
+  - {fileID: 315679571703926430, guid: 23eb5084a604a0e468cd20a4e109bc53, type: 3}
+  - {fileID: 315679571703926430, guid: f618d35caad7b4944bc1bfe7e1ebee10, type: 3}
+  - {fileID: 315679571703926430, guid: cfc01d4b173e9dc4a8e333924b7e5200, type: 3}
+  skillRangeObjects:
+  - {fileID: 7366274943035746026, guid: 1d01454048f860a49acbae90416762c3, type: 3}
+  - {fileID: 7366274943035746026, guid: d4363c16784a4b94c8e3f9fbaadda3af, type: 3}
+  - {fileID: 7366274943035746026, guid: 4cb0e51698599e641b01756d292a3ffe, type: 3}
+  - {fileID: 7366274943035746026, guid: 24e95b453792dc44ba3fd5b914632965, type: 3}
+  - {fileID: 7366274943035746026, guid: 11baffee30541d846ab04570a1869125, type: 3}
+  baseDamage: 4.5
+  baseCount: 1
+  damages:
+  - 0.5
+  - 1
+  - 1.5
+  - 2
+  - 3
+  counts: 0100000001000000010000000100000002000000
+  cooldowns:
+  - 9
+  - 7
+  - 5
+  - 3
+  - 1

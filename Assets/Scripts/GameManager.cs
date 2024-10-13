@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
     {
         health = maxhealth;
 
-        //�ӽ� ��ũ��Ʈ (ù ����)
+        //ÀÓ½Ã ½ºÅ©¸³Æ® (Ã¹ ¼±ÅÃ)
         uiLevelUp.Select(0);
         //isLive = true;
         Resume();

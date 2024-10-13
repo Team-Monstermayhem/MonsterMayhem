@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.U2D.Sprites;
 using UnityEngine;
+using static Cinemachine.DocumentationSortingAttribute;
 
 public class Weapon : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class Weapon : MonoBehaviour
 	public float damage;
 	public int count;
 	public float speed;
+	GameObject curBullet;
 
 	float timer;
 	Player player;
@@ -40,23 +42,22 @@ public class Weapon : MonoBehaviour
 				break;
 		}
 
-		if (Input.GetButtonDown("Jump"))
+*//*		if (Input.GetButtonDown("Jump"))
 		{
 			LevelUp(10, 1);
-		}
+		}*//*
 	}
 
-	public void LevelUp(float damage, int count)
+	public void LevelUp(float damage, int count, int level)
 	{
 		this.damage += damage;
 		this.count += count;
 
 		if (id == 0)
 			Batch();
+    player.BroadcastMessage("ApplyGear", SendMessageOptions.DontRequireReceiver);
 
-        player.BroadcastMessage("ApplyGear", SendMessageOptions.DontRequireReceiver);
-
-    }
+   }
 
 	public void Init(ItemData data)
 	{
@@ -85,6 +86,12 @@ public class Weapon : MonoBehaviour
 				speed = 150;
 				Batch();
 				break;
+
+			case 1:
+				speed = 0.3f;
+				//Batch();
+				break;
+
 			default:
 				speed = 0.3f;
 				break;
@@ -115,7 +122,7 @@ public class Weapon : MonoBehaviour
 			bullet.Rotate(rotVec);
 			bullet.Translate(bullet.up * 1.5f, Space.World);
 
-			bullet.GetComponent<Bullet>().Init(damage, -1, Vector3.zero); // -1 is infinity per
+			bullet.GetComponent<Bullet>().Init(damage, -100, Vector3.zero); // -1 is infinity per
 		}
 	}
 
@@ -126,7 +133,8 @@ public class Weapon : MonoBehaviour
 		Vector3 targetPos = player.scanner.nearestTarget.position;
 		Vector3 dir= targetPos - transform.position;
 		dir = dir.normalized;
-		Transform bullet = GameManager.instance.poolManager.GetObject(prefabId).transform;
+		curBullet = GameManager.instance.poolManager.GetObject(prefabId);
+		Transform bullet = curBullet.transform;
 		bullet.position = transform.position;
 		bullet.rotation = Quaternion.FromToRotation(Vector3.up, dir);
 		bullet.GetComponent<Bullet>().Init(damage, count, dir);
