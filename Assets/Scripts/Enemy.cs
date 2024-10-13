@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -67,15 +68,42 @@ public class Enemy : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		if (!collision.CompareTag("Bullet") || !isLive)
+		if (collision.CompareTag("Bullet") && isLive)
+			health -= collision.GetComponent<SkillProjectiles>().curDamage;
+		else
 			return;
-		health -= collision.GetComponent<Bullet>().damage;
+		StartCoroutine(KnockBack());
+		//Debug.Log("Name : " + collision);
+		if (health > 0)
+		{
+			anim.SetTrigger("Hit");
+		} else
+		{
+			isLive = false;
+			coll.enabled = false;
+			rigid.simulated = false;
+			spriteRenderer.sortingOrder = 1;
+			anim.SetBool("Dead", true);
+			GameManager.instance.kill++;
+			GameManager.instance.GetExp();
+			//Dead();
+		}
+	}
+
+	private void OnCollisionEnter2D(Collision2D collision)
+	{
+		// 충돌한 오브젝트가 벽일 경우
+		if (collision.gameObject.CompareTag("Wall") && isLive)
+			health -= collision.gameObject.GetComponent<SkillProjectiles>().curDamage;
+		else
+			return;
 		StartCoroutine(KnockBack());
 
 		if (health > 0)
 		{
 			anim.SetTrigger("Hit");
-		} else
+		}
+		else
 		{
 			isLive = false;
 			coll.enabled = false;
