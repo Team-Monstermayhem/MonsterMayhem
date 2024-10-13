@@ -1,11 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LevelUp : MonoBehaviour
 {
     RectTransform rect;
     Item[] items;
+    
+    public float destroyTime = 2 * 10f;
+    private float remainingTime;
+    public Text timer;
+    int min;
+    int sec;
 
     // Start is called before the first frame update
     void Awake()
@@ -21,6 +28,22 @@ public class LevelUp : MonoBehaviour
         GameManager.instance.Stop();
         AudioManager.instance.PlaySfx(AudioManager.Sfx.LevelUp);
         AudioManager.instance.EffectBgm(true);
+
+        remainingTime = destroyTime;
+        StartCoroutine(StartCountdown());
+    }
+
+    IEnumerator StartCountdown()
+    {
+        while (remainingTime > 0)
+        {
+            remainingTime -= Time.unscaledDeltaTime;
+            min = Mathf.FloorToInt(remainingTime / 60);
+            sec = Mathf.FloorToInt(remainingTime % 60);
+            timer.text = string.Format("{0:D2}:{1:D2}", min, sec);
+            yield return null;
+        }
+        Hide();
     }
 
     public void Hide()
