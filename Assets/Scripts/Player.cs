@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -7,6 +8,7 @@ public class Player : MonoBehaviour
 	public Vector2 inputVec;
 	public float speed;
 	public Scanner scanner;
+	public GameObject[] skillBtns;
 
 	Rigidbody2D rigid;
 	SpriteRenderer spriteRenderer;
@@ -26,6 +28,10 @@ public class Player : MonoBehaviour
 	{
 		inputVec.x = Input.GetAxis("Horizontal");
 		inputVec.y = Input.GetAxis("Vertical");
+		/*f (Input.GetKeyDown(KeyCode.Alpha1))
+		{
+			
+		}*/
 
 	}
 

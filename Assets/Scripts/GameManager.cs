@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     [Header("# Game Object")]
     public PoolManager poolManager;
     public Player player;
+    //public Animator[] animators;
 
     private void Awake()
     {
