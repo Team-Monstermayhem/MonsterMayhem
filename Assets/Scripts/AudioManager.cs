@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AudioManager : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class AudioManager : MonoBehaviour
     public float bgmVolume;
     AudioSource bgmPlayer;
     AudioHighPassFilter bgmEffect;
+    public Slider bgmSlider;
 
     [Header("#SFX")]
     public AudioClip[] sfxClips;
@@ -18,6 +20,7 @@ public class AudioManager : MonoBehaviour
     public int channels;
     AudioSource[] sfxPlayers;
     int channelIndex;
+    public Slider sfxSlider;
 
     public enum Sfx { Dead, Hit, LevelUp=3, Lose, Melee, Range=7, Select, Win }
 
@@ -39,6 +42,9 @@ public class AudioManager : MonoBehaviour
         bgmPlayer.clip = bgmClip;
         bgmEffect = Camera.main.GetComponent<AudioHighPassFilter>();
 
+        bgmSlider.value = bgmVolume;
+        bgmSlider.onValueChanged.AddListener(OnBgmChange);
+
         //효과음 플레이어 초기화
         GameObject sfxObject = new GameObject("SfxPlayer");
         sfxObject.transform.parent = transform;
@@ -51,6 +57,9 @@ public class AudioManager : MonoBehaviour
             sfxPlayers[index].bypassListenerEffects = true;
             sfxPlayers[index].volume = sfxVolume;
         }
+
+        sfxSlider.value = sfxVolume;
+        sfxSlider.onValueChanged.AddListener(OnSfxChange);
     }
 
     public void PlayBgm(bool isPlay)
@@ -90,5 +99,18 @@ public class AudioManager : MonoBehaviour
             sfxPlayers[loopIndex].Play();
             break;
         }
+    }
+
+    void OnBgmChange(float value)
+    {
+        bgmPlayer.volume = value;
+        bgmVolume = value;
+    }
+
+    void OnSfxChange(float value)
+    {
+        for (int index = 0; index < sfxPlayers.Length; index++)
+            sfxPlayers[index].volume = value;
+        sfxVolume = value;
     }
 }
