@@ -25,7 +25,7 @@ public class Boss : MonoBehaviour
     public float warningTime = 1f; // 공격 전 경고 시간
 
     public GameObject projectilePrefab; // 투사체 프리팹
-    public float projectileSpeed; // 투사체 속도
+    public float projectileSpeed = 10f; // 투사체 속도
     public float projectileCooldown = 6f; // 투사체 쿨타임
     private float lastProjectileTime;
 
@@ -62,7 +62,7 @@ public class Boss : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!isLive || anim.GetCurrentAnimatorStateInfo(0).IsName("Hit"))
+        if (!isLive || anim.GetCurrentAnimatorStateInfo(0).IsName("Hit") || GameManager.instance.isLive != true)
             return;
 
         if (!isDashing)
@@ -80,7 +80,7 @@ public class Boss : MonoBehaviour
 
     void LateUpdate()
     {
-        if (!isLive)
+        if (!isLive || GameManager.instance.isLive != true)
             return;
         spriter.flipX = target.position.x < rigid.position.x;
     }

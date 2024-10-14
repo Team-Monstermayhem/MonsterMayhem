@@ -32,11 +32,13 @@ public class GameManager : MonoBehaviour
 
     public void GameStart()
     {
+        
         health = maxhealth;
 
         //ÀÓ½Ã ½ºÅ©¸³Æ® (Ã¹ ¼±ÅÃ)
         uiLevelUp.Select(0);
         //isLive = true;
+
         Resume();
 
         AudioManager.instance.PlayBgm(true);
