@@ -42,7 +42,7 @@ public class Player : MonoBehaviour
         if (!GameManager.instance.isLive)
             return;
         Vector2 nextVec = inputVec.normalized * speed * Time.fixedDeltaTime;
-		// À§Ä¡ÀÌµ¿
+		// ï¿½ï¿½Ä¡ï¿½Ìµï¿½
 		rigid.MovePosition(rigid.position + nextVec);
 	}
 

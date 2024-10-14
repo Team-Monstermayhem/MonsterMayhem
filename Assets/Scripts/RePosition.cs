@@ -41,7 +41,13 @@ public class RePosition : MonoBehaviour
 					transform.Translate(playerDir * 20 + new Vector3(Random.Range(-3f, 3f), 0f));
 				}
 				break;
-		}
+			case "Boss":
+                if (coll.enabled)
+                {
+                    transform.Translate(playerDir * 30 + new Vector3(Random.Range(-3f, 3f), 0f));
+                }
+                break;
+        }
 
 
 	}
