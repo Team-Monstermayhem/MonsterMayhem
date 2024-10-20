@@ -13,16 +13,16 @@ public class Player : MonoBehaviour
 	Rigidbody2D rigid;
 	SpriteRenderer spriteRenderer;
 	Animator anim;
+    WaitForFixedUpdate wait;
 
-
-	private void Awake()
+    private void Awake()
 	{
 		rigid = GetComponent<Rigidbody2D>();
 		spriteRenderer = GetComponent<SpriteRenderer>();
 		anim = GetComponent<Animator>();
 		scanner = GetComponent<Scanner>();
-
-	}
+        wait = new WaitForFixedUpdate();
+    }
 	// Update is called once per frame
 	void Update()
 	{
@@ -55,7 +55,17 @@ public class Player : MonoBehaviour
 		{
 			spriteRenderer.flipX = (inputVec.x < 0);
 		}
-	}
+        if (GameManager.instance.health <= 0)
+        {
+            for (int index = 2; index < transform.childCount; index++)
+            {
+                transform.GetChild(index).gameObject.SetActive(false);
+            }
+
+            anim.SetTrigger("Dead");
+            GameManager.instance.GameOver();
+        }
+    }
 
 	void OnCollisionStay2D(Collision2D collision)
 	{
@@ -63,16 +73,19 @@ public class Player : MonoBehaviour
 			return;
 
 		GameManager.instance.health -= Time.deltaTime * 10;
-
-		if (GameManager.instance.health < 0)
-		{
-			for (int index = 2; index < transform.childCount; index++)
-			{
-				transform.GetChild(index).gameObject.SetActive(false);
-			}
-
-			anim.SetTrigger("Dead");
-			GameManager.instance.GameOver();
-		}
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!collision.CompareTag("Bullet2") || !GameManager.instance.isLive)
+            return;
+        GameManager.instance.health -= collision.GetComponent<Bullet2>().damage;
+        StartCoroutine(KnockBack());
+    }
+    IEnumerator KnockBack()
+    {
+        yield return wait;
+        Vector3 playerPos = GameManager.instance.transform.position;
+        Vector3 dirVec = transform.position - playerPos;
+        rigid.AddForce(dirVec.normalized * 3, ForceMode2D.Impulse);
     }
 }
