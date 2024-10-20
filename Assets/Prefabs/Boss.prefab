@@ -116,7 +116,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8381279460803962438}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.03, y: 2.56, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 1
@@ -215,26 +215,28 @@ MonoBehaviour:
   speed: 5
   health: 500
   maxHealth: 500
-  target: {fileID: 7551270315008720823, guid: 87cdaea2c0087a44fb1db0b3d72ca42a, type: 3}
-  meleeDamage: 0
+  target: {fileID: 0}
+  meleeDamage: 40
   meleeCooldown: 5
   meleeConeAngle: 90
-  meleeRange: 3
-  aoeDamage: 0
+  meleeRange: 4
+  aoeDamage: 40
   aoeRadius: 3
-  aoeCooldown: 8
+  aoeCooldown: 7
   aoeMarkerPrefab: {fileID: 3950841626174604852, guid: a9107c73272297948b62764b467baf1e, type: 3}
+  aoeEffectPrefab: {fileID: 8378648546881499446, guid: 867c572a5be680d42a042d2349f10143, type: 3}
   coneMarkerPrefab: {fileID: 3103850810888021163, guid: efa527a42fdea4247b874bac8f1e4fa5, type: 3}
-  warningTime: 1
+  coneEffectPrefab: {fileID: 1217052686275614452, guid: 93eec7d9a2bf2c143b561ca37e5a4a79, type: 3}
+  warningTime: 1.1
   projectilePrefab: {fileID: 8508082470719964619, guid: 7bb9852bf0f29c6449deb76d4761b799, type: 3}
-  projectileSpeed: 0
-  projectileCooldown: 6
+  projectileSpeed: 10
+  projectileCooldown: 2
   projectile2Speed: 5
   projectile2Count: 12
-  projectile2Cooldown: 6
+  projectile2Cooldown: 4
   dashSpeedMultiplier: 3
   dashDuration: 0.5
-  dashCooldown: 10
+  dashCooldown: 6
   collisionDamage: 10
 --- !u!114 &5225899953631559466
 MonoBehaviour:

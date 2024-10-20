@@ -12,7 +12,7 @@ public class Boss : MonoBehaviour
     public float meleeDamage; // 근접 공격 피해
     public float meleeCooldown = 5f; // 근접 공격 쿨타임
     public float meleeConeAngle = 90f; // 원뿔 범위 각도
-    public float meleeRange = 3f; // 근접 공격 범위
+    public float meleeRange = 4f; // 근접 공격 범위
     private float lastMeleeTime;
 
     public float aoeDamage; // 원거리 원형 범위 공격 피해
@@ -21,8 +21,10 @@ public class Boss : MonoBehaviour
     private float lastAoeTime;
 
     public GameObject aoeMarkerPrefab; // 원형 범위 마커 프리팹
+    public GameObject aoeEffectPrefab;  // AOE 파티클 효과 프리팹
     public GameObject coneMarkerPrefab; // 원뿔 범위 마커 프리팹
-    public float warningTime = 1f; // 공격 전 경고 시간
+    public GameObject coneEffectPrefab; // 원뿔 범위 효과 프리팹
+    public float warningTime = 1.1f; // 공격 전 경고 시간
 
     public GameObject projectilePrefab; // 투사체 프리팹
     public float projectileSpeed = 10f; // 투사체 속도
@@ -159,13 +161,24 @@ public class Boss : MonoBehaviour
         float currentAngle = GetAngleToPlayer(); // 공격 시점 플레이어와 보스 각도
         float angleDifference = Mathf.Abs(Mathf.DeltaAngle(attackAngle, currentAngle));
 
+        // 파티클 이펙트 소환 위치 계산 (보스의 위치에서 attackAngle 방향으로 meleeRange의 반만큼 떨어진 위치)
+        Vector3 spawnPosition = transform.position + new Vector3(
+            Mathf.Cos(attackAngle * Mathf.Deg2Rad) * (meleeRange / 2),
+            Mathf.Sin(attackAngle * Mathf.Deg2Rad) * (meleeRange / 2),
+            0
+        );
+
+        GameObject particleEffect = Instantiate(coneEffectPrefab, spawnPosition, Quaternion.identity);
+        particleEffect.transform.SetParent(transform);
+        particleEffect.transform.rotation = Quaternion.Euler(0, 0, attackAngle);
+        Destroy(particleEffect, 1f);
+
         if (angleDifference <= meleeConeAngle / 2 && Vector2.Distance(target.position, rigid.position) <= meleeRange)
         {
             Player player = target.GetComponent<Player>();
             if (player != null)
             {
                 Debug.Log("MeeleeConeAttackHit");
-                //anim.SetTrigger("MeleeConeAttack");
                 GameManager.instance.health -= meleeDamage;
             }
         }
@@ -178,9 +191,13 @@ public class Boss : MonoBehaviour
         // 원형 마커 표시
         GameObject aoeMarker = Instantiate(aoeMarkerPrefab, attackPos, Quaternion.identity);
         //aoeMarker.transform.localScale = new Vector3(aoeRadius, aoeRadius, 1); // 범위에 맞춰 크기 설정
+        GameObject aoeEffect = Instantiate(aoeEffectPrefab, attackPos, Quaternion.identity);
+        Destroy(aoeEffect, warningTime + 0.1f);
+
         yield return new WaitForSeconds(warningTime); // 경고 시간 대기
 
         Destroy(aoeMarker); // 마커 제거
+
 
         // 공격 수행
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(attackPos, aoeRadius);
@@ -192,13 +209,11 @@ public class Boss : MonoBehaviour
                 if (player != null)
                 {
                     Debug.Log("AoeAttackHit");
-                    //player.TakeDamage(aoeDamage);
                     GameManager.instance.health -= aoeDamage;
                 }
             }
         }
 
-        //anim.SetTrigger("AoeAttack");
     }
 
     // 원거리 투사체 공격 함수
