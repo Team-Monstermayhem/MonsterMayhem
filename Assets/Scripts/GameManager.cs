@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     public float gameTime;
     public float maxGameTime = 2 * 10f;
     [Header("# Player Info")]
+    public int plyaerId;
     public float health;
     public float maxhealth;
     public int level;
@@ -30,15 +31,15 @@ public class GameManager : MonoBehaviour
         instance = this;
     }
 
-    public void GameStart()
+    public void GameStart(int id)
     {
-        
+        plyaerId = id;
         health = maxhealth;
 
-        //ÀÓ½Ã ½ºÅ©¸³Æ® (Ã¹ ¼±ÅÃ)
-        uiLevelUp.Select(0);
+        uiLevelUp.Select(plyaerId);
         //isLive = true;
 
+        player.gameObject.SetActive(true);
         Resume();
 
         AudioManager.instance.PlayBgm(true);
