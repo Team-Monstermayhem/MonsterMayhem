@@ -30,14 +30,19 @@ public class GameManager : MonoBehaviour
         instance = this;
     }
 
+    private void Start()
+    {
+        GameStart(); // 게임 시작 시 초기화
+    }
+
     public void GameStart()
     {
-        
         health = maxhealth;
+        gameTime = 0;  // 게임 시간 초기화
 
-        //ÀÓ½Ã ½ºÅ©¸³Æ® (Ã¹ ¼±ÅÃ)
+        // 첫 선택 UI 설정
         uiLevelUp.Select(0);
-        //isLive = true;
+        isLive = true;
 
         Resume();
 
@@ -106,7 +111,7 @@ public class GameManager : MonoBehaviour
             return;
         exp++;
 
-        if (exp == nextExp[Mathf.Min(level, nextExp.Length-1)])
+        if (exp == nextExp[Mathf.Min(level, nextExp.Length - 1)])
         {
             level++;
             exp = 0;

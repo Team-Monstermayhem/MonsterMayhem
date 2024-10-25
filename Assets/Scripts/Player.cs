@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
 		scanner = GetComponent<Scanner>();
         wait = new WaitForFixedUpdate();
     }
-	// Update is called once per frame
+
 	void Update()
 	{
 		if (!GameManager.instance.isLive)
@@ -42,7 +42,6 @@ public class Player : MonoBehaviour
         if (!GameManager.instance.isLive)
             return;
         Vector2 nextVec = inputVec.normalized * speed * Time.fixedDeltaTime;
-		// ��ġ�̵�
 		rigid.MovePosition(rigid.position + nextVec);
 	}
 
@@ -72,7 +71,10 @@ public class Player : MonoBehaviour
 		if (!GameManager.instance.isLive)
 			return;
 
-		GameManager.instance.health -= Time.deltaTime * 10;
+		if (collision.gameObject.CompareTag("Enemy"))
+    	{
+    	    GameManager.instance.health -= Time.deltaTime * 10;
+    	}
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
