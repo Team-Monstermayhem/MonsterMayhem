@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     public LevelUp uiLevelUp;
     public Result uiResult;
     public GameObject enemyCleaner;
+    public GameObject uiEnhance;
 
     private void Awake()
     {
@@ -86,6 +87,11 @@ public class GameManager : MonoBehaviour
     public void GameRetry()
     {
         SceneManager.LoadScene(0);
+    }
+
+    public void Enhance()
+    {
+        uiEnhance.SetActive(true);
     }
 
     private void Update()
