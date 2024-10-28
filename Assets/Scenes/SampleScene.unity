@@ -5210,6 +5210,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boss
       objectReference: {fileID: 0}
+    - target: {fileID: 8381279460803962438, guid: 8f970df189d712649af6aeaed963f2f8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8984413937942629045, guid: 8f970df189d712649af6aeaed963f2f8, type: 3}
       propertyPath: target
       value: 
@@ -5995,8 +5999,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 13
+    m_Font: {fileID: 12800000, guid: e715fcabbb6163e48b780b3b92979f8e, type: 3}
+    m_FontSize: 10
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -6986,7 +6990,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 882164749}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: Enhance
+        m_MethodName: DoEnhance
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -17449,6 +17453,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputVec: {x: 0, y: 0}
   speed: 7
+  attack: 10
   scanner: {fileID: 0}
   skillBtns: []
 --- !u!95 &700132785
@@ -17842,8 +17847,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 13
+    m_Font: {fileID: 12800000, guid: e715fcabbb6163e48b780b3b92979f8e, type: 3}
+    m_FontSize: 10
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -18630,7 +18635,7 @@ MonoBehaviour:
   isLive: 0
   gameTime: 0
   maxGameTime: 20
-  plyaerId: 0
+  selectedSkillType: 0
   health: 0
   maxhealth: 100
   level: 0
@@ -18641,6 +18646,7 @@ MonoBehaviour:
   player: {fileID: 700132784}
   uiLevelUp: {fileID: 1713977786}
   uiResult: {fileID: 241059633}
+  enhance: {fileID: 0}
   enemyCleaner: {fileID: 306195234}
   uiEnhance: {fileID: 1350674123}
 --- !u!4 &882164750
@@ -19020,8 +19026,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 13
+    m_Font: {fileID: 12800000, guid: e715fcabbb6163e48b780b3b92979f8e, type: 3}
+    m_FontSize: 10
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -25589,8 +25595,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 80, y: 1}
-  m_SizeDelta: {x: 15, y: 15}
+  m_AnchoredPosition: {x: 95, y: 1}
+  m_SizeDelta: {x: 45, y: 15}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1196833198
 MonoBehaviour:
@@ -25635,7 +25641,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1196833199}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1350674125}
+        m_TargetAssemblyTypeName: Enhance, Assembly-CSharp
+        m_MethodName: EnhanceHealth
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1196833199
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26462,6 +26480,12 @@ MonoBehaviour:
   coin: 1000
   attack: 10
   speed: 0
+  healthEnhance: 0
+  attackEnhance: 0
+  speedEnhance: 0
+  healthEnhanceCoin: 64000000c80000002c01000090010000f4010000
+  attackEnhanceCoin: 64000000c80000002c01000090010000f4010000
+  speedEnhanceCoin: 64000000c80000002c01000090010000f4010000
   uI: {fileID: 1350674123}
   playerInstance: {fileID: 700132784}
 --- !u!1 &1358412473
@@ -26859,8 +26883,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 80, y: 1}
-  m_SizeDelta: {x: 15, y: 15}
+  m_AnchoredPosition: {x: 95, y: 1}
+  m_SizeDelta: {x: 45, y: 15}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1510832930
 MonoBehaviour:
@@ -26905,7 +26929,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1510832931}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1350674125}
+        m_TargetAssemblyTypeName: Enhance, Assembly-CSharp
+        m_MethodName: EnhanceAttack
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1510832931
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27220,6 +27256,7 @@ MonoBehaviour:
     spriteType: 1
     health: 30
     speed: 2.6
+  bossPrefab: {fileID: 1815730121}
 --- !u!1 &1594177100
 GameObject:
   m_ObjectHideFlags: 0
@@ -28553,6 +28590,11 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &1815730121 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8381279460803962438, guid: 8f970df189d712649af6aeaed963f2f8, type: 3}
+  m_PrefabInstance: {fileID: 94927753}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1837060803
 GameObject:
   m_ObjectHideFlags: 0
@@ -29485,8 +29527,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 80, y: 1}
-  m_SizeDelta: {x: 15, y: 15}
+  m_AnchoredPosition: {x: 95, y: 1}
+  m_SizeDelta: {x: 45, y: 15}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2086671657
 MonoBehaviour:
@@ -29531,7 +29573,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2086671658}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1350674125}
+        m_TargetAssemblyTypeName: Enhance, Assembly-CSharp
+        m_MethodName: EnhanceSpeed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2086671658
 MonoBehaviour:
   m_ObjectHideFlags: 0
