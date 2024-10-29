@@ -11,6 +11,10 @@ public class Enemy : MonoBehaviour
 	public RuntimeAnimatorController[] animCon;
 	public Rigidbody2D target;
 
+	public GameObject projectilePrefab; 
+    public float attackRange = 5f; 
+    private bool hasFired = false;
+
 	bool isLive;
 
 	Rigidbody2D rigid;
@@ -40,7 +44,23 @@ public class Enemy : MonoBehaviour
 		Vector2 nextVec = dirVec.normalized * speed * Time.fixedDeltaTime;
 		rigid.MovePosition(rigid.position + nextVec);
 		rigid.velocity = Vector2.zero;
+
+		if (!hasFired && Vector2.Distance(transform.position, target.position) <= attackRange)
+        {
+            FireProjectile();
+            hasFired = true;
+        }
 	}
+
+	 private void FireProjectile()
+    {
+        GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+        Rigidbody2D projRigid = projectile.GetComponent<Rigidbody2D>();
+        Vector2 direction = (target.position - rigid.position).normalized;
+        projRigid.velocity = direction * 3f; 
+        Destroy(projectile, 5f);
+    }
+
 
 	private void LateUpdate()
 	{
