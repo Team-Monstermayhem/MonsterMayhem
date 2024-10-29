@@ -215,7 +215,7 @@ MonoBehaviour:
   speed: 5
   health: 500
   maxHealth: 500
-  target: {fileID: 0}
+  target: {fileID: 7551270315008720823, guid: 87cdaea2c0087a44fb1db0b3d72ca42a, type: 3}
   meleeDamage: 40
   meleeCooldown: 5
   meleeConeAngle: 90
