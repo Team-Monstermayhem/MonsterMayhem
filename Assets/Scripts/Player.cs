@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
 {
 	public Vector2 inputVec;
 	public float speed;
+    public float attack;
 	public Scanner scanner;
 	public GameObject[] skillBtns;
 
