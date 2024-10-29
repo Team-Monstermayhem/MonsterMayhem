@@ -21,6 +21,12 @@ public class Player : MonoBehaviour
 		spriteRenderer = GetComponent<SpriteRenderer>();
 		anim = GetComponent<Animator>();
 		scanner = GetComponent<Scanner>();
+		SkillController skillConTroller = this.AddComponent<SkillController>();
+		skillConTroller.skills = new Skill[5];
+		skillConTroller.skills[0] = GameObject.Find("ItemUI 0").GetComponent<Skill>();
+		skillConTroller.skills[1] = GameObject.Find("ItemUI 1").GetComponent<Skill>();
+		skillConTroller.skills[2] = GameObject.Find("ItemUI 2").GetComponent<Skill>();
+		skillConTroller.skills[3] = GameObject.Find("ItemUI 3").GetComponent<Skill>();
 
 	}
 	// Update is called once per frame

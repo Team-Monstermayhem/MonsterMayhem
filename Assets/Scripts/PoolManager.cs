@@ -13,18 +13,18 @@ public class PoolManager : MonoBehaviour
 
     private void Awake()
     {
-		for (int i = 0; i < 5; i++)
+		for (int i = 0; i < 4; i++)
 		{
-			for (int j = 0; j < 5; j++)
+			for (int j = 0; j < 4; j++)
 			{
-				prefabs[1 + i * 5 + j] = skillDatas[i].skillRangeObjects[j];
+				prefabs[5 + i * 4 + j] = skillDatas[i].skillRangeObjects[j];
 			}
-			for (int j = 0; j < 5; j++)
+			for (int j = 0; j < 4; j++)
 			{
-				prefabs[26 + i * 5 + j] = skillDatas[i].projectiles[j];
+				prefabs[21 + i * 4 + j] = skillDatas[i].projectiles[j];
 			}
 		}
-		pools = new List<GameObject>[prefabs.Length]; // enemy 0, 1~25 skill range, 26~50 skill projectile
+		pools = new List<GameObject>[prefabs.Length]; // enemy 0, 1~4 baseAttack, 5~29 skill range, 30~54 skill projectile
 
         for (int i = 0; i < pools.Length; i++) {
             pools[i] = new List<GameObject>();
@@ -37,7 +37,7 @@ public class PoolManager : MonoBehaviour
 
         foreach (GameObject item in pools[index])
         {
-            if (!item.activeSelf)
+            if (item != null && !item.activeSelf)
             {
                 select = item;
                 select.SetActive(true);

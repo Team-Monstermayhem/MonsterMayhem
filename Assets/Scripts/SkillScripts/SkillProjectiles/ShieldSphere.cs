@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class ShieldSphere : SkillProjectiles
@@ -34,9 +35,26 @@ public class ShieldSphere : SkillProjectiles
 
 			SkillProjectiles skillproj = bullet.AddComponent<SkillProjectiles>();
 			skillproj.data = data;
-			bullet.AddComponent<CircleCollider2D>();
+			CircleCollider2D circleCollider = bullet.AddComponent<CircleCollider2D>();
 			bullet.GetComponent<Collider2D>().isTrigger = true;
+			Animator animator = bullet.AddComponent<Animator>();
+			RuntimeAnimatorController controller = AssetDatabase.LoadAssetAtPath<RuntimeAnimatorController>("Assets/SkillSprite/S3L2.overrideController");
+			if (controller != null)
+				animator.runtimeAnimatorController = controller;
+			else
+				Debug.LogError("S3L2 애니메이션 파일 못찾음");
+/*			float objectWidth = gameObject.GetComponent<SpriteRenderer>().bounds.size.x;
+			float objectHeight = gameObject.GetComponent<SpriteRenderer>().bounds.size.y;
 
+			// 오브젝트의 크기를 기준으로 CircleCollider의 반지름 설정
+			// width와 height 중 더 작은 값을 기준으로 반지름 설정
+			float newRadius = Mathf.Min(objectWidth, objectHeight) / 2f;
+
+			// CircleCollider2D 반지름 업데이트*/
+			circleCollider.radius = 1.3f;
+			bullet.transform.localScale = new Vector3(1f, 1f, 0f);
+
+			bullet.tag = "SkillProjectile";
 			
 			bullet.transform.localPosition = Vector3.zero;
 			bullet.transform.localRotation = Quaternion.identity;

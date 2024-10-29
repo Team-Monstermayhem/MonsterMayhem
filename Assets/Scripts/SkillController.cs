@@ -1,23 +1,20 @@
 using UnityEngine;
 using UnityEngine.UI;
+using static Cinemachine.DocumentationSortingAttribute;
 
 public class SkillController : MonoBehaviour
 {
 	public Skill[] skills; // 스킬 배열 5개
-	public Button[] skillButtons; // 스킬 버튼 배열 5개
-	public int selectedSkillIndex = -1; // 현재 선택된 스킬 인덱스
+	//public Button[] skillButtons; // 스킬 버튼 배열 5개
+	public int selectedSkillIndex; // 현재 선택된 스킬 인덱스
 	public int prevSelectedSkillIndex;
-	
+	int selectSkillType;
 	public GameObject skillRangeInstance;
 
 	void Start()
 	{
-		// 버튼 클릭 이벤트 등록
-		for (int i = 0; i < skillButtons.Length; i++)
-		{
-			int index = i; // 클로저 문제 방지
-			skillButtons[i].onClick.AddListener(() => ButtonClick(index)); // Button Component에 onclick event mapping
-		}
+		selectSkillType = GameManager.instance.selectSKillTtype;
+		selectedSkillIndex = -1;
 	}
 
 	void Update()
@@ -30,32 +27,49 @@ public class SkillController : MonoBehaviour
 				break;
 			}
 		} // 여기서 스킬이 선택되야 함.
-		if (selectedSkillIndex != -1 && skills[selectedSkillIndex].level != 0 && skillRangeInstance == null)
+		if (selectedSkillIndex == -1)
+			return;
+		Debug.Log("selecectedSkill Index : " + selectedSkillIndex  + ", " + skillRangeInstance);
+		// 즉시 시전 스킬
+		if (skills[selectedSkillIndex].level != 0 && ((selectedSkillIndex == 0 && selectSkillType == 2) || (selectedSkillIndex == 2 && selectSkillType == 3)))
 		{
-			skillRangeInstance = skills[selectedSkillIndex].ShowSkillRange();
+			Debug.Log("dont show skill Range");
+			skills[selectedSkillIndex].UseSkill(Camera.main.ScreenToWorldPoint(Input.mousePosition), selectedSkillIndex); // 스킬 사용
+			selectedSkillIndex = -1; // 사용 후 선택 초기화	
+			return;
+		}
+		if (skills[selectedSkillIndex].level != 0 && skillRangeInstance == null)
+		{
+			skillRangeInstance = skills[selectedSkillIndex].ShowSkillRange(selectedSkillIndex);
 			prevSelectedSkillIndex = selectedSkillIndex;
 		}
-		else if (selectedSkillIndex != -1 && skills[selectedSkillIndex].level != 0 && skillRangeInstance != null)
+		else if (skills[selectedSkillIndex].level != 0 && skillRangeInstance != null)
 		{
 			if (prevSelectedSkillIndex != selectedSkillIndex)
 			{
 				skillRangeInstance.SetActive(false);
-				skillRangeInstance = skills[selectedSkillIndex].ShowSkillRange();
+				skillRangeInstance = skills[selectedSkillIndex].ShowSkillRange(selectedSkillIndex);
 				prevSelectedSkillIndex = selectedSkillIndex;
 			}
+			/*			else if (selectedSkillIndex == 1 && (selectSkillType == 1 || selectSkillType == 2))
+						{
+							skills[selectedSkillIndex].UseSkill(Camera.main.ScreenToWorldPoint(Input.mousePosition), selectedSkillIndex); // 스킬 사용
+							selectedSkillIndex = -1; // 사용 후 선택 초기화	
+							return;	
+						}*/
+
 		}
 		// level 1이상, 스킬 범위가 뜬 상황이 보장되어야 함.
-		if (selectedSkillIndex != -1 && skills[selectedSkillIndex].level != 0 && skillRangeInstance != null && Input.GetMouseButtonDown(0)) // 스킬범위가 뜬 상태에서 화면을 클릭하면.
+		if (skills[selectedSkillIndex].level != 0 && skillRangeInstance != null && Input.GetMouseButtonDown(0)) // 스킬범위가 뜬 상태에서 화면을 클릭하면.
 		{
 			skillRangeInstance.SetActive(false); // 범위 숨김
 			skillRangeInstance = null;
-			skills[selectedSkillIndex].UseSkill(Camera.main.ScreenToWorldPoint(Input.mousePosition)); // 스킬 사용
+			skills[selectedSkillIndex].UseSkill(Camera.main.ScreenToWorldPoint(Input.mousePosition), selectedSkillIndex); // 스킬 사용
 			selectedSkillIndex = -1; // 사용 후 선택 초기화
 		}
-
-
 	}
-
+}
+/*
 	private void ButtonClick(int skillIndex)
 	{
 		selectedSkillIndex = skillIndex;
@@ -66,4 +80,4 @@ public class SkillController : MonoBehaviour
 			skillRangeInstance = skills[skillIndex].ShowSkillRange();
 	}
 
-}
+}*/

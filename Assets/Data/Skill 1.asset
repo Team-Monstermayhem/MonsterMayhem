@@ -23,13 +23,11 @@ MonoBehaviour:
   - {fileID: 315679571703926430, guid: 42c8e7b8a841d374eb5c76b7b874e7a3, type: 3}
   - {fileID: 315679571703926430, guid: 775386f1fd5ef644d9e042605344b132, type: 3}
   - {fileID: 315679571703926430, guid: 8b7ed71a6e0f2e24e9778072ee07a8bc, type: 3}
-  - {fileID: 315679571703926430, guid: 629e1ccd0d1a78a488fca49f02ceb76b, type: 3}
   skillRangeObjects:
   - {fileID: 7366274943035746026, guid: 4dfb1ccd5fbd06547a14e52eb0745bc3, type: 3}
   - {fileID: 7366274943035746026, guid: a403b1a2001135d45a9b84bb8a9662ac, type: 3}
   - {fileID: 7366274943035746026, guid: b4e05eebec97791478aeedf6b74d704c, type: 3}
   - {fileID: 7366274943035746026, guid: 019a1a7181cd84c49bf1b93c2359e242, type: 3}
-  - {fileID: 7366274943035746026, guid: 2d4ae38430210e047868efcabffd48ae, type: 3}
   baseDamage: 4.5
   baseCount: 1
   damages:
