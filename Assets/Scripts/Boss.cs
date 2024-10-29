@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Boss : MonoBehaviour
 {
+    private float spawnTime;  // 보스 등장 시간
     public float speed;
     public float health;
     public float maxHealth;
@@ -60,6 +61,17 @@ public class Boss : MonoBehaviour
         anim = GetComponent<Animator>();
         coll = GetComponent<Collider2D>();
         wait = new WaitForFixedUpdate();
+
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player != null)
+        {
+            target = player.GetComponent<Rigidbody2D>();
+        }
+    }
+
+    void Start()
+    {
+        spawnTime = Time.time;  // 보스 등장 시점 기록
     }
 
     void FixedUpdate()
@@ -90,38 +102,40 @@ public class Boss : MonoBehaviour
     // 다양한 공격 패턴을 실행
     void ExecuteAttackPattern()
     {
+        float elapsedTime = Time.time - spawnTime;  // 보스 등장 후 경과 시간
+
         // 근접 원뿔 범위 공격
-        if (Time.time - lastMeleeTime >= meleeCooldown)
+        if (elapsedTime - lastMeleeTime >= meleeCooldown)
         {
             StartCoroutine(PerformMeleeConeAttack());
-            lastMeleeTime = Time.time;
+            lastMeleeTime = elapsedTime;
         }
 
         // 원거리 원형 범위 공격
-        if (Time.time - lastAoeTime >= aoeCooldown)
+        if (elapsedTime - lastAoeTime >= aoeCooldown)
         {
             StartCoroutine(PerformAoeAttack());
-            lastAoeTime = Time.time;
+            lastAoeTime = elapsedTime;
         }
 
         // 원거리 투사체 공격
-        if (Time.time - lastProjectileTime >= projectileCooldown)
+        if (elapsedTime - lastProjectileTime >= projectileCooldown)
         {
             PerformRangedProjectileAttack();
-            lastProjectileTime = Time.time;
+            lastProjectileTime = elapsedTime;
         }
         // 원형 투사체 공격
-        if (Time.time - lastProjectile2Time >= projectile2Cooldown)
+        if (elapsedTime - lastProjectile2Time >= projectile2Cooldown)
         {
             PerformCircularProjectileAttack();
-            lastProjectile2Time = Time.time;
+            lastProjectile2Time = elapsedTime;
         }
 
         // 고속 이동
-        if (Time.time - lastDashTime >= dashCooldown && !isDashing)
+        if (elapsedTime - lastDashTime >= dashCooldown && !isDashing)
         {
             StartCoroutine(PerformDashAttack());
-            lastDashTime = Time.time;
+            lastDashTime = elapsedTime;
         }
     }
     // 플레이어와의 각도 계산 (원뿔 범위 공격을 위해)

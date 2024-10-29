@@ -10,7 +10,16 @@ public class Scanner : MonoBehaviour
 	public RaycastHit2D[] targets;
 	public Transform nearestTarget;
 
-	private void FixedUpdate()
+    public GameObject projectilePrefab;  // 발사체 프리팹
+    public float attackInterval = 0.4f;  // 공격 주기
+    public float projectileSpeed = 10f;  // 발사체 속도
+
+    private void Start()
+    {
+        InvokeRepeating("AutoAttack", attackInterval, attackInterval);
+    }
+
+    private void FixedUpdate()
 	{
 		targets = Physics2D.CircleCastAll(transform.position, scanRange, Vector2.zero, 0, targetLayer);
 		nearestTarget = GetNearest();
@@ -35,4 +44,16 @@ public class Scanner : MonoBehaviour
 		}
 		return result;
 	}
+
+    void AutoAttack()
+    {
+        if (nearestTarget != null)
+        {
+            GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+            Rigidbody2D projectileRb = projectile.GetComponent<Rigidbody2D>();
+
+            Vector2 direction = (nearestTarget.position - transform.position).normalized;
+            projectileRb.velocity = direction * projectileSpeed;
+        }
+    }
 }

@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 5225899953631559466}
   - component: {fileID: 6574305721676001224}
   - component: {fileID: 4048132550772193819}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Boss
   m_TagString: Boss
   m_Icon: {fileID: 0}
@@ -215,7 +215,7 @@ MonoBehaviour:
   speed: 5
   health: 500
   maxHealth: 500
-  target: {fileID: 7551270315008720823, guid: 87cdaea2c0087a44fb1db0b3d72ca42a, type: 3}
+  target: {fileID: 0}
   meleeDamage: 40
   meleeCooldown: 5
   meleeConeAngle: 90

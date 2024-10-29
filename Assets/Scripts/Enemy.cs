@@ -73,7 +73,11 @@ public class Enemy : MonoBehaviour
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		if (collision.CompareTag("Bullet") && isLive)
-			health -= collision.GetComponent<SkillProjectiles>().curDamage;
+		{
+			Debug.Log("1");
+            health -= collision.GetComponent<SkillProjectiles>().curDamage;
+            Debug.Log("2");
+        }
 		else
 			return;
 		StartCoroutine(KnockBack());
