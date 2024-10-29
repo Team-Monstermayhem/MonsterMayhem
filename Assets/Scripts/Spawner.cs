@@ -13,7 +13,7 @@ public class Spawner : MonoBehaviour
     List<int> enemyPrefabIndexes;
     int currentPrefabIndex;
     int currentWave = 1;
-    float waveDuration = 1f;
+    float waveDuration = 10f;
     int maxWave = 10;
     public GameObject bossPrefab; 
     private GameObject bossInstance; 
@@ -40,7 +40,7 @@ public class Spawner : MonoBehaviour
 
         for (int i = 0; i < maxWave; i++)
         {
-            float spawnTime = Mathf.Max(0.1f, 1.0f - (i * 0.05f));
+            float spawnTime = Mathf.Max(0.1f, 5.0f - (i * 0.05f));
             int health = 10 + (i * 10);
             float speed = 1.0f + (i * 0.1f);
             spawnData[i] = new SpawnData { spawnTime = spawnTime, spriteType = i % enemyPrefabIndexes.Count, health = health, speed = speed };
@@ -83,6 +83,7 @@ public class Spawner : MonoBehaviour
         {
             Debug.Log("Boss is spawning as wave " + maxWave + " has been reached!");
             bossInstance = Instantiate(bossPrefab, spawnPoint[0].position, Quaternion.identity);
+            bossInstance.SetActive(true);
         }
     }
 

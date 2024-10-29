@@ -101,7 +101,7 @@ Animator:
   m_GameObject: {fileID: 6060534844895723887}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 22100000, guid: 03aa1c6e015384526acb44a3c2f94384, type: 2}
+  m_Controller: {fileID: 22100000, guid: b354d6759d7614e3fbcdcf98d8470cd1, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -129,8 +129,7 @@ MonoBehaviour:
   health: 0
   maxHealth: 0
   animCon:
-  - {fileID: 22100000, guid: 03aa1c6e015384526acb44a3c2f94384, type: 2}
-  - {fileID: 22100000, guid: 03aa1c6e015384526acb44a3c2f94384, type: 2}
+  - {fileID: 22100000, guid: b354d6759d7614e3fbcdcf98d8470cd1, type: 2}
   target: {fileID: 0}
 --- !u!114 &-2117570235153639996
 MonoBehaviour:
@@ -159,7 +158,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -170,7 +169,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!70 &1141829124237024862
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

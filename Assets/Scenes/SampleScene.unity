@@ -7583,7 +7583,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 8
+  orthographic size: 7.5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -18747,7 +18747,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isLive: 0
   gameTime: 0
-  maxGameTime: 20
+  maxGameTime: 150
   selectedSkillType: 0
   health: 0
   maxhealth: 100
@@ -29682,9 +29682,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabs:
-  - {fileID: 2339110608010200996, guid: 101bc127a119e894a8651586f739c60d, type: 3}
+  - {fileID: 644217783055353067, guid: 0df214ce096a64d34a3bf64c8e6b81bb, type: 3}
   - {fileID: 2193388512974144860, guid: 51902dee820ba4843956038134b4a463, type: 3}
   - {fileID: 8508082470719964619, guid: 54f7fd0f02a586246a6f483947acbcd6, type: 3}
+  - {fileID: 1097974445049196154, guid: 9b61601912146430f89acd1ffff7fbdc, type: 3}
+  - {fileID: 7365895710750816678, guid: 8afb7c6550bca44b6966a860907a66be, type: 3}
+  - {fileID: 6060534844895723887, guid: cee7223054204416cbf83a87ede9f1d1, type: 3}
+  - {fileID: 1092398643815234680, guid: 5b9502290835f4e94b862d88f63ccc7c, type: 3}
+  - {fileID: 4124758436530011007, guid: 52178c60266e0431c826d04603889aa4, type: 3}
+  - {fileID: 865724479923813163, guid: 45fea395fd9984d29a48315b2da0477e, type: 3}
+  - {fileID: 7524691744949115219, guid: f045f292f012a4d219d557b11cfc6fef, type: 3}
+  - {fileID: 1578782923121554095, guid: 9615e6b87081544fbbb5ee262ccf79e4, type: 3}
+  - {fileID: 4298803044835693261, guid: aac73b70f72ba4fe7b67361ca733e4d0, type: 3}
   skillDatas: []
 --- !u!1 &2083402210
 GameObject:
