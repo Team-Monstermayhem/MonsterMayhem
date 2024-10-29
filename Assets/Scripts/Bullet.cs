@@ -28,15 +28,16 @@ public class Bullet : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		if (!collision.CompareTag("Enemy") || per == -1)
-			return;
-
-		per--;
-		if (per == -1)
+		if (collision.CompareTag("Enemy") || collision.CompareTag("Boss") || per > -1)
 		{
-			rigid.velocity = Vector2.zero;
-			gameObject.SetActive(false);
+			per--;
+			if (per == -1)
+			{
+				rigid.velocity = Vector2.zero;
+				gameObject.SetActive(false);
+			}
 		}
+		else return;
 
 	}
 }

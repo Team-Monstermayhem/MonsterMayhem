@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     public float gameTime;
     public float maxGameTime = 2 * 10f;
     [Header("# Player Info")]
+    public int selectedSkillType;
     public float health;
     public float maxhealth;
     public int level;
@@ -25,22 +26,43 @@ public class GameManager : MonoBehaviour
     public Player player;
     public LevelUp uiLevelUp;
     public Result uiResult;
+    public Enhance enhance;
     public GameObject enemyCleaner;
+    public GameObject uiEnhance;
 
     private void Awake()
     {
         instance = this;
     }
 
-    public void GameStart()
+    private void Start()
     {
-        
+        enhance = uiEnhance.GetComponent<Enhance>();
+        maxhealth = PlayerPrefs.GetFloat("maxHealth", maxhealth);
+        player.attack = PlayerPrefs.GetFloat("attack", player.attack);
+        player.speed = PlayerPrefs.GetFloat("speed", player.speed);
+        enhance.coin = PlayerPrefs.GetFloat("coin", enhance.coin);
+        enhance.healthEnhance = PlayerPrefs.GetInt("healthEnhance", enhance.healthEnhance);
+        enhance.attackEnhance = PlayerPrefs.GetInt("attackEnhance", enhance.attackEnhance);
+        enhance.speedEnhance = PlayerPrefs.GetInt("speedEnhance", enhance.speedEnhance);
+        //GameStart(0); // °ÔÀÓ ½ÃÀÛ ½Ã ÃÊ±âÈ­
+
+        PlayerPrefs.DeleteAll();
+    }
+
+    public void GameStart(int id)
+    {
+        selectedSkillType = id;
         health = maxhealth;
+        gameTime = 0;
 
-        //Ã€Ã“Â½Ãƒ Â½ÂºÃ…Â©Â¸Â³Ã†Â® (ÃƒÂ¹ Â¼Â±Ã…Ãƒ)
-        uiLevelUp.Select(0);
+        // Ã¹ ¼±ÅÃ UI ¼³Á¤
+        //uiLevelUp.Select(0);
         //isLive = true;
+        uiLevelUp.Select(selectedSkillType);
+        isLive = true;
 
+        player.gameObject.SetActive(true);
         Resume();
 
         AudioManager.instance.PlayBgm(true);
@@ -86,7 +108,25 @@ public class GameManager : MonoBehaviour
 
     public void GameRetry()
     {
+        PlayerPrefs.SetFloat("maxHealth", maxhealth);
+        PlayerPrefs.SetFloat("attack", player.attack);
+        PlayerPrefs.SetFloat("speed", player.speed);
+        PlayerPrefs.SetFloat("coin", enhance.coin);
+        PlayerPrefs.SetInt("healthEnhance", enhance.healthEnhance);
+        PlayerPrefs.SetInt("attackEnhance", enhance.attackEnhance);
+        PlayerPrefs.SetInt("speedEnhance", enhance.speedEnhance);
+
         SceneManager.LoadScene(0);
+
+        //maxhealth = PlayerPrefs.GetFloat("maxHealth", maxhealth);
+        //player.attack = PlayerPrefs.GetFloat("attack", player.attack);
+        //player.speed = PlayerPrefs.GetFloat("speed", player.speed);
+        //PlayerPrefs.DeleteAll();
+    }
+
+    public void DoEnhance()
+    {
+        uiEnhance.SetActive(true);
     }
 
     private void Update()
@@ -108,7 +148,7 @@ public class GameManager : MonoBehaviour
             return;
         exp++;
 
-        if (exp == nextExp[Mathf.Min(level, nextExp.Length-1)])
+        if (exp == nextExp[Mathf.Min(level, nextExp.Length - 1)])
         {
             level++;
             exp = 0;

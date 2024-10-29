@@ -25,8 +25,7 @@ public class PoolManager : MonoBehaviour
 			}
 		}
 		pools = new List<GameObject>[prefabs.Length]; // enemy 0, 1~4 baseAttack, 5~29 skill range, 30~54 skill projectile
-
-        for (int i = 0; i < pools.Length; i++) {
+    for (int i = 0; i < pools.Length; i++) {
             pools[i] = new List<GameObject>();
         }
     }
