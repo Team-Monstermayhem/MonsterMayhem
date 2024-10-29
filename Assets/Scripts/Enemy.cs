@@ -66,7 +66,7 @@ public class Enemy : MonoBehaviour
 	{
         if (!GameManager.instance.isLive)
             return;
-        spriteRenderer.flipX = target.position.x < rigid.position.x;
+        spriteRenderer.flipX = target.position.x > rigid.position.x;
 	}
 
 	private void OnEnable()
@@ -94,9 +94,9 @@ public class Enemy : MonoBehaviour
 	{
 		if (collision.CompareTag("Bullet") && isLive)
 		{
-			Debug.Log("1");
+			//Debug.Log("1");
             health -= collision.GetComponent<SkillProjectiles>().curDamage;
-            Debug.Log("2");
+            //Debug.Log("2");
         }
 		else
 			return;

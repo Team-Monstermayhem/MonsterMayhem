@@ -207,3 +207,5 @@ MonoBehaviour:
   animCon:
   - {fileID: 22100000, guid: 43f6818d758c3412285693a8d8f7502b, type: 2}
   target: {fileID: 0}
+  projectilePrefab: {fileID: 8508082470719964619, guid: 7bb9852bf0f29c6449deb76d4761b799, type: 3}
+  attackRange: 5
