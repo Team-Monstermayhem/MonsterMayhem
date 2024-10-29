@@ -21,15 +21,13 @@ MonoBehaviour:
   projectiles:
   - {fileID: 315679571703926430, guid: bff1c081f0e203c42a9233533b5b54c0, type: 3}
   - {fileID: 315679571703926430, guid: afe426b87d46f2b4c9b98abe89bc1a4d, type: 3}
-  - {fileID: 315679571703926430, guid: 0eb135c8cd86ca6448665e209a28579a, type: 3}
-  - {fileID: 315679571703926430, guid: 7c1d2e97ee0d2db46a3572744283bdb5, type: 3}
-  - {fileID: 315679571703926430, guid: 22af0767f2aee5a459ede4a87cca2bdf, type: 3}
+  - {fileID: 315679571703926430, guid: e80e1cc47b1ce9c43904c61e5f5218a9, type: 3}
+  - {fileID: 315679571703926430, guid: d34fcacd939e3784c88ea38501af46e1, type: 3}
   skillRangeObjects:
   - {fileID: 7366274943035746026, guid: 4c895162e2b805f41aedf25077dd20f6, type: 3}
   - {fileID: 7366274943035746026, guid: eb34c8ce986f2774b9a8c1af3636b1af, type: 3}
-  - {fileID: 7366274943035746026, guid: 1996e47519bac5044a8ec9553a567a98, type: 3}
+  - {fileID: 7366274943035746026, guid: 184eaa4d24c4c924ea35cd3a60270c32, type: 3}
   - {fileID: 7366274943035746026, guid: a3df48c435e79854c853c4838ebc97f7, type: 3}
-  - {fileID: 7366274943035746026, guid: c06b63554b4fd364cb8fd400c685d53e, type: 3}
   baseDamage: 4.5
   baseCount: 1
   damages:

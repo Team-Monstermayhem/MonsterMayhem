@@ -10,6 +10,9 @@ TagManager:
   - Bullet
   - Boss
   - Bullet2
+  - Wall
+  - SkillProjectile
+  - continuousDamage
   layers:
   - Default
   - TransparentFX

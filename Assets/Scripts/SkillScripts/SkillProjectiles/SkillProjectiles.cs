@@ -23,3 +23,4 @@ public class SkillProjectiles : MonoBehaviour
 		curMouseClickPos = mouseClickPos;
 	}
 }
+

@@ -16,14 +16,20 @@ public class Player : MonoBehaviour
 	Animator anim;
     WaitForFixedUpdate wait;
 
-    private void Awake()
+  private void Awake()
 	{
 		rigid = GetComponent<Rigidbody2D>();
 		spriteRenderer = GetComponent<SpriteRenderer>();
 		anim = GetComponent<Animator>();
 		scanner = GetComponent<Scanner>();
-        wait = new WaitForFixedUpdate();
-    }
+		SkillController skillConTroller = this.AddComponent<SkillController>();
+		skillConTroller.skills = new Skill[5];
+		skillConTroller.skills[0] = GameObject.Find("ItemUI 0").GetComponent<Skill>();
+		skillConTroller.skills[1] = GameObject.Find("ItemUI 1").GetComponent<Skill>();
+		skillConTroller.skills[2] = GameObject.Find("ItemUI 2").GetComponent<Skill>();
+		skillConTroller.skills[3] = GameObject.Find("ItemUI 3").GetComponent<Skill>();
+    wait = new WaitForFixedUpdate();
+  }
 
 	void Update()
 	{

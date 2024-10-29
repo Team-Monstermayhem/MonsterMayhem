@@ -11,6 +11,9 @@ public class Enemy : MonoBehaviour
 	public RuntimeAnimatorController[] animCon;
 	public Rigidbody2D target;
 
+	public float damageInterval = 1f;
+	private float damageTimer = 0f;
+
 	bool isLive;
 
 	Rigidbody2D rigid;
@@ -73,11 +76,9 @@ public class Enemy : MonoBehaviour
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		if (collision.CompareTag("Bullet") && isLive)
-		{
-			Debug.Log("1");
-            health -= collision.GetComponent<SkillProjectiles>().curDamage;
-            Debug.Log("2");
-        }
+			health -= collision.GetComponent<Bullet>().damage;
+		else if (collision.CompareTag("SkillProjectile") && isLive)
+			health -= collision.GetComponent<SkillProjectiles>().curDamage;
 		else
 			return;
 		StartCoroutine(KnockBack());
@@ -101,9 +102,46 @@ public class Enemy : MonoBehaviour
         }
 	}
 
+	private void OnTriggerStay2D(Collider2D collision)
+	{
+		if (collision.CompareTag("continuousDamage") && isLive)
+			health -= collision.GetComponent<SkillProjectiles>().curDamage;
+		else
+			return;
+		StartCoroutine(KnockBack());
+		//Debug.Log("Stay State Name : " + collision);
+		damageInterval += Time.deltaTime;
+		if (damageTimer >= damageInterval)
+		{
+			health -= collision.GetComponent<Bullet>().damage;
+			damageTimer = 0f;
+		}
+		if (health > 0)
+		{
+			anim.SetTrigger("Hit");
+			AudioManager.instance.PlaySfx(AudioManager.Sfx.Hit);
+		}
+		else
+		{
+			isLive = false;
+			coll.enabled = false;
+			rigid.simulated = false;
+			spriteRenderer.sortingOrder = 1;
+			anim.SetBool("Dead", true);
+			GameManager.instance.kill++;
+			GameManager.instance.GetExp();
+			//Dead();
+			if (GameManager.instance.isLive)
+				AudioManager.instance.PlaySfx(AudioManager.Sfx.Dead);
+		}
+	}
+
+
 	private void OnCollisionEnter2D(Collision2D collision)
 	{
 		// 충돌한 오브젝트가 벽일 경우
+		if (collision.gameObject.CompareTag("continuousDamage") && isLive)
+			damageTimer = 0f;	
 		if (collision.gameObject.CompareTag("Wall") && isLive)
 			health -= collision.gameObject.GetComponent<SkillProjectiles>().curDamage;
 		else
