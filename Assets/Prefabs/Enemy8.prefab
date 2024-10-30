@@ -106,7 +106,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -117,7 +117,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!70 &4179002344681284095
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -177,7 +177,7 @@ Animator:
   m_GameObject: {fileID: 7524691744949115219}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 22100000, guid: 924868976c2384a559453ca522d1a15d, type: 2}
+  m_Controller: {fileID: 22100000, guid: 43f6818d758c3412285693a8d8f7502b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -205,6 +205,7 @@ MonoBehaviour:
   health: 0
   maxHealth: 0
   animCon:
-  - {fileID: 22100000, guid: 924868976c2384a559453ca522d1a15d, type: 2}
-  - {fileID: 22100000, guid: 924868976c2384a559453ca522d1a15d, type: 2}
+  - {fileID: 22100000, guid: 43f6818d758c3412285693a8d8f7502b, type: 2}
   target: {fileID: 0}
+  projectilePrefab: {fileID: 8508082470719964619, guid: 7bb9852bf0f29c6449deb76d4761b799, type: 3}
+  attackRange: 5

@@ -67,7 +67,7 @@ public class Skill : MonoBehaviour
 			Debug.Log($"{level} level {skillData.skillName} is still on cooldown.");
 			return;
 		}
-		GameObject skillprojectile = poolManager.GetObject(21 + (int)skillData.skillType * 4 + selectedSkillIndex); //0 : enemy 1~25 : skill range 26~50 : skill projectile
+		GameObject skillprojectile = poolManager.GetObject(28 + (int)skillData.skillType * 4 + selectedSkillIndex); //0 : enemy 1~25 : skill range 26~50 : skill projectile
 		Debug.Log(skillprojectile + "is NULL?");
 		skillprojectile.GetComponent<SkillProjectiles>().Init(level, mouseClickPos, skillData);
 
@@ -78,7 +78,7 @@ public class Skill : MonoBehaviour
 	public GameObject ShowSkillRange(int selectedSkillIndex)
 	{
 		Debug.Log("Skill Rangef??" + "SkillData : " + skillData.skillType + "Level : " + level);
-		GameObject skillRangeInstance = poolManager.GetObject(5 + (int)skillData.skillType * 4 + selectedSkillIndex);
+		GameObject skillRangeInstance = poolManager.GetObject(12 + (int)skillData.skillType * 4 + selectedSkillIndex);
 		if (skillRangeInstance.GetComponent<Collider2D>() == null)
 		{
 			skillRangeInstance.AddComponent<Collider2D>();	

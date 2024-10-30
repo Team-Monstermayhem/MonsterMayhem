@@ -8,12 +8,11 @@ public class SkillController : MonoBehaviour
 	//public Button[] skillButtons; // 스킬 버튼 배열 5개
 	public int selectedSkillIndex; // 현재 선택된 스킬 인덱스
 	public int prevSelectedSkillIndex;
-	int selectSkillType;
+	public int selectSkillType;
 	public GameObject skillRangeInstance;
 
 	void Start()
 	{
-		selectSkillType = GameManager.instance.selectSKillTtype;
 		selectedSkillIndex = -1;
 	}
 
@@ -29,7 +28,7 @@ public class SkillController : MonoBehaviour
 		} // 여기서 스킬이 선택되야 함.
 		if (selectedSkillIndex == -1)
 			return;
-		Debug.Log("selecectedSkill Index : " + selectedSkillIndex  + ", " + skillRangeInstance);
+		Debug.Log("selectedSkill Index : " + selectedSkillIndex  + ", " + skillRangeInstance);
 		// 즉시 시전 스킬
 		if (skills[selectedSkillIndex].level != 0 && ((selectedSkillIndex == 0 && selectSkillType == 2) || (selectedSkillIndex == 2 && selectSkillType == 3)))
 		{
