@@ -17,6 +17,10 @@ MonoBehaviour:
   skillName: "\uBB3C\uC18D\uC131 \uC2A4\uD0AC"
   skillDescription: 
   skillIcon: {fileID: 927338625, guid: d71a3dc7aa20fad4f9a99fc76a9254ba, type: 3}
+  skillIcons:
+  - {fileID: -285013694338296238, guid: a0d73a37fe6567547ac7eb5d9b68009a, type: 3}
+  - {fileID: -4775844128731519781, guid: c676f25f7ac1076429a391493844afbd, type: 3}
+  - {fileID: 715961402, guid: ee849eac9990c4b4f8ca6fca2c8a2803, type: 3}
   maxLevel: 5
   projectiles:
   - {fileID: 315679571703926430, guid: cca91a25dc6324149b5d8cd4ee38935b, type: 3}

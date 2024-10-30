@@ -174,8 +174,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.44, y: 0.3}
+  m_Offset: {x: 0.0015813907, y: -0.001581341}
+  m_Size: {x: 0.2997864, y: 0.32719654}
   m_Direction: 0
 --- !u!114 &-381692237291473200
 MonoBehaviour:
@@ -207,5 +207,6 @@ MonoBehaviour:
   animCon:
   - {fileID: 22100000, guid: dbd0f3fa41240408d926b8e96f1d413a, type: 2}
   target: {fileID: 0}
+  damageInterval: 1
   projectilePrefab: {fileID: 8508082470719964619, guid: 7bb9852bf0f29c6449deb76d4761b799, type: 3}
   attackRange: 3

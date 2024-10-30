@@ -7583,7 +7583,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 9.583333
+  orthographic size: 10.5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -18755,7 +18755,7 @@ MonoBehaviour:
   kill: 0
   exp: 0
   nextExp: 03000000050000000a0000001e0000003c0000006400000096000000d20000001801000068010000c201000058020000
-  selectSKillTtype: 3
+  selectSKillType: 0
   poolManager: {fileID: 2061066980}
   player: {fileID: 700132784}
   uiLevelUp: {fileID: 1713977786}
@@ -25863,7 +25863,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -181907988, guid: d71a3dc7aa20fad4f9a99fc76a9254ba, type: 3}
+  m_Sprite: {fileID: 1308339721139580801, guid: 64e1d5295aa4d7e48b1a5472bb6ab374, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
