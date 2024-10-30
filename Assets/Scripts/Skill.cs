@@ -12,9 +12,8 @@ public class Skill : MonoBehaviour
 	public SkillData skillData; // 스킬 데이터
 	public Image coolImage;
 	public int level; // 현재 레벨
-	private bool isOnCooldown; // 쿨타임 상태
+	public bool isOnCooldown; // 쿨타임 상태
 	float cooldownTimer = 0f;
-
 	public PoolManager poolManager;
 	public Image skillIcon;
 	Text textLevel;
@@ -27,13 +26,12 @@ public class Skill : MonoBehaviour
 		coolImage = transform.GetChild(0).GetComponent<Image>();
 		//poolManager = GameManager.instance.poolManager;
 		skillIcon = GetComponentsInChildren<Image>()[1];
-		skillData = poolManager.skillDatas[GameManager.instance.selectSKillTtype];
-		skillIcon.sprite = skillData.skillIcon;
+        skillData = poolManager.skillDatas[GameManager.instance.selectSKillType];
 
-		Text[] texts = GetComponentsInChildren<Text>();
+        Text[] texts = GetComponentsInChildren<Text>();
 		textLevel = texts[0];
 
-		level = 1;
+		level = 0;
 
 	}
 

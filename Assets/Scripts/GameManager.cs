@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEditor.EditorTools;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,7 +21,7 @@ public class GameManager : MonoBehaviour
     public int exp;
     public int[] nextExp = { 3, 5, 10, 30, 60, 100, 150, 210, 280, 360, 450, 600 };
 
-	public int selectSKillTtype;
+	public int selectSKillType;
     [Header("# Game Object")]
     public PoolManager poolManager;
     public Player player;
@@ -52,7 +53,7 @@ public class GameManager : MonoBehaviour
 
     public void GameStart(int id)
     {
-		selectSKillTtype = id;
+		selectSKillType = id;
         health = maxhealth;
         gameTime = 0;
 
@@ -64,18 +65,24 @@ public class GameManager : MonoBehaviour
 
         player.gameObject.SetActive(true);
 		SkillController skillController = player.AddComponent<SkillController>();
-		player.GetComponent<SkillController>().selectSkillType = selectSKillTtype;
+		player.GetComponent<SkillController>().selectSkillType = selectSKillType;
 
 		skillController.skills = new Skill[5];
-		skillController.skills[0] = GameObject.Find("ItemUI 0").AddComponent<Skill>();
-		skillController.skills[0].skillData = poolManager.skillDatas[0];
-		skillController.skills[1] = GameObject.Find("ItemUI 1").AddComponent<Skill>();
-		skillController.skills[0].skillData = poolManager.skillDatas[1];
-		skillController.skills[2] = GameObject.Find("ItemUI 2").AddComponent<Skill>();
-		skillController.skills[0].skillData = poolManager.skillDatas[2];
-		skillController.skills[3] = GameObject.Find("ItemUI 3").AddComponent<Skill>();
-		skillController.skills[0].skillData = poolManager.skillDatas[3];
+		for (int i = 0; i < 3; i++)
+		{
+			skillController.skills[i] = GameObject.Find("ItemUI " + i).GetComponent<Skill>();
+			skillController.skills[i].skillData = poolManager.skillDatas[selectSKillType];
+			Image skillIcon = skillController.skills[i].transform.GetChild(0).GetComponent<Image>();
+			skillIcon.sprite= poolManager.skillDatas[selectSKillType].skillIcons[i];
 
+            GameObject skillObject = GameObject.Find("Skill " + i);
+            Skill levelUpSkill = skillObject.GetComponent<Skill>();
+            levelUpSkill.skillData = poolManager.skillDatas[selectSKillType];
+            levelUpSkill.transform.GetChild(0).GetComponent<Image>().sprite = poolManager.skillDatas[selectSKillType].skillIcons[i];
+            Text[] texts = skillObject.GetComponentsInChildren<Text>();
+            texts[1].text = "스킬 " + i;
+            texts[2].text = "스킬을 강화합니다.";
+        }
 		Resume();
 
         AudioManager.instance.PlayBgm(true);
