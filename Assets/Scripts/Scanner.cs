@@ -47,7 +47,7 @@ public class Scanner : MonoBehaviour
 
     void AutoAttack()
     {
-        if (nearestTarget != null)
+        if (nearestTarget != null && GameManager.instance.isLive)
         {
 			GameObject projectile = GameManager.instance.poolManager.GetObject(44);
 			projectile.transform.position = GameManager.instance.player.transform.position;

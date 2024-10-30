@@ -40,6 +40,8 @@ public class HUD : MonoBehaviour
                 Vector3 worldPosition = boss.transform.position + bossHealthOffset;
                 Vector3 screenPosition = Camera.main.WorldToScreenPoint(worldPosition);
                 transform.position = screenPosition;
+                if (!boss.isLive)
+                    mySlider.gameObject.SetActive(false);
             }
         }
         else
@@ -68,9 +70,7 @@ public class HUD : MonoBehaviour
                     float curHealth = GameManager.instance.health;
 
                     float maxHealth = GameManager.instance.maxhealth;
-					Debug.Log("curH : " + curHealth + ", maxH : " + maxHealth);
 					mySlider.value = curHealth / maxHealth;
-					Debug.Log("mySlider.value : " + mySlider.value);
 					break;
 
             }

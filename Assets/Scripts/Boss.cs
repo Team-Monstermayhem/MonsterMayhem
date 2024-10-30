@@ -46,7 +46,7 @@ public class Boss : MonoBehaviour
 
     public float collisionDamage = 10f; // 플레이어와 충돌 시 피해량
 
-    bool isLive = true;
+    public bool isLive = true;
 
     Rigidbody2D rigid;
     SpriteRenderer spriter;
@@ -72,6 +72,7 @@ public class Boss : MonoBehaviour
     void Start()
     {
         spawnTime = Time.time;  // 보스 등장 시점 기록
+        isLive = true;
     }
 
     void FixedUpdate()
@@ -280,9 +281,12 @@ public class Boss : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!collision.CompareTag("Bullet") || !isLive)
+        if (collision.CompareTag("Bullet") && isLive)
+            health -= collision.GetComponent<Bullet>().damage;
+        else if (collision.CompareTag("SkillProjectile") && isLive)
+            health -= collision.GetComponent<SkillProjectiles>().curDamage;
+        else
             return;
-        health -= collision.GetComponent<Bullet>().damage;
         StartCoroutine(KnockBack());
 
         if (health > 0)
@@ -299,17 +303,18 @@ public class Boss : MonoBehaviour
             GameManager.instance.kill++;
             GameManager.instance.GetExp();
             Dead();
+            GameManager.instance.GameVictory();
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!collision.collider.CompareTag("Player") || !isLive)
+        /*if (!collision.collider.CompareTag("Player") || !isLive)
             return;
         Player player = collision.collider.GetComponent<Player>();
         if (player != null)
         {
             //player.TakeDamage(collisionDamage); // 충돌 시 플레이어에게 피해 입히기
-        }
+        }*/
     }
 
     IEnumerator KnockBack()

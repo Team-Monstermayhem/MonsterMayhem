@@ -16,10 +16,6 @@ public class Enemy : MonoBehaviour
     public float attackRange = 5f; 
     private bool hasFired = false;
 
-	public GameObject projectilePrefab; 
-    public float attackRange = 5f; 
-    private bool hasFired = false;
-
 	bool isLive;
 
 	Rigidbody2D rigid;
