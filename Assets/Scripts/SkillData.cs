@@ -13,6 +13,7 @@ public class SkillData : ScriptableObject
     public string skillName;
     public string skillDescription;
     public Sprite skillIcon;
+	public Sprite[] skillIcons;
 	public int maxLevel = 5;
 
 	[Header("# Skill Object")]
