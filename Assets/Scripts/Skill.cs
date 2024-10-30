@@ -5,59 +5,52 @@ using Unity.VisualScripting;
 using UnityEditor.EditorTools;
 using UnityEngine;
 using UnityEngine.UI;
-
+using System.Text.RegularExpressions;
 
 public class Skill : MonoBehaviour
 {
 	public SkillData skillData; // 스킬 데이터
-	public Button skillButton;
 	public Image coolImage;
 	public int level; // 현재 레벨
 	private bool isOnCooldown; // 쿨타임 상태
 	float cooldownTimer = 0f;
 
 	public PoolManager poolManager;
-
 	public Image skillIcon;
 	Text textLevel;
 
 
-	private void Awake()
+	private void Start()
 	{
-		level = 0;
+
+		poolManager = GameManager.instance.poolManager;
+		coolImage = transform.GetChild(0).GetComponent<Image>();
+		//poolManager = GameManager.instance.poolManager;
 		skillIcon = GetComponentsInChildren<Image>()[1];
+		skillData = poolManager.skillDatas[GameManager.instance.selectSKillTtype];
 		skillIcon.sprite = skillData.skillIcon;
 
 		Text[] texts = GetComponentsInChildren<Text>();
 		textLevel = texts[0];
 
-		
-	}
+		level = 1;
 
-
-
-	private void Start()
-	{
-		poolManager = GameManager.instance.poolManager;
-		skillButton = GetComponent<Button>();
-		coolImage = transform.GetChild(1).GetComponent<Image>();
 	}
 
 	private void Update()
 	{
-		if (isOnCooldown)
+		if (isOnCooldown && level != 0)
 		{
 			cooldownTimer += Time.deltaTime;
 			//Debug.Log("Cooldown Timer : " + cooldownTimer + "Cooldown Target : " + skillData.cooldowns[level]);
-			if (cooldownTimer >= skillData.cooldowns[level])
+			if (cooldownTimer >= skillData.cooldowns[level-1])
 			{
 				isOnCooldown = false;
 				coolImage.fillAmount = 1;
-				skillButton.interactable = true;
 			}
 			else
 			{
-				coolImage.fillAmount = cooldownTimer / skillData.cooldowns[level];
+				coolImage.fillAmount = cooldownTimer / skillData.cooldowns[level-1];
 			}
 		}
 	}
@@ -67,23 +60,25 @@ public class Skill : MonoBehaviour
 		textLevel.text = "Lv." + (level);
 	}
 
-	public void UseSkill(Vector3 mouseClickPos)
+	public void UseSkill(Vector3 mouseClickPos, int selectedSkillIndex)
 	{
 		if (isOnCooldown)
 		{
 			Debug.Log($"{level} level {skillData.skillName} is still on cooldown.");
 			return;
 		}
-		GameObject skillprojectile = poolManager.GetObject(25 + (int)skillData.skillType * 5 + level); //0 : enemy 1~25 : skill range 26~50 : skill projectile
+		GameObject skillprojectile = poolManager.GetObject(28 + (int)skillData.skillType * 4 + selectedSkillIndex); //0 : enemy 1~25 : skill range 26~50 : skill projectile
+		Debug.Log(skillprojectile + "is NULL?");
 		skillprojectile.GetComponent<SkillProjectiles>().Init(level, mouseClickPos, skillData);
 
 
-		StartCoroutine(SkillCooldown(skillData.cooldowns[level - 1])); // 레벨에 따라 쿨타임 설정
+		StartCoroutine(SkillCooldown(skillData.cooldowns[level])); // 레벨에 따라 쿨타임 설정
 	}
 
-	public GameObject ShowSkillRange()
+	public GameObject ShowSkillRange(int selectedSkillIndex)
 	{
-		GameObject skillRangeInstance = poolManager.GetObject((int)skillData.skillType * 5 + level);
+		Debug.Log("Skill Rangef??" + "SkillData : " + skillData.skillType + "Level : " + level);
+		GameObject skillRangeInstance = poolManager.GetObject(12 + (int)skillData.skillType * 4 + selectedSkillIndex);
 		if (skillRangeInstance.GetComponent<Collider2D>() == null)
 		{
 			skillRangeInstance.AddComponent<Collider2D>();	
@@ -99,7 +94,6 @@ public class Skill : MonoBehaviour
 		isOnCooldown = true;
 		cooldownTimer = 0f;
 		coolImage.fillAmount = 0;
-		skillButton.interactable = false;
 		yield return new WaitForSeconds(cooldown);
 		isOnCooldown = false;
 		yield return null;

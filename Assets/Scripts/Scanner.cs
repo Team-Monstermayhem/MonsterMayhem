@@ -16,7 +16,7 @@ public class Scanner : MonoBehaviour
 
     private void Start()
     {
-        InvokeRepeating("AutoAttack", attackInterval, attackInterval);
+        InvokeRepeating("AutoAttack", 3f, attackInterval);
     }
 
     private void FixedUpdate()
@@ -49,7 +49,9 @@ public class Scanner : MonoBehaviour
     {
         if (nearestTarget != null)
         {
-            GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+			GameObject projectile = GameManager.instance.poolManager.GetObject(44);
+			projectile.transform.position = GameManager.instance.player.transform.position;
+           // GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
             Rigidbody2D projectileRb = projectile.GetComponent<Rigidbody2D>();
 
             Vector2 direction = (nearestTarget.position - transform.position).normalized;

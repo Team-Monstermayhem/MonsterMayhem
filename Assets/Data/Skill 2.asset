@@ -20,28 +20,26 @@ MonoBehaviour:
   maxLevel: 5
   projectiles:
   - {fileID: 315679571703926430, guid: cca91a25dc6324149b5d8cd4ee38935b, type: 3}
-  - {fileID: 315679571703926430, guid: be05f90bad82c8a40816068288ae9456, type: 3}
+  - {fileID: 315679571703926430, guid: 93878bb2688db2a41925942e8517e4dd, type: 3}
   - {fileID: 315679571703926430, guid: eabb8af574325f741ac0868d3676266a, type: 3}
   - {fileID: 315679571703926430, guid: f4585a36107dd894bb37e4fb69d1a3ef, type: 3}
-  - {fileID: 315679571703926430, guid: b7c1eb5af35e4b6489cc333971cfe71b, type: 3}
   skillRangeObjects:
   - {fileID: 7366274943035746026, guid: dc49cc4492281f7498d86a4bbb54401f, type: 3}
-  - {fileID: 7366274943035746026, guid: 9300254a514a2944d9e38a216841e258, type: 3}
+  - {fileID: 7366274943035746026, guid: 43c53b0e23cb40a4591d3283d271756c, type: 3}
   - {fileID: 7366274943035746026, guid: 6af10a0e2a9be474ab208e6a8d564b00, type: 3}
   - {fileID: 7366274943035746026, guid: cdcd78e4c4170394d9d8ce9331db3220, type: 3}
-  - {fileID: 7366274943035746026, guid: 25a52b57d5fe0274883cdf8ffb36b77c, type: 3}
-  baseDamage: 4.5
-  baseCount: 1
+  baseDamage: 60
+  baseCount: 100
   damages:
-  - 0.5
-  - 1
-  - 1.5
-  - 2
-  - 3
+  - 7
+  - 7
+  - 7
+  - 7
+  - 7
   counts: 0100000001000000010000000100000002000000
   cooldowns:
-  - 9
-  - 7
-  - 5
-  - 3
-  - 1
+  - 4
+  - 4
+  - 4
+  - 4
+  - 4

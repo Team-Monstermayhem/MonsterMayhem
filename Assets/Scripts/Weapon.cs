@@ -129,6 +129,7 @@ public class Weapon : MonoBehaviour
 		Vector3 dir= targetPos - transform.position;
 		dir = dir.normalized;
 		curBullet = GameManager.instance.poolManager.GetObject(prefabId);
+		Debug.Log("curBullet : " + curBullet);
 		Transform bullet = curBullet.transform;
 		bullet.position = transform.position;
 		bullet.rotation = Quaternion.FromToRotation(Vector3.up, dir);

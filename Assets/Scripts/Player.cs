@@ -16,14 +16,16 @@ public class Player : MonoBehaviour
 	Animator anim;
     WaitForFixedUpdate wait;
 
-    private void Awake()
+	public SkillController skillController;
+  private void Start()
 	{
 		rigid = GetComponent<Rigidbody2D>();
 		spriteRenderer = GetComponent<SpriteRenderer>();
 		anim = GetComponent<Animator>();
 		scanner = GetComponent<Scanner>();
-        wait = new WaitForFixedUpdate();
-    }
+		//skillConTroller = this.AddComponent<SkillController>();
+		wait = new WaitForFixedUpdate();
+  }
 
 	void Update()
 	{

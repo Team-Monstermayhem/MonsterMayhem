@@ -12,6 +12,7 @@ public class CircleAttack : SkillProjectiles
 
 		transform.position = pos;
 		StartCoroutine(DeactivateAfterTime(3f));
+		//Destroy(transform, 2f);
 	}
 
 	IEnumerator DeactivateAfterTime(float delay)

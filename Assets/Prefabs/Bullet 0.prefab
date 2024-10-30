@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8503976852025147860}
   - component: {fileID: 1021905001297045587}
   - component: {fileID: 7160147498115190184}
-  - component: {fileID: 6778849719321851782}
+  - component: {fileID: 5815579675184921670}
   m_Layer: 0
   m_Name: Bullet 0
   m_TagString: Bullet
@@ -51,6 +51,8 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -94,6 +96,7 @@ BoxCollider2D:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2193388512974144860}
   m_Enabled: 1
+  serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -117,7 +120,8 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,10 +132,9 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
   m_Size: {x: 0.3888889, y: 1}
   m_EdgeRadius: 0
---- !u!114 &6778849719321851782
+--- !u!114 &5815579675184921670
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -140,7 +143,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2193388512974144860}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26719643b9d2c3546ad21a83bbb618e3, type: 3}
+  m_Script: {fileID: 11500000, guid: 85c07f92a1806424c95f34cb137b784d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
