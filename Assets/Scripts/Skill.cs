@@ -12,7 +12,7 @@ public class Skill : MonoBehaviour
 	public SkillData skillData; // 스킬 데이터
 	public Image coolImage;
 	public int level; // 현재 레벨
-	private bool isOnCooldown; // 쿨타임 상태
+	public bool isOnCooldown; // 쿨타임 상태
 	float cooldownTimer = 0f;
 
 	public PoolManager poolManager;
@@ -27,8 +27,7 @@ public class Skill : MonoBehaviour
 		coolImage = transform.GetChild(0).GetComponent<Image>();
 		//poolManager = GameManager.instance.poolManager;
 		skillIcon = GetComponentsInChildren<Image>()[1];
-		skillData = poolManager.skillDatas[GameManager.instance.selectSKillTtype];
-		skillIcon.sprite = skillData.skillIcon;
+		skillData = poolManager.skillDatas[GameManager.instance.selectSKillType];
 
 		Text[] texts = GetComponentsInChildren<Text>();
 		textLevel = texts[0];
@@ -67,7 +66,7 @@ public class Skill : MonoBehaviour
 			Debug.Log($"{level} level {skillData.skillName} is still on cooldown.");
 			return;
 		}
-		GameObject skillprojectile = poolManager.GetObject(21 + (int)skillData.skillType * 4 + selectedSkillIndex); //0 : enemy 1~25 : skill range 26~50 : skill projectile
+		GameObject skillprojectile = poolManager.GetObject(28 + (int)skillData.skillType * 4 + selectedSkillIndex); //0 : enemy 1~25 : skill range 26~50 : skill projectile
 		Debug.Log(skillprojectile + "is NULL?");
 		skillprojectile.GetComponent<SkillProjectiles>().Init(level, mouseClickPos, skillData);
 
@@ -78,7 +77,7 @@ public class Skill : MonoBehaviour
 	public GameObject ShowSkillRange(int selectedSkillIndex)
 	{
 		Debug.Log("Skill Rangef??" + "SkillData : " + skillData.skillType + "Level : " + level);
-		GameObject skillRangeInstance = poolManager.GetObject(5 + (int)skillData.skillType * 4 + selectedSkillIndex);
+		GameObject skillRangeInstance = poolManager.GetObject(12 + (int)skillData.skillType * 4 + selectedSkillIndex);
 		if (skillRangeInstance.GetComponent<Collider2D>() == null)
 		{
 			skillRangeInstance.AddComponent<Collider2D>();	

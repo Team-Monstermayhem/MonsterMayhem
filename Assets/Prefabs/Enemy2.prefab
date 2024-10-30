@@ -101,7 +101,7 @@ Animator:
   m_GameObject: {fileID: 1097974445049196154}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 22100000, guid: 8850ad8a8140b4cf194cbb5b0364409f, type: 2}
+  m_Controller: {fileID: 22100000, guid: 68af30951b4eb4b7c87463491af26ec5, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -128,7 +128,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -139,7 +139,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!70 &8790882691114830780
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -174,8 +174,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.3, y: 0.38}
+  m_Offset: {x: 0.0109835565, y: -0.025346717}
+  m_Size: {x: 0.17833593, y: 0.3293067}
   m_Direction: 0
 --- !u!114 &6063955257077305130
 MonoBehaviour:
@@ -205,6 +205,8 @@ MonoBehaviour:
   health: 0
   maxHealth: 0
   animCon:
-  - {fileID: 22100000, guid: 8850ad8a8140b4cf194cbb5b0364409f, type: 2}
-  - {fileID: 22100000, guid: 8850ad8a8140b4cf194cbb5b0364409f, type: 2}
+  - {fileID: 22100000, guid: 68af30951b4eb4b7c87463491af26ec5, type: 2}
   target: {fileID: 0}
+  damageInterval: 1
+  projectilePrefab: {fileID: 8508082470719964619, guid: 7bb9852bf0f29c6449deb76d4761b799, type: 3}
+  attackRange: 5

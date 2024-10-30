@@ -298,7 +298,7 @@ public class Boss : MonoBehaviour
             anim.SetBool("Dead", true);
             GameManager.instance.kill++;
             GameManager.instance.GetExp();
-            //Dead();
+            Dead();
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)

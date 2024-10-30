@@ -10,9 +10,11 @@ public class Enemy : MonoBehaviour
 	public float maxHealth;
 	public RuntimeAnimatorController[] animCon;
 	public Rigidbody2D target;
-
 	public float damageInterval = 1f;
 	private float damageTimer = 0f;
+	public GameObject projectilePrefab; 
+    public float attackRange = 5f; 
+    private bool hasFired = false;
 
 	bool isLive;
 
@@ -43,13 +45,29 @@ public class Enemy : MonoBehaviour
 		Vector2 nextVec = dirVec.normalized * speed * Time.fixedDeltaTime;
 		rigid.MovePosition(rigid.position + nextVec);
 		rigid.velocity = Vector2.zero;
+
+		if (!hasFired && Vector2.Distance(transform.position, target.position) <= attackRange)
+        {
+            FireProjectile();
+            hasFired = true;
+        }
 	}
+
+	 private void FireProjectile()
+    {
+        GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+        Rigidbody2D projRigid = projectile.GetComponent<Rigidbody2D>();
+        Vector2 direction = (target.position - rigid.position).normalized;
+        projRigid.velocity = direction * 3f; 
+        Destroy(projectile, 5f);
+    }
+
 
 	private void LateUpdate()
 	{
         if (!GameManager.instance.isLive)
             return;
-        spriteRenderer.flipX = target.position.x < rigid.position.x;
+        spriteRenderer.flipX = target.position.x > rigid.position.x;
 	}
 
 	private void OnEnable()
@@ -67,7 +85,7 @@ public class Enemy : MonoBehaviour
 
 	public void Init(SpawnData data)
 	{
-		anim.runtimeAnimatorController = animCon[data.spriteType];
+		anim.runtimeAnimatorController = animCon[0];
 		speed = data.speed;
 		maxHealth = data.health;
 		health = data.health;
@@ -96,7 +114,7 @@ public class Enemy : MonoBehaviour
 			anim.SetBool("Dead", true);
 			GameManager.instance.kill++;
 			GameManager.instance.GetExp();
-            //Dead();
+            Dead();
 			if (GameManager.instance.isLive)
 				AudioManager.instance.PlaySfx(AudioManager.Sfx.Dead);
         }
@@ -130,7 +148,7 @@ public class Enemy : MonoBehaviour
 			anim.SetBool("Dead", true);
 			GameManager.instance.kill++;
 			GameManager.instance.GetExp();
-			//Dead();
+			Dead();
 			if (GameManager.instance.isLive)
 				AudioManager.instance.PlaySfx(AudioManager.Sfx.Dead);
 		}
@@ -161,7 +179,7 @@ public class Enemy : MonoBehaviour
 			anim.SetBool("Dead", true);
 			GameManager.instance.kill++;
 			GameManager.instance.GetExp();
-			//Dead();
+			Dead();
 		}
 	}
 

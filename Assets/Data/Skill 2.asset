@@ -17,9 +17,13 @@ MonoBehaviour:
   skillName: "\uBB3C\uC18D\uC131 \uC2A4\uD0AC"
   skillDescription: 
   skillIcon: {fileID: 927338625, guid: d71a3dc7aa20fad4f9a99fc76a9254ba, type: 3}
+  skillIcons:
+  - {fileID: -285013694338296238, guid: a0d73a37fe6567547ac7eb5d9b68009a, type: 3}
+  - {fileID: -4775844128731519781, guid: c676f25f7ac1076429a391493844afbd, type: 3}
+  - {fileID: 715961402, guid: ee849eac9990c4b4f8ca6fca2c8a2803, type: 3}
   maxLevel: 5
   projectiles:
-  - {fileID: 315679571703926430, guid: 7c1d2e97ee0d2db46a3572744283bdb5, type: 3}
+  - {fileID: 315679571703926430, guid: cca91a25dc6324149b5d8cd4ee38935b, type: 3}
   - {fileID: 315679571703926430, guid: 93878bb2688db2a41925942e8517e4dd, type: 3}
   - {fileID: 315679571703926430, guid: eabb8af574325f741ac0868d3676266a, type: 3}
   - {fileID: 315679571703926430, guid: f4585a36107dd894bb37e4fb69d1a3ef, type: 3}
@@ -28,18 +32,18 @@ MonoBehaviour:
   - {fileID: 7366274943035746026, guid: 43c53b0e23cb40a4591d3283d271756c, type: 3}
   - {fileID: 7366274943035746026, guid: 6af10a0e2a9be474ab208e6a8d564b00, type: 3}
   - {fileID: 7366274943035746026, guid: cdcd78e4c4170394d9d8ce9331db3220, type: 3}
-  baseDamage: 4.5
+  baseDamage: 60
   baseCount: 100
   damages:
-  - 50
-  - 50
-  - 1.5
-  - 2
-  - 3
+  - 7
+  - 7
+  - 7
+  - 7
+  - 7
   counts: 0100000001000000010000000100000002000000
   cooldowns:
-  - 9
-  - 7
-  - 5
-  - 3
-  - 1
+  - 4
+  - 4
+  - 4
+  - 4
+  - 4

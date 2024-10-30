@@ -17,14 +17,14 @@ public class PoolManager : MonoBehaviour
 		{
 			for (int j = 0; j < 4; j++)
 			{
-				prefabs[5 + i * 4 + j] = skillDatas[i].skillRangeObjects[j];
+				prefabs[12 + i * 4 + j] = skillDatas[i].skillRangeObjects[j];
 			}
 			for (int j = 0; j < 4; j++)
 			{
-				prefabs[21 + i * 4 + j] = skillDatas[i].projectiles[j];
+				prefabs[28 + i * 4 + j] = skillDatas[i].projectiles[j];
 			}
 		}
-		pools = new List<GameObject>[prefabs.Length]; // enemy 0, 1~4 baseAttack, 5~29 skill range, 30~54 skill projectile
+		pools = new List<GameObject>[prefabs.Length];
     for (int i = 0; i < pools.Length; i++) {
             pools[i] = new List<GameObject>();
         }

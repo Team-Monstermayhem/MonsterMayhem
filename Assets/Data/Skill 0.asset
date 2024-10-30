@@ -22,7 +22,7 @@ MonoBehaviour:
   - {fileID: 315679571703926430, guid: 8b27b93c0d834e84eb9c113b65930d60, type: 3}
   - {fileID: 315679571703926430, guid: cc04b7298b666c74a8295d3b6ac86b85, type: 3}
   - {fileID: 7366274943035746026, guid: a2f427e466d276d48ae5173de3ff770c, type: 3}
-  - {fileID: 315679571703926430, guid: 8b7ed71a6e0f2e24e9778072ee07a8bc, type: 3}
+  - {fileID: 7366274943035746026, guid: a2f427e466d276d48ae5173de3ff770c, type: 3}
   skillRangeObjects:
   - {fileID: 7366274943035746026, guid: 1d01454048f860a49acbae90416762c3, type: 3}
   - {fileID: 7366274943035746026, guid: d4363c16784a4b94c8e3f9fbaadda3af, type: 3}

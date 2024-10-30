@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.EditorTools;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,7 +14,6 @@ public class GameManager : MonoBehaviour
     public float gameTime;
     public float maxGameTime = 2 * 10f;
     [Header("# Player Info")]
-    public int selectedSkillType;
     public float health;
     public float maxhealth;
     public int level;
@@ -20,7 +21,7 @@ public class GameManager : MonoBehaviour
     public int exp;
     public int[] nextExp = { 3, 5, 10, 30, 60, 100, 150, 210, 280, 360, 450, 600 };
 
-	public int selectSKillTtype;
+	public int selectSKillType;
     [Header("# Game Object")]
     public PoolManager poolManager;
     public Player player;
@@ -52,18 +53,29 @@ public class GameManager : MonoBehaviour
 
     public void GameStart(int id)
     {
-        selectedSkillType = id;
+		selectSKillType = id;
         health = maxhealth;
         gameTime = 0;
 
         // 첫 선택 UI 설정
         //uiLevelUp.Select(0);
         //isLive = true;
-        uiLevelUp.Select(selectedSkillType);
+        //uiLevelUp.Select(selectSKillTtype);
         isLive = true;
 
         player.gameObject.SetActive(true);
-        Resume();
+		SkillController skillController = player.AddComponent<SkillController>();
+		player.GetComponent<SkillController>().selectSkillType = selectSKillType;
+
+		skillController.skills = new Skill[5];
+		for (int i = 0; i < 3; i++)
+		{
+			skillController.skills[i] = GameObject.Find("ItemUI " + i).AddComponent<Skill>();
+			skillController.skills[i].skillData = poolManager.skillDatas[selectSKillType];
+			Image skillIcon = skillController.skills[i].transform.GetChild(0).GetComponent<Image>();
+			skillIcon.sprite= poolManager.skillDatas[selectSKillType].skillIcons[i];
+		}
+		Resume();
 
         AudioManager.instance.PlayBgm(true);
         AudioManager.instance.PlaySfx(AudioManager.Sfx.Select);
