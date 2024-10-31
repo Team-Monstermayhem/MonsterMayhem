@@ -7,6 +7,7 @@ public class LevelUp : MonoBehaviour
 {
     RectTransform rect;
     Item[] items;
+    Skill[] skills;
     
     public float destroyTime = 2 * 10f;
     private float remainingTime;
@@ -20,6 +21,7 @@ public class LevelUp : MonoBehaviour
     {
         rect = GetComponent<RectTransform>();
         items = GetComponentsInChildren<Item>(true);
+        skills = GetComponentsInChildren<Skill>(true);
     }
 
     public void Show()
@@ -72,14 +74,18 @@ public class LevelUp : MonoBehaviour
         {
             item.gameObject.SetActive(false);
         }
+        foreach (Skill skill in skills)
+        {
+            skill.gameObject.SetActive(false);
+        }
 
         //무작위로 3개 아이템 활성화
         int[] ran = new int[3];
         while (true)
         {
-            ran[0] = Random.Range(0, items.Length);
-            ran[1] = Random.Range(0, items.Length);
-            ran[2] = Random.Range(0, items.Length);
+            ran[0] = Random.Range(0, items.Length + skills.Length);
+            ran[1] = Random.Range(0, items.Length + skills.Length);
+            ran[2] = Random.Range(0, items.Length + skills.Length);
 
             if (ran[0] != ran[1] && ran[1] != ran[2] && ran[0] != ran[2])
                 break;
@@ -87,16 +93,26 @@ public class LevelUp : MonoBehaviour
 
         for (int index = 0; index < ran.Length; index++)
         {
-            Item ranItem = items[ran[index]];
-
-            //만렙 아이템의 경우는 소비아이템으로 대체
-            if (ranItem.level == ranItem.data.damages.Length)
+            if (ran[index] < items.Length)
             {
-                items[4].gameObject.SetActive(true);
+                Item ranItem = items[ran[index]];
+
+                //만렙 아이템의 경우는 소비아이템으로 대체
+                if (ranItem.level == ranItem.data.damages.Length)
+                {
+                    items[4].gameObject.SetActive(true);
+                }
+                else
+                {
+                    ranItem.gameObject.SetActive(true);
+                }
             }
             else
             {
-                ranItem.gameObject.SetActive(true);
+                Skill ranSkill = skills[ran[index]-items.Length];
+
+                //만렙은 일단 가정 X
+                ranSkill.gameObject.SetActive(true);
             }
         }
     }

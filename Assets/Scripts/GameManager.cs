@@ -70,11 +70,19 @@ public class GameManager : MonoBehaviour
 		skillController.skills = new Skill[5];
 		for (int i = 0; i < 3; i++)
 		{
-			skillController.skills[i] = GameObject.Find("ItemUI " + i).AddComponent<Skill>();
+			skillController.skills[i] = GameObject.Find("ItemUI " + i).GetComponent<Skill>();
 			skillController.skills[i].skillData = poolManager.skillDatas[selectSKillType];
 			Image skillIcon = skillController.skills[i].transform.GetChild(0).GetComponent<Image>();
 			skillIcon.sprite= poolManager.skillDatas[selectSKillType].skillIcons[i];
-		}
+
+            GameObject skillObject = GameObject.Find("Skill " + i);
+            Skill levelUpSkill = skillObject.GetComponent<Skill>();
+            levelUpSkill.skillData = poolManager.skillDatas[selectSKillType];
+            levelUpSkill.transform.GetChild(0).GetComponent<Image>().sprite = poolManager.skillDatas[selectSKillType].skillIcons[i];
+            Text[] texts = skillObject.GetComponentsInChildren<Text>();
+            texts[1].text = "스킬 " + i;
+            texts[2].text = "스킬을 강화합니다.";
+        }
 		Resume();
 
         AudioManager.instance.PlayBgm(true);
