@@ -30,7 +30,7 @@ public class SkillController : MonoBehaviour
 			return;
 		Debug.Log("selectedSkill Index : " + selectedSkillIndex  + ", " + skillRangeInstance);
 		// 즉시 시전 스킬
-		if (skills[selectedSkillIndex].level != 0 && ((selectedSkillIndex == 0 && selectSkillType == 2) || (selectedSkillIndex == 2 && selectSkillType == 3)))
+		if (skills[selectedSkillIndex].level != 0 && ((selectedSkillIndex == 0 && selectSkillType == 2) || (selectedSkillIndex == 2 && selectSkillType == 3) || (selectedSkillIndex == 1 && selectSkillType == 1)))
 		{
 			Debug.Log("dont show skill Range");
 			skills[selectedSkillIndex].UseSkill(Camera.main.ScreenToWorldPoint(Input.mousePosition), selectedSkillIndex); // 스킬 사용
