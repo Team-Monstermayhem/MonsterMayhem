@@ -21,6 +21,7 @@ public class SkillRangeFollowingPlayer : MonoBehaviour
 		transform.position = player.position;
 		
 		Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+		mousePosition.z = 0;
 		Vector3 direction = (mousePosition - transform.position).normalized;
 		direction.z = 0;
 		// 오브젝트가 바라볼 방향을 계산

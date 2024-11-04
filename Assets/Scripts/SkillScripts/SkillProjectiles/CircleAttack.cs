@@ -5,22 +5,31 @@ using UnityEngine;
 
 public class CircleAttack : SkillProjectiles
 {
-	private void Start()
+	public float delay = 3f;
+
+	private void OnEnable()
 	{
 		Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+		pos.y += 3.0f;
 		pos.z = 0;
-
 		transform.position = pos;
-		StartCoroutine(DeactivateAfterTime(3f));
-		//Destroy(transform, 2f);
+		// delay초 후 DeactivateObject 호출
+		Debug.Log("시작하자마자?");
+		delay = 3f;
+		Invoke("DeactivateObject", delay);
 	}
 
-	IEnumerator DeactivateAfterTime(float delay)
+	// 오브젝트가 비활성화될 때 호출되어서 이전 Invoke를 취소
+	private void OnDisable()
 	{
-		// 5초 기다리기
-		yield return new WaitForSeconds(delay);
+		Debug.Log("OnDisable 호출됨. Stack Trace:\n" + System.Environment.StackTrace);
+		CancelInvoke("DeactivateObject");
+	}
 
-		// 오브젝트 비활성화
-		transform.gameObject.SetActive(false);
+
+	void DeactivateObject()
+	{
+		Debug.Log("Deactivate 함수 호출됨. Stack Trace:\n" + System.Environment.StackTrace);
+		gameObject.SetActive(false);
 	}
 }

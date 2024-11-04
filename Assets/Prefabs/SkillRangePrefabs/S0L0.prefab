@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 6951091062295519900}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.02, z: 0}
+  m_LocalPosition: {x: 0, y: -0.99, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 5969052065534784782}
   - component: {fileID: 6353776989157420443}
   - component: {fileID: 8690550934378749272}
-  - component: {fileID: 526778409884640014}
+  - component: {fileID: 2845208871825080961}
   m_Layer: 0
   m_Name: S0L0
   m_TagString: Untagged
@@ -60,7 +60,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1.1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5125, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8076850829050395926}
@@ -83,8 +83,6 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -109,8 +107,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 95b097761cd9fc949b267954d89b0043, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.09019608}
+  m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -132,17 +130,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e559ada556a9ac14d8f49a1a1e17fb81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  child: {fileID: 0}
-  player: {fileID: 0}
---- !u!60 &526778409884640014
-PolygonCollider2D:
+--- !u!70 &2845208871825080961
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7366274943035746026}
   m_Enabled: 1
-  serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -164,40 +159,9 @@ PolygonCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
+  m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.005375575, y: 0.50125396}
-    oldSize: {x: 2.35, y: 3.28}
-    newSize: {x: 1, y: 2}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 2.2273674, y: -0.68411297}
-      - {x: 2.2973673, y: -0.404113}
-      - {x: 2.3173673, y: -0.204113}
-      - {x: 2.3173673, y: 0.155887}
-      - {x: 2.2973673, y: 0.33588699}
-      - {x: 2.2973673, y: 0.40588698}
-      - {x: 2.2173674, y: 0.69588697}
-      - {x: 2.1673675, y: 0.865887}
-      - {x: 1.9773674, y: 1.2358869}
-      - {x: 1.8673674, y: 1.395887}
-      - {x: 1.6873673, y: 1.595887}
-      - {x: 1.6373674, y: 1.6358869}
-      - {x: 1.6173674, y: 1.6358869}
-      - {x: -0.012632598, y: 0.0058869934}
-      - {x: -0.012632598, y: -0.0041130064}
-      - {x: 1.6173674, y: -1.634113}
-      - {x: 1.6573673, y: -1.634113}
-      - {x: 1.8673674, y: -1.394113}
-      - {x: 2.0273674, y: -1.134113}
-      - {x: 2.1573675, y: -0.864113}
-  m_UseDelaunayMesh: 0
+  m_Size: {x: 1, y: 2}
+  m_Direction: 0

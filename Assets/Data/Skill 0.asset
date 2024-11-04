@@ -17,29 +17,33 @@ MonoBehaviour:
   skillName: "\uC18D\uC131 \uC2A4\uD0AC"
   skillDescription: 
   skillIcon: {fileID: -201829820, guid: d71a3dc7aa20fad4f9a99fc76a9254ba, type: 3}
+  skillIcons:
+  - {fileID: -4088476253307753314, guid: f5246608584596f45a9a22eb0f3cf0a6, type: 3}
+  - {fileID: -2382326153634559624, guid: 746584c73317f5243a4a09edfb44607a, type: 3}
+  - {fileID: 7145198348311737387, guid: 552f4f55892186044ad92b2d3097fcc3, type: 3}
   maxLevel: 5
   projectiles:
-  - {fileID: 315679571703926430, guid: 8b27b93c0d834e84eb9c113b65930d60, type: 3}
+  - {fileID: 315679571703926430, guid: c7f23fa91dc07ff42a41cd93b8d23763, type: 3}
   - {fileID: 315679571703926430, guid: cc04b7298b666c74a8295d3b6ac86b85, type: 3}
   - {fileID: 7366274943035746026, guid: a2f427e466d276d48ae5173de3ff770c, type: 3}
   - {fileID: 7366274943035746026, guid: a2f427e466d276d48ae5173de3ff770c, type: 3}
   skillRangeObjects:
-  - {fileID: 7366274943035746026, guid: 1d01454048f860a49acbae90416762c3, type: 3}
+  - {fileID: 7366274943035746026, guid: 998da27e40b6570448713607491f27b1, type: 3}
   - {fileID: 7366274943035746026, guid: d4363c16784a4b94c8e3f9fbaadda3af, type: 3}
   - {fileID: 7366274943035746026, guid: 2f8ed27b662fb2d4f8626491464751a0, type: 3}
   - {fileID: 7366274943035746026, guid: 24e95b453792dc44ba3fd5b914632965, type: 3}
-  baseDamage: 4.5
-  baseCount: 1
+  baseDamage: 30
+  baseCount: 300
   damages:
-  - 0.5
-  - 1
-  - 1.5
+  - 7
+  - 15
+  - 7
   - 2
   - 3
   counts: 0100000001000000010000000100000002000000
   cooldowns:
-  - 9
-  - 7
   - 5
+  - 7
+  - 6
   - 3
   - 1
