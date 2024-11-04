@@ -9,6 +9,8 @@ public class Boss : MonoBehaviour
     public float health;
     public float maxHealth;
     public Rigidbody2D target;
+    public float damageInterval = 0.5f;
+    private float damageTimer = 0f;
 
     public float meleeDamage; // ���� ���� ����
     public float meleeCooldown = 5f; // ���� ���� ��Ÿ��
@@ -292,6 +294,72 @@ public class Boss : MonoBehaviour
         if (health > 0)
         {
             anim.SetTrigger("Hit");
+            AudioManager.instance.PlaySfx(AudioManager.Sfx.Hit);
+        }
+        else
+        {
+            isLive = false;
+            coll.enabled = false;
+            rigid.simulated = false;
+            spriter.sortingOrder = 1;
+            anim.SetBool("Dead", true);
+            GameManager.instance.kill++;
+            GameManager.instance.GetExp();
+            Dead();
+            if (GameManager.instance.isLive)
+                AudioManager.instance.PlaySfx(AudioManager.Sfx.Dead);
+            GameManager.instance.GameVictory();
+        }
+    }
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (!(collision.CompareTag("continuousDamage") && isLive))
+            return;
+
+        damageTimer += Time.deltaTime;
+        if (damageTimer >= damageInterval)
+        {
+            if (health > 0)
+            {
+                StartCoroutine(KnockBack());
+                health -= collision.GetComponent<SkillProjectiles>().curDamage;
+                damageTimer = 0f;
+                anim.SetTrigger("Hit");
+                AudioManager.instance.PlaySfx(AudioManager.Sfx.Hit);
+            }
+            else
+            {
+                isLive = false;
+                coll.enabled = false;
+                rigid.simulated = false;
+                spriter.sortingOrder = 1;
+                anim.SetBool("Dead", true);
+                GameManager.instance.kill++;
+                GameManager.instance.GetExp();
+                Dead();
+                if (GameManager.instance.isLive)
+                    AudioManager.instance.PlaySfx(AudioManager.Sfx.Dead);
+                GameManager.instance.GameVictory();
+            }
+
+        }
+    }
+
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // 충돌한 오브젝트가 벽일 경우
+        if (collision.gameObject.CompareTag("continuousDamage") && isLive)
+            damageTimer = 0f;
+        if (collision.gameObject.CompareTag("Wall") && isLive)
+            health -= collision.gameObject.GetComponent<SkillProjectiles>().curDamage;
+        else
+            return;
+        StartCoroutine(KnockBack());
+
+        if (health > 0)
+        {
+            anim.SetTrigger("Hit");
         }
         else
         {
@@ -305,16 +373,6 @@ public class Boss : MonoBehaviour
             Dead();
             GameManager.instance.GameVictory();
         }
-    }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        /*if (!collision.collider.CompareTag("Player") || !isLive)
-            return;
-        Player player = collision.collider.GetComponent<Player>();
-        if (player != null)
-        {
-            //player.TakeDamage(collisionDamage); // �浹 �� �÷��̾�� ���� ������
-        }*/
     }
 
     IEnumerator KnockBack()

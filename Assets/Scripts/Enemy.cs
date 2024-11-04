@@ -10,7 +10,7 @@ public class Enemy : MonoBehaviour
 	public float maxHealth;
 	public RuntimeAnimatorController[] animCon;
 	public Rigidbody2D target;
-	public float damageInterval = 1f;
+	public float damageInterval = 0.5f;
 	private float damageTimer = 0f;
 	public GameObject projectilePrefab; 
     public float attackRange = 5f; 
@@ -120,42 +120,41 @@ public class Enemy : MonoBehaviour
         }
 	}
 
-	private void OnTriggerStay2D(Collider2D collision)
-	{
-		if (collision.CompareTag("continuousDamage") && isLive)
-			health -= collision.GetComponent<SkillProjectiles>().curDamage;
-		else
-			return;
-		StartCoroutine(KnockBack());
-		//Debug.Log("Stay State Name : " + collision);
-		damageInterval += Time.deltaTime;
-		if (damageTimer >= damageInterval)
-		{
-			health -= collision.GetComponent<Bullet>().damage;
-			damageTimer = 0f;
-		}
-		if (health > 0)
-		{
-			anim.SetTrigger("Hit");
-			AudioManager.instance.PlaySfx(AudioManager.Sfx.Hit);
-		}
-		else
-		{
-			isLive = false;
-			coll.enabled = false;
-			rigid.simulated = false;
-			spriteRenderer.sortingOrder = 1;
-			anim.SetBool("Dead", true);
-			GameManager.instance.kill++;
-			GameManager.instance.GetExp();
-			Dead();
-			if (GameManager.instance.isLive)
-				AudioManager.instance.PlaySfx(AudioManager.Sfx.Dead);
-		}
-	}
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (!(collision.CompareTag("continuousDamage") && isLive))
+            return;
+
+        damageTimer += Time.deltaTime;
+        if (damageTimer >= damageInterval)
+        {
+            if (health > 0)
+            {
+                StartCoroutine(KnockBack());
+                health -= collision.GetComponent<SkillProjectiles>().curDamage;
+                damageTimer = 0f;
+                anim.SetTrigger("Hit");
+                AudioManager.instance.PlaySfx(AudioManager.Sfx.Hit);
+            }
+            else
+            {
+                isLive = false;
+                coll.enabled = false;
+                rigid.simulated = false;
+                spriteRenderer.sortingOrder = 1;
+                anim.SetBool("Dead", true);
+                GameManager.instance.kill++;
+                GameManager.instance.GetExp();
+                Dead();
+                if (GameManager.instance.isLive)
+                    AudioManager.instance.PlaySfx(AudioManager.Sfx.Dead);
+            }
+
+        }
+    }
 
 
-	private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
 	{
 		// 충돌한 오브젝트가 벽일 경우
 		if (collision.gameObject.CompareTag("continuousDamage") && isLive)

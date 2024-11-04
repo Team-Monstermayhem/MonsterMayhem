@@ -13,7 +13,7 @@ public class Spawner : MonoBehaviour
     List<int> enemyPrefabIndexes;
     int currentPrefabIndex;
     int currentWave = 1;
-    float waveDuration = 10f;
+    float waveDuration = 6f;
     int maxWave = 10;
     public GameObject bossPrefab; 
     private GameObject bossInstance; 
