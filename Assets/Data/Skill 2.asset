@@ -32,18 +32,18 @@ MonoBehaviour:
   - {fileID: 7366274943035746026, guid: 43c53b0e23cb40a4591d3283d271756c, type: 3}
   - {fileID: 7366274943035746026, guid: 6af10a0e2a9be474ab208e6a8d564b00, type: 3}
   - {fileID: 7366274943035746026, guid: cdcd78e4c4170394d9d8ce9331db3220, type: 3}
-  baseDamage: 60
+  baseDamage: 15
   baseCount: 100
   damages:
-  - 7
-  - 7
-  - 7
+  - 0.5
+  - 10
+  - 25
   - 7
   - 7
   counts: 0100000001000000010000000100000002000000
   cooldowns:
-  - 4
-  - 4
-  - 4
+  - 5
+  - 6
+  - 8
   - 4
   - 4

@@ -17,7 +17,8 @@ public class Player : MonoBehaviour
     WaitForFixedUpdate wait;
 
 	public SkillController skillController;
-  private void Start()
+	public ParticleSystem dustEffect; // 먼지 파티클 시스템
+	private void Start()
 	{
 		rigid = GetComponent<Rigidbody2D>();
 		spriteRenderer = GetComponent<SpriteRenderer>();
@@ -37,6 +38,15 @@ public class Player : MonoBehaviour
 		{
 			
 		}*/
+		if (inputVec.magnitude > 0 && !dustEffect.isPlaying)
+		{
+			dustEffect.transform.position = transform.position;
+			dustEffect.Play();
+		}
+		else if (inputVec.magnitude == 0 && dustEffect.isPlaying)
+		{
+			dustEffect.Stop();
+		}
 
 	}
 

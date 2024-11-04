@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1706467469808976533}
   m_Layer: 0
   m_Name: S3L1
-  m_TagString: SkillProjectile
+  m_TagString: continuousDamage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -158,6 +158,7 @@ MonoBehaviour:
   curSpeed: 0
   curCoolTime: 0
   curMouseClickPos: {x: 0, y: 0, z: 0}
+  delay: 0
 --- !u!58 &1706467469808976533
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -188,7 +189,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0

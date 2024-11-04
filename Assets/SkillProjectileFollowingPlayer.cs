@@ -10,12 +10,23 @@ public class SkillProjectileFollowingPlayer : MonoBehaviour
     void Start()
     {
 		player = GameManager.instance.player.transform;
-		Destroy(gameObject, dieTime);
     }
 
-    // Update is called once per frame
-    void Update()
+	private void OnEnable()
+	{
+		dieTime = 3f;
+		Invoke("DeActive", dieTime);	
+	}
+
+	// Update is called once per frame
+	void Update()
     {
+		//transform.up = player.transform.forward;
         transform.position = player.position;
     }
+
+	void DeActive()
+	{
+		gameObject.SetActive(false);
+	}
 }

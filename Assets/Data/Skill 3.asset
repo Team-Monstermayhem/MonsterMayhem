@@ -17,6 +17,10 @@ MonoBehaviour:
   skillName: "\uBC14\uB78C\uC18D\uC131 \uC2A4\uD0AC"
   skillDescription: 
   skillIcon: {fileID: 927338625, guid: d71a3dc7aa20fad4f9a99fc76a9254ba, type: 3}
+  skillIcons:
+  - {fileID: -8447486988359499119, guid: 1d13e64721eaad544b98f5f6d340ef69, type: 3}
+  - {fileID: 7657655401298656558, guid: 23e7fd6365154034fa6ff6355096ad2d, type: 3}
+  - {fileID: 6878053156181088341, guid: 64e1d5295aa4d7e48b1a5472bb6ab374, type: 3}
   maxLevel: 5
   projectiles:
   - {fileID: 315679571703926430, guid: bff1c081f0e203c42a9233533b5b54c0, type: 3}
@@ -28,18 +32,18 @@ MonoBehaviour:
   - {fileID: 7366274943035746026, guid: eb34c8ce986f2774b9a8c1af3636b1af, type: 3}
   - {fileID: 7366274943035746026, guid: 184eaa4d24c4c924ea35cd3a60270c32, type: 3}
   - {fileID: 7366274943035746026, guid: a3df48c435e79854c853c4838ebc97f7, type: 3}
-  baseDamage: 4.5
-  baseCount: 1
+  baseDamage: 10
+  baseCount: 100
   damages:
-  - 6
-  - 7
   - 8
+  - 16
+  - 20
   - 9
   - 3
-  counts: 0100000064000000640000006400000002000000
+  counts: 1e00000064000000640000006400000002000000
   cooldowns:
-  - 9
-  - 7
+  - 4
   - 5
+  - 8
   - 3
   - 1

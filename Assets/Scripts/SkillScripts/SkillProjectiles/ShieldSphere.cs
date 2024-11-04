@@ -10,20 +10,45 @@ public class ShieldSphere : SkillProjectiles
 	SpriteRenderer spriteRenderer;
 	public Sprite circleSprite;
 	GameObject bullet;
+
+	public float delay;
     // Start is called before the first frame update
     void Start()
     {
+		delay = 5f;
 		speed = 70;
 		projectileNum = 5;
-		Batch();
-    }
+		
+		//Invoke("DeactivateObject", delay);
+	}
 
-    // Update is called once per frame
-    void Update()
+	private void OnEnable()
+	{
+		delay = 3f;
+		projectileNum = curlevel * 5;
+		Batch();
+		// delay초 후 DeactivateObject 호출
+		Invoke("DeactivateObject", delay);
+	}
+
+	// 오브젝트가 비활성화될 때 호출되어서 이전 Invoke를 취소
+	private void OnDisable()
+	{
+		CancelInvoke("DeactivateObject");
+	}
+
+	// Update is called once per frame
+	void Update()
     {
 		transform.position = GameManager.instance.player.transform.position;
 		transform.Rotate(Vector3.back, speed * Time.deltaTime);
 	}
+
+	private void DeactivateObject()
+	{
+		gameObject.SetActive(false); // 오브젝트 비활성화
+	}
+
 	void Batch()
 	{
 		for (int index = 0; index < projectileNum; index++)
@@ -34,7 +59,7 @@ public class ShieldSphere : SkillProjectiles
 			spriteRenderer.sprite = circleSprite;
 
 			SkillProjectiles skillproj = bullet.AddComponent<SkillProjectiles>();
-			skillproj.data = data;
+			skillproj.curDamage = curDamage;
 			CircleCollider2D circleCollider = bullet.AddComponent<CircleCollider2D>();
 			bullet.GetComponent<Collider2D>().isTrigger = true;
 			Animator animator = bullet.AddComponent<Animator>();
@@ -61,7 +86,7 @@ public class ShieldSphere : SkillProjectiles
 			//bullet.transform.position = GameManager.instance.player.transform.position;
 			Vector3 rotVec = Vector3.forward * 360 * index / projectileNum;
 			bullet.transform.Rotate(rotVec);
-			bullet.transform.Translate(bullet.transform.up * 1.5f, Space.World);
+			bullet.transform.Translate(bullet.transform.up * (curlevel + 1), Space.World);
 		}
 	}
 }

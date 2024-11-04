@@ -89,7 +89,7 @@ public class Spawner : MonoBehaviour
 
     void Spawn()
     {
-        int enemiesToSpawn = currentWave + 1;
+        int enemiesToSpawn = currentWave * 6;
 
         for (int i = 0; i < enemiesToSpawn; i++)
         {

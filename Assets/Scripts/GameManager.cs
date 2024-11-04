@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     public int level;
     public int kill;
     public int exp;
-    public int[] nextExp = { 3, 5, 10, 30, 60, 100, 150, 210, 280, 360, 450, 600 };
+    public int[] nextExp = { 3, 5, 7, 12, 20, 35, 50, 70, 95, 112, 150, 200 };
 
 	public int selectSKillType;
     [Header("# Game Object")]
@@ -70,11 +70,19 @@ public class GameManager : MonoBehaviour
 		skillController.skills = new Skill[5];
 		for (int i = 0; i < 3; i++)
 		{
-			skillController.skills[i] = GameObject.Find("ItemUI " + i).AddComponent<Skill>();
+			skillController.skills[i] = GameObject.Find("ItemUI " + i).GetComponent<Skill>();
 			skillController.skills[i].skillData = poolManager.skillDatas[selectSKillType];
 			Image skillIcon = skillController.skills[i].transform.GetChild(0).GetComponent<Image>();
 			skillIcon.sprite= poolManager.skillDatas[selectSKillType].skillIcons[i];
-		}
+
+            GameObject skillObject = GameObject.Find("Skill " + i);
+            Skill levelUpSkill = skillObject.GetComponent<Skill>();
+            levelUpSkill.skillData = poolManager.skillDatas[selectSKillType];
+            levelUpSkill.transform.GetChild(0).GetComponent<Image>().sprite = poolManager.skillDatas[selectSKillType].skillIcons[i];
+            Text[] texts = skillObject.GetComponentsInChildren<Text>();
+            texts[1].text = "스킬 " + i;
+            texts[2].text = "스킬을 강화합니다.";
+        }
 		Resume();
 
         AudioManager.instance.PlayBgm(true);
@@ -158,15 +166,17 @@ public class GameManager : MonoBehaviour
     {
         if (!isLive)
             return;
+
         exp++;
 
         if (exp == nextExp[Mathf.Min(level, nextExp.Length - 1)])
         {
             level++;
-            exp = 0;
+			exp = 0;
             uiLevelUp.Show();
         }
-    }
+
+	}
 
     public void Stop()
     {

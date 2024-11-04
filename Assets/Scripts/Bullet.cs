@@ -6,6 +6,7 @@ public class Bullet : MonoBehaviour
 {
 	public float damage;
 	public int per;
+	public Player player;
 
 
 	Rigidbody2D rigid;
@@ -17,7 +18,7 @@ public class Bullet : MonoBehaviour
 
 	public void Init(float damage, int per, Vector3 dir)
 	{
-		this.damage = damage;
+		this.damage = damage * player.attack / 10;
 		this.per = per;
 
 		if (per >= 0)
