@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     public int level;
     public int kill;
     public int exp;
-    public int[] nextExp = { 3, 5, 10, 30, 60, 100, 150, 210, 280, 360, 450, 600 };
+    public int[] nextExp = { 3, 5, 7, 12, 20, 35, 50, 70, 95, 112, 150, 200 };
 
 	public int selectSKillType;
     [Header("# Game Object")]
@@ -166,15 +166,17 @@ public class GameManager : MonoBehaviour
     {
         if (!isLive)
             return;
+
         exp++;
 
         if (exp == nextExp[Mathf.Min(level, nextExp.Length - 1)])
         {
             level++;
-            exp = 0;
+			exp = 0;
             uiLevelUp.Show();
         }
-    }
+
+	}
 
     public void Stop()
     {
