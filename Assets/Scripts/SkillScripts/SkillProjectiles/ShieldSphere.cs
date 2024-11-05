@@ -13,17 +13,12 @@ public class ShieldSphere : SkillProjectiles
 
 	public float delay;
     // Start is called before the first frame update
-    void Start()
-    {
-		delay = 5f;
-		speed = 70;
-		projectileNum = 5;
-		
-		//Invoke("DeactivateObject", delay);
-	}
 
 	private void OnEnable()
 	{
+		delay = 5f;
+		speed = 70;
+		projectileNum = 5;
 		delay = 3f;
 		projectileNum = curlevel * 5;
 		Batch();

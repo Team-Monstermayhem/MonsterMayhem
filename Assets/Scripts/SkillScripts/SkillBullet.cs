@@ -48,7 +48,7 @@ public class SkillBullet : SkillProjectiles
 		curPer--;
 		if (curPer < 0)
 		{
-			//Debug.Log("È£ÃâµÊ. Stack Trace:\n" + System.Environment.StackTrace);
+			//Debug.Log("È£ï¿½ï¿½ï¿½. Stack Trace:\n" + System.Environment.StackTrace);
 			rigid.velocity = Vector2.zero;
 			gameObject.SetActive(false);
 		}

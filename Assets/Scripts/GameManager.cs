@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
         enhance.healthEnhance = PlayerPrefs.GetInt("healthEnhance", enhance.healthEnhance);
         enhance.attackEnhance = PlayerPrefs.GetInt("attackEnhance", enhance.attackEnhance);
         enhance.speedEnhance = PlayerPrefs.GetInt("speedEnhance", enhance.speedEnhance);
-        //GameStart(0); // °ÔÀÓ ½ÃÀÛ ½Ã ÃÊ±âÈ­
+        //GameStart(0); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ê±ï¿½È­
 
         PlayerPrefs.DeleteAll();
     }
@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
         health = maxhealth;
         gameTime = 0;
 
-        // Ã¹ ¼±ÅÃ UI ¼³Á¤
+        // Ã¹ ï¿½ï¿½ï¿½ï¿½ UI ï¿½ï¿½ï¿½ï¿½
         //uiLevelUp.Select(0);
         //isLive = true;
         //uiLevelUp.Select(selectSKillTtype);
@@ -80,8 +80,8 @@ public class GameManager : MonoBehaviour
             levelUpSkill.skillData = poolManager.skillDatas[selectSKillType];
             levelUpSkill.transform.GetChild(0).GetComponent<Image>().sprite = poolManager.skillDatas[selectSKillType].skillIcons[i];
             Text[] texts = skillObject.GetComponentsInChildren<Text>();
-            texts[1].text = "½ºÅ³ " + i;
-            texts[2].text = "½ºÅ³À» °­È­ÇÕ´Ï´Ù.";
+            texts[1].text = "ï¿½ï¿½Å³ " + i;
+            texts[2].text = "ï¿½ï¿½Å³ï¿½ï¿½ ï¿½ï¿½È­ï¿½Õ´Ï´ï¿½.";
         }
 		Resume();
 
@@ -121,8 +121,8 @@ public class GameManager : MonoBehaviour
 
         uiResult.gameObject.SetActive(true);
         uiResult.Win();
-        enhance.coin += kill;
-        Stop();
+		enhance.coin += kill * 5;
+		Stop();
 
         AudioManager.instance.PlayBgm(false);
         AudioManager.instance.PlaySfx(AudioManager.Sfx.Win);
