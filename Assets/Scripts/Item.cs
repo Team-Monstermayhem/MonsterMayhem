@@ -74,6 +74,10 @@ public class Item : MonoBehaviour
                 SetUI(level);
                 break;
             case ItemData.ItemType.Glove:
+				Scanner scanner = GameManager.instance.player.GetComponent<Scanner>();
+				scanner.attackInterval -= level * 0.2f;  // 공격 주기
+				scanner.projectileSpeed += 2f;  // 발사체 속도
+				break;
             case ItemData.ItemType.Shoe:
                 if(level == 0)
                 {

@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditor.EditorTools;
+//using UnityEditor.EditorTools;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Text.RegularExpressions;
@@ -31,12 +31,10 @@ public class Skill : MonoBehaviour
 
         Text[] texts = GetComponentsInChildren<Text>();
 		textLevel = texts[0];
-		string numberPart = gameObject.name.Substring(5); // "item " 이후의 문자열 추출
-		if (int.TryParse(numberPart, out int number))
-		{
-			skillNum = number;
-		}
-
+		char c = gameObject.name[gameObject.name.Length - 1]; // "item " 이후의 문자열 추출
+		//Debug.Log(" c : " + c);
+		skillNum = (int)(c - '0');
+		Debug.Log("gameObjectName : " + gameObject.name + "skillNum : " + skillNum);
 		level = 0;
 
 	}
@@ -62,6 +60,7 @@ public class Skill : MonoBehaviour
 				}
 				else
 				{
+					//Debug.Log("Num : " + skillNum);
 					coolImage.fillAmount = cooldownTimer / skillData.cooldowns[skillNum];
 					//Debug.Log("fill amount : " + coolImage.fillAmount);
 				}
@@ -85,7 +84,7 @@ public class Skill : MonoBehaviour
 		//Debug.Log(skillprojectile + "is NULL?");
 		skillprojectile.GetComponent<SkillProjectiles>().Init(level, mouseClickPos, skillData, selectedSkillIndex);
 
-
+		Debug.Log("usesskill : " + skillNum);
 		StartCoroutine(SkillCooldown(skillData.cooldowns[skillNum])); // 레벨에 따라 쿨타임 설정
 	}
 

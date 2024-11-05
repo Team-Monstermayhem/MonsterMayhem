@@ -44,6 +44,6 @@ MonoBehaviour:
   cooldowns:
   - 4
   - 5
-  - 8
+  - 15
   - 3
   - 1
