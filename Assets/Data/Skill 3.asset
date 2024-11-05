@@ -32,7 +32,7 @@ MonoBehaviour:
   - {fileID: 7366274943035746026, guid: eb34c8ce986f2774b9a8c1af3636b1af, type: 3}
   - {fileID: 7366274943035746026, guid: 184eaa4d24c4c924ea35cd3a60270c32, type: 3}
   - {fileID: 7366274943035746026, guid: a3df48c435e79854c853c4838ebc97f7, type: 3}
-  baseDamage: 10
+  baseDamage: 50
   baseCount: 100
   damages:
   - 8

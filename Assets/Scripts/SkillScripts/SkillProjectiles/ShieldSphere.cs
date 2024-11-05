@@ -63,7 +63,7 @@ public class ShieldSphere : SkillProjectiles
 			CircleCollider2D circleCollider = bullet.AddComponent<CircleCollider2D>();
 			bullet.GetComponent<Collider2D>().isTrigger = true;
 			Animator animator = bullet.AddComponent<Animator>();
-			RuntimeAnimatorController controller = AssetDatabase.LoadAssetAtPath<RuntimeAnimatorController>("Assets/SkillSprite/S3L2.overrideController");
+			RuntimeAnimatorController controller = Resources.Load<RuntimeAnimatorController>("S3L2");
 			if (controller != null)
 				animator.runtimeAnimatorController = controller;
 			else
