@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditor.EditorTools;
+//using UnityEditor.EditorTools;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -101,6 +101,7 @@ public class GameManager : MonoBehaviour
 
         uiResult.gameObject.SetActive(true);
         uiResult.Lose();
+        enhance.coin += kill;
         Stop();
 
         AudioManager.instance.PlayBgm(false);
@@ -120,6 +121,7 @@ public class GameManager : MonoBehaviour
 
         uiResult.gameObject.SetActive(true);
         uiResult.Win();
+        enhance.coin += kill;
         Stop();
 
         AudioManager.instance.PlayBgm(false);
