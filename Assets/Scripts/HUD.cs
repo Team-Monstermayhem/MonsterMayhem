@@ -11,8 +11,8 @@ public class HUD : MonoBehaviour
     Text myText;
     Slider mySlider;
 
-    private Boss boss; // Boss ¿ÀºêÁ§Æ®¸¦ ÂüÁ¶ÇÒ º¯¼ö
-    public Vector3 bossHealthOffset = new Vector3(0, 1.5f, 0); // º¸½º ¸Ó¸® À§ ¿ÀÇÁ¼Â ¼³Á¤
+    private Boss boss; // Boss ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public Vector3 bossHealthOffset = new Vector3(0, 1.5f, 0); // ï¿½ï¿½ï¿½ï¿½ ï¿½Ó¸ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
     private void Awake()
     {
@@ -26,20 +26,22 @@ public class HUD : MonoBehaviour
         {
             if (boss == null)
             {
-                GameObject bossObject = GameObject.FindWithTag("Boss"); // Boss ÅÂ±×·Î º¸½º ¿ÀºêÁ§Æ® Ã£±â
+                GameObject bossObject = GameObject.FindWithTag("Boss"); // Boss ï¿½Â±×·ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® Ã£ï¿½ï¿½
                 if (bossObject != null)
                 {
-                    boss = bossObject.GetComponent<Boss>(); // Boss ÄÄÆ÷³ÍÆ® °¡Á®¿À±â
+                    boss = bossObject.GetComponent<Boss>(); // Boss ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 }
             }
 
             if (boss != null)
             {
                 mySlider.value = boss.health / boss.maxHealth;
-                // º¸½º ¸Ó¸® À§ À§Ä¡¿¡ µû¶ó´Ù´Ï°Ô ¼³Á¤
+                // ï¿½ï¿½ï¿½ï¿½ ï¿½Ó¸ï¿½ ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ù´Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½
                 Vector3 worldPosition = boss.transform.position + bossHealthOffset;
                 Vector3 screenPosition = Camera.main.WorldToScreenPoint(worldPosition);
                 transform.position = screenPosition;
+                if (!boss.isLive)
+                    mySlider.gameObject.SetActive(false);
             }
         }
         else
@@ -68,9 +70,7 @@ public class HUD : MonoBehaviour
                     float curHealth = GameManager.instance.health;
 
                     float maxHealth = GameManager.instance.maxhealth;
-					//Debug.Log("curH : " + curHealth + ", maxH : " + maxHealth);
 					mySlider.value = curHealth / maxHealth;
-					//Debug.Log("mySlider.value : " + mySlider.value);
 					break;
 
             }

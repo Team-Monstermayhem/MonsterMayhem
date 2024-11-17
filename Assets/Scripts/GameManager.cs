@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditor.EditorTools;
+//using UnityEditor.EditorTools;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -120,7 +120,8 @@ public class GameManager : MonoBehaviour
 
         uiResult.gameObject.SetActive(true);
         uiResult.Win();
-        Stop();
+		enhance.coin += kill * 5;
+		Stop();
 
         AudioManager.instance.PlayBgm(false);
         AudioManager.instance.PlaySfx(AudioManager.Sfx.Win);

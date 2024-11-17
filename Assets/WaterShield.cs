@@ -9,6 +9,7 @@ public class WaterShield : MonoBehaviour
 	private void OnEnable()
 	{
 		result = GameManager.instance.health;
+		transform.localScale *= GetComponent<SkillProjectiles>().curlevel;
 	}
 	private void OnDisable()
 	{

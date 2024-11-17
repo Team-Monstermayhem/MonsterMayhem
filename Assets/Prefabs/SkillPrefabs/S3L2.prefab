@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -1972384513587627547}
   m_Layer: 0
   m_Name: S3L2
-  m_TagString: SkillProjectile
+  m_TagString: continuousDamage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -53,6 +53,7 @@ MonoBehaviour:
   curCoolTime: 0
   curMouseClickPos: {x: 0, y: 0, z: 0}
   circleSprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  delay: 0
 --- !u!50 &-1972384513587627547
 Rigidbody2D:
   serializedVersion: 4

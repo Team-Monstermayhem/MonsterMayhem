@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
+//sing static UnityEditor.PlayerSettings;
 
 public class SkillBullet : SkillProjectiles
 {
@@ -18,6 +18,21 @@ public class SkillBullet : SkillProjectiles
         animator = GetComponent<Animator>();
 		circleCollider = GetComponent<CircleCollider2D>();
 	}
+	private void OnEnable()
+	{
+		if (transform.childCount != 0)
+		{
+			if (transform.GetChild(0) != null)
+			{
+				transform.GetChild(0).gameObject.SetActive(true);
+			}
+			if (transform.GetChild(1) != null)
+			{
+				transform.GetChild(1).gameObject.SetActive(true);
+			}
+		}
+	}
+
 
 	public override void Init(int level, Vector3 mouseClickPos, SkillData data, int selectedSkillIndex)
 	{

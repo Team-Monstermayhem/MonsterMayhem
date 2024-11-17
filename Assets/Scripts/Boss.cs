@@ -4,49 +4,51 @@ using UnityEngine;
 
 public class Boss : MonoBehaviour
 {
-    private float spawnTime;  // º¸½º µîÀå ½Ã°£
+    private float spawnTime;  // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
     public float speed;
     public float health;
     public float maxHealth;
     public Rigidbody2D target;
+    public float damageInterval = 0.5f;
+    private float damageTimer = 0f;
 
-    public float meleeDamage; // ±ÙÁ¢ °ø°İ ÇÇÇØ
-    public float meleeCooldown = 5f; // ±ÙÁ¢ °ø°İ ÄğÅ¸ÀÓ
-    public float meleeConeAngle = 90f; // ¿ø»Ô ¹üÀ§ °¢µµ
-    public float meleeRange = 4f; // ±ÙÁ¢ °ø°İ ¹üÀ§
+    public float meleeDamage; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public float meleeCooldown = 5f; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½
+    public float meleeConeAngle = 90f; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public float meleeRange = 4f; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     private float lastMeleeTime;
 
-    public float aoeDamage; // ¿ø°Å¸® ¿øÇü ¹üÀ§ °ø°İ ÇÇÇØ
-    public float aoeRadius = 3f; // ¿ø°Å¸® ¿øÇü ¹üÀ§
-    public float aoeCooldown = 8f; // ¿ø°Å¸® ¿øÇü °ø°İ ÄğÅ¸ÀÓ
+    public float aoeDamage; // ï¿½ï¿½ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public float aoeRadius = 3f; // ï¿½ï¿½ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public float aoeCooldown = 8f; // ï¿½ï¿½ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½
     private float lastAoeTime;
 
-    public GameObject aoeMarkerPrefab; // ¿øÇü ¹üÀ§ ¸¶Ä¿ ÇÁ¸®ÆÕ
-    public GameObject aoeEffectPrefab;  // AOE ÆÄÆ¼Å¬ È¿°ú ÇÁ¸®ÆÕ
-    public GameObject coneMarkerPrefab; // ¿ø»Ô ¹üÀ§ ¸¶Ä¿ ÇÁ¸®ÆÕ
-    public GameObject coneEffectPrefab; // ¿ø»Ô ¹üÀ§ È¿°ú ÇÁ¸®ÆÕ
-    public float warningTime = 1.1f; // °ø°İ Àü °æ°í ½Ã°£
+    public GameObject aoeMarkerPrefab; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¿ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public GameObject aoeEffectPrefab;  // AOE ï¿½ï¿½Æ¼Å¬ È¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public GameObject coneMarkerPrefab; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¿ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public GameObject coneEffectPrefab; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public float warningTime = 1.1f; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
 
-    public GameObject projectilePrefab; // Åõ»çÃ¼ ÇÁ¸®ÆÕ
-    public float projectileSpeed = 10f; // Åõ»çÃ¼ ¼Óµµ
-    public float projectileCooldown = 6f; // Åõ»çÃ¼ ÄğÅ¸ÀÓ
+    public GameObject projectilePrefab; // ï¿½ï¿½ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public float projectileSpeed = 10f; // ï¿½ï¿½ï¿½ï¿½Ã¼ ï¿½Óµï¿½
+    public float projectileCooldown = 6f; // ï¿½ï¿½ï¿½ï¿½Ã¼ ï¿½ï¿½Å¸ï¿½ï¿½
     private float lastProjectileTime;
 
-    // »ç¹æÀ¸·Î °ø°İÇÏ´Â ÆĞÅÏ ÃÑ¾Ë
-    public float projectile2Speed = 5f; // ÃÑ¾Ë ¼Óµµ
-    public int projectile2Count = 12; // ¹ß»çÇÒ ÃÑ¾Ë ¼ö
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ¾ï¿½
+    public float projectile2Speed = 5f; // ï¿½Ñ¾ï¿½ ï¿½Óµï¿½
+    public int projectile2Count = 12; // ï¿½ß»ï¿½ï¿½ï¿½ ï¿½Ñ¾ï¿½ ï¿½ï¿½
     public float projectile2Cooldown = 6f;
     private float lastProjectile2Time;
 
-    public float dashSpeedMultiplier = 3f; // ´ë½Ã ½Ã ¼Óµµ ¹èÀ²
-    public float dashDuration = 0.5f; // ´ë½Ã Áö¼Ó ½Ã°£
-    public float dashCooldown = 10f; // ´ë½Ã ÄğÅ¸ÀÓ
+    public float dashSpeedMultiplier = 3f; // ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Óµï¿½ ï¿½ï¿½ï¿½ï¿½
+    public float dashDuration = 0.5f; // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
+    public float dashCooldown = 10f; // ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½
     private float lastDashTime;
     private bool isDashing = false;
 
-    public float collisionDamage = 10f; // ÇÃ·¹ÀÌ¾î¿Í Ãæµ¹ ½Ã ÇÇÇØ·®
+    public float collisionDamage = 10f; // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ ï¿½æµ¹ ï¿½ï¿½ ï¿½ï¿½ï¿½Ø·ï¿½
 
-    bool isLive = true;
+    public bool isLive = true;
 
     Rigidbody2D rigid;
     SpriteRenderer spriter;
@@ -71,7 +73,7 @@ public class Boss : MonoBehaviour
 
     void Start()
     {
-        spawnTime = Time.time;  // º¸½º µîÀå ½ÃÁ¡ ±â·Ï
+        spawnTime = Time.time;  // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 		isLive = true;
     }
 
@@ -82,14 +84,14 @@ public class Boss : MonoBehaviour
 
         if (!isDashing)
         {
-            // ÇÃ·¹ÀÌ¾î¸¦ µû¶ó ÀÌµ¿
+            // ï¿½Ã·ï¿½ï¿½Ì¾î¸¦ ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
             Vector2 dirVec = target.position - rigid.position;
             Vector2 nextVec = dirVec.normalized * speed * Time.fixedDeltaTime;
             rigid.MovePosition(rigid.position + nextVec);
             rigid.velocity = Vector2.zero;
         }
 
-        // °ø°İ ÆĞÅÏ ½ÇÇà
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         ExecuteAttackPattern();
     }
 
@@ -100,46 +102,46 @@ public class Boss : MonoBehaviour
         spriter.flipX = target.position.x < rigid.position.x;
     }
 
-    // ´Ù¾çÇÑ °ø°İ ÆĞÅÏÀ» ½ÇÇà
+    // ï¿½Ù¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     void ExecuteAttackPattern()
     {
-        float elapsedTime = Time.time - spawnTime;  // º¸½º µîÀå ÈÄ °æ°ú ½Ã°£
+        float elapsedTime = Time.time - spawnTime;  // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
 
-        // ±ÙÁ¢ ¿ø»Ô ¹üÀ§ °ø°İ
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (elapsedTime - lastMeleeTime >= meleeCooldown)
         {
             StartCoroutine(PerformMeleeConeAttack());
             lastMeleeTime = elapsedTime;
         }
 
-        // ¿ø°Å¸® ¿øÇü ¹üÀ§ °ø°İ
+        // ï¿½ï¿½ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (elapsedTime - lastAoeTime >= aoeCooldown)
         {
             StartCoroutine(PerformAoeAttack());
             lastAoeTime = elapsedTime;
         }
 
-        // ¿ø°Å¸® Åõ»çÃ¼ °ø°İ
+        // ï¿½ï¿½ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½
         if (elapsedTime - lastProjectileTime >= projectileCooldown)
         {
             PerformRangedProjectileAttack();
             lastProjectileTime = elapsedTime;
         }
-        // ¿øÇü Åõ»çÃ¼ °ø°İ
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½
         if (elapsedTime - lastProjectile2Time >= projectile2Cooldown)
         {
             PerformCircularProjectileAttack();
             lastProjectile2Time = elapsedTime;
         }
 
-        // °í¼Ó ÀÌµ¿
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
         if (elapsedTime - lastDashTime >= dashCooldown && !isDashing)
         {
             StartCoroutine(PerformDashAttack());
             lastDashTime = elapsedTime;
         }
     }
-    // ÇÃ·¹ÀÌ¾î¿ÍÀÇ °¢µµ °è»ê (¿ø»Ô ¹üÀ§ °ø°İÀ» À§ÇØ)
+    // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
     float GetAngleToPlayer()
     {
         Vector2 direction = (target.position - rigid.position).normalized;
@@ -148,35 +150,35 @@ public class Boss : MonoBehaviour
 
     IEnumerator PerformMeleeConeAttack()
     {
-        // ¿ø»Ô ¸¶Ä¿ Ç¥½Ã (º¸½ºÀÇ ÀÚ½ÄÀ¸·Î ¼³Á¤)
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¿ Ç¥ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
         GameObject coneMarker = Instantiate(coneMarkerPrefab, transform.position, Quaternion.identity);
-        coneMarker.transform.SetParent(transform); // º¸½º¸¦ ºÎ¸ğ·Î ¼³Á¤ÇØ ÇÔ²² ¿òÁ÷ÀÌ°Ô ÇÔ
-        coneMarker.transform.localPosition = Vector3.zero; // ¸¶Ä¿°¡ º¸½ºÀÇ À§Ä¡¿¡ Á¤È®È÷ ¸Âµµ·Ï
+        coneMarker.transform.SetParent(transform); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô²ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì°ï¿½ ï¿½ï¿½
+        coneMarker.transform.localPosition = Vector3.zero; // ï¿½ï¿½Ä¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½È®ï¿½ï¿½ ï¿½Âµï¿½ï¿½ï¿½
 
-        float timer = 0f; // °æ°í ½Ã°£ Å¸ÀÌ¸Ó
+        float timer = 0f; // ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ Å¸ï¿½Ì¸ï¿½
         float attackAngle = 0f;
 
-        // °æ°í ½Ã°£ ¹İ µ¿¾È ¸¶Ä¿ÀÇ ¹æÇâÀ» Áö¼ÓÀûÀ¸·Î ÇÃ·¹ÀÌ¾î ¹æÇâÀ¸·Î ¾÷µ¥ÀÌÆ®
+        // ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
         while (timer < warningTime)
         {
             if (timer < warningTime / 2)
             {
-                // ÇÃ·¹ÀÌ¾îÀÇ ÇöÀç À§Ä¡¸¦ ±âÁØÀ¸·Î ¸¶Ä¿ È¸Àü
+                // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¿ È¸ï¿½ï¿½
                 coneMarker.transform.rotation = Quaternion.Euler(0, 0, GetAngleToPlayer());
-                attackAngle = GetAngleToPlayer(); // °ø°İÇÒ ÃÖÁ¾ °¢µµ
+                attackAngle = GetAngleToPlayer(); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             }
-            timer += Time.deltaTime; // °æ°í ½Ã°£ ¾÷µ¥ÀÌÆ®
-            yield return null; // ´ÙÀ½ ÇÁ·¹ÀÓ±îÁö ´ë±â
+            timer += Time.deltaTime; // ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
+            yield return null; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ó±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         }
 
-        // °æ°í ½Ã°£ÀÌ ³¡³ª¸é ¸¶Ä¿ Á¦°Å
+        // ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¿ ï¿½ï¿½ï¿½ï¿½
         Destroy(coneMarker);
 
-        // °ø°İ ¼öÇà
-        float currentAngle = GetAngleToPlayer(); // °ø°İ ½ÃÁ¡ ÇÃ·¹ÀÌ¾î¿Í º¸½º °¢µµ
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        float currentAngle = GetAngleToPlayer(); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         float angleDifference = Mathf.Abs(Mathf.DeltaAngle(attackAngle, currentAngle));
 
-        // ÆÄÆ¼Å¬ ÀÌÆåÆ® ¼ÒÈ¯ À§Ä¡ °è»ê (º¸½ºÀÇ À§Ä¡¿¡¼­ attackAngle ¹æÇâÀ¸·Î meleeRangeÀÇ ¹İ¸¸Å­ ¶³¾îÁø À§Ä¡)
+        // ï¿½ï¿½Æ¼Å¬ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½È¯ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ attackAngle ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ meleeRangeï¿½ï¿½ ï¿½İ¸ï¿½Å­ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡)
         Vector3 spawnPosition = transform.position + new Vector3(
             Mathf.Cos(attackAngle * Mathf.Deg2Rad) * (meleeRange / 2),
             Mathf.Sin(attackAngle * Mathf.Deg2Rad) * (meleeRange / 2),
@@ -199,22 +201,22 @@ public class Boss : MonoBehaviour
         }
     }
 
-    // ¿ø°Å¸® ¿øÇü ¹üÀ§ °ø°İ ÇÔ¼ö
+    // ï¿½ï¿½ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
     IEnumerator PerformAoeAttack()
     {
         Vector2 attackPos = target.transform.position;
-        // ¿øÇü ¸¶Ä¿ Ç¥½Ã
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¿ Ç¥ï¿½ï¿½
         GameObject aoeMarker = Instantiate(aoeMarkerPrefab, attackPos, Quaternion.identity);
-        //aoeMarker.transform.localScale = new Vector3(aoeRadius, aoeRadius, 1); // ¹üÀ§¿¡ ¸ÂÃç Å©±â ¼³Á¤
+        //aoeMarker.transform.localScale = new Vector3(aoeRadius, aoeRadius, 1); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         GameObject aoeEffect = Instantiate(aoeEffectPrefab, attackPos, Quaternion.identity);
         Destroy(aoeEffect, warningTime + 0.1f);
 
-        yield return new WaitForSeconds(warningTime); // °æ°í ½Ã°£ ´ë±â
+        yield return new WaitForSeconds(warningTime); // ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½
 
-        Destroy(aoeMarker); // ¸¶Ä¿ Á¦°Å
+        Destroy(aoeMarker); // ï¿½ï¿½Ä¿ ï¿½ï¿½ï¿½ï¿½
 
 
-        // °ø°İ ¼öÇà
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(attackPos, aoeRadius);
         foreach (Collider2D hitCollider in hitColliders)
         {
@@ -231,7 +233,7 @@ public class Boss : MonoBehaviour
 
     }
 
-    // ¿ø°Å¸® Åõ»çÃ¼ °ø°İ ÇÔ¼ö
+    // ï¿½ï¿½ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
     void PerformRangedProjectileAttack()
     {
         GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
@@ -242,41 +244,41 @@ public class Boss : MonoBehaviour
         //anim.SetTrigger("ProjectileAttack");
     }
 
-    // »ç¹æÀ¸·Î Åõ»çÃ¼ °ø°İ ÇÔ¼ö
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
     void PerformCircularProjectileAttack()
     {
-        float angleStep = 360f / projectile2Count; // °¢ ÃÑ¾Ë »çÀÌÀÇ °¢µµ
-        float currentAngle = 0f; // Ã¹ ÃÑ¾ËÀÇ °¢µµ ½ÃÀÛÁ¡
+        float angleStep = 360f / projectile2Count; // ï¿½ï¿½ ï¿½Ñ¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        float currentAngle = 0f; // Ã¹ ï¿½Ñ¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
         for (int i = 0; i < projectile2Count; i++)
         {
-            // ÇöÀç °¢µµ¿¡ µû¸¥ ¹æÇâ °è»ê
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
             float projectileDirX = Mathf.Cos(currentAngle * Mathf.Deg2Rad);
             float projectileDirY = Mathf.Sin(currentAngle * Mathf.Deg2Rad);
             Vector2 direction = new Vector2(projectileDirX, projectileDirY).normalized;
 
-            // ÃÑ¾Ë »ı¼º
+            // ï¿½Ñ¾ï¿½ ï¿½ï¿½ï¿½ï¿½
             GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
             Rigidbody2D projectileRb = projectile.GetComponent<Rigidbody2D>();
-            projectileRb.velocity = direction * projectile2Speed; // ÃÑ¾ËÀÇ ¹æÇâ°ú ¼Óµµ ¼³Á¤
+            projectileRb.velocity = direction * projectile2Speed; // ï¿½Ñ¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Óµï¿½ ï¿½ï¿½ï¿½ï¿½
 
-            currentAngle += angleStep; // °¢µµ °»½Å
+            currentAngle += angleStep; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         }
     }
 
-    // °í¼Ó ÀÌµ¿(´ë½Ã) ÇÔ¼ö
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½(ï¿½ï¿½ï¿½) ï¿½Ô¼ï¿½
     IEnumerator PerformDashAttack()
     {
-        isDashing = true; // ´ë½Ã ½ÃÀÛ
+        isDashing = true; // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Vector2 dashDirection = (target.position - rigid.position).normalized;
         rigid.velocity = dashDirection * speed * dashSpeedMultiplier;
 
         //anim.SetTrigger("DashAttack");
 
-        yield return new WaitForSeconds(dashDuration); // ´ë½Ã Áö¼Ó ½Ã°£¸¸Å­ ±â´Ù¸²
+        yield return new WaitForSeconds(dashDuration); // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½Å­ ï¿½ï¿½Ù¸ï¿½
 
-        rigid.velocity = Vector2.zero; // ´ë½Ã ÈÄ ¼Óµµ ÃÊ±âÈ­
-        isDashing = false; // ´ë½Ã Á¾·á
+        rigid.velocity = Vector2.zero; // ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Óµï¿½ ï¿½Ê±ï¿½È­
+        isDashing = false; // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -292,6 +294,7 @@ public class Boss : MonoBehaviour
         if (health > 0)
         {
             anim.SetTrigger("Hit");
+            AudioManager.instance.PlaySfx(AudioManager.Sfx.Hit);
         }
         else
         {
@@ -303,19 +306,74 @@ public class Boss : MonoBehaviour
             GameManager.instance.kill++;
             GameManager.instance.GetExp();
             Dead();
-			GameManager.instance.GameVictory();
-		}
+            if (GameManager.instance.isLive)
+                AudioManager.instance.PlaySfx(AudioManager.Sfx.Dead);
+            GameManager.instance.GameVictory();
+        }
     }
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (!(collision.CompareTag("continuousDamage") && isLive))
+            return;
+
+        damageTimer += Time.deltaTime;
+        if (damageTimer >= damageInterval)
+        {
+            if (health > 0)
+            {
+                StartCoroutine(KnockBack());
+                health -= collision.GetComponent<SkillProjectiles>().curDamage;
+                damageTimer = 0f;
+                anim.SetTrigger("Hit");
+                AudioManager.instance.PlaySfx(AudioManager.Sfx.Hit);
+            }
+            else
+            {
+                isLive = false;
+                coll.enabled = false;
+                rigid.simulated = false;
+                spriter.sortingOrder = 1;
+                anim.SetBool("Dead", true);
+                GameManager.instance.kill++;
+                GameManager.instance.GetExp();
+                Dead();
+                if (GameManager.instance.isLive)
+                    AudioManager.instance.PlaySfx(AudioManager.Sfx.Dead);
+                GameManager.instance.GameVictory();
+            }
+
+        }
+    }
+
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
-/*		if (!collision.collider.CompareTag("Player") || !isLive)
-			return;
-		Player player = collision.collider.GetComponent<Player>();
-		if (player != null)
-		{
-			//player.TakeDamage(collisionDamage); // Ãæµ¹ ½Ã ÇÃ·¹ÀÌ¾î¿¡°Ô ÇÇÇØ ÀÔÈ÷±â
-		}*/
-	}
+        // ì¶©ëŒí•œ ì˜¤ë¸Œì íŠ¸ê°€ ë²½ì¼ ê²½ìš°
+        if (collision.gameObject.CompareTag("continuousDamage") && isLive)
+            damageTimer = 0f;
+        if (collision.gameObject.CompareTag("Wall") && isLive)
+            health -= collision.gameObject.GetComponent<SkillProjectiles>().curDamage;
+        else
+            return;
+        StartCoroutine(KnockBack());
+
+        if (health > 0)
+        {
+            anim.SetTrigger("Hit");
+        }
+        else
+        {
+            isLive = false;
+            coll.enabled = false;
+            rigid.simulated = false;
+            spriter.sortingOrder = 1;
+            anim.SetBool("Dead", true);
+            GameManager.instance.kill++;
+            GameManager.instance.GetExp();
+            Dead();
+            GameManager.instance.GameVictory();
+        }
+    }
 
     IEnumerator KnockBack()
     {

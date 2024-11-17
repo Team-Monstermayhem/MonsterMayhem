@@ -107,12 +107,14 @@ MonoBehaviour:
   data: {fileID: 0}
   curlevel: 0
   curDamage: 0
-  curPer: 0
+  curPer: 100
   curSpeed: 0
-  curCoolTime: 0
   curMouseClickPos: {x: 0, y: 0, z: 0}
   animCon: []
   rigid: {fileID: 0}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!70 &8166432968915513443
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -304,12 +306,14 @@ MonoBehaviour:
   data: {fileID: 0}
   curlevel: 0
   curDamage: 0
-  curPer: 0
+  curPer: 100
   curSpeed: 0
-  curCoolTime: 0
   curMouseClickPos: {x: 0, y: 0, z: 0}
   animCon: []
   rigid: {fileID: 0}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!70 &4320901603362643877
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -501,12 +505,14 @@ MonoBehaviour:
   data: {fileID: 0}
   curlevel: 0
   curDamage: 0
-  curPer: 0
+  curPer: 100
   curSpeed: 0
-  curCoolTime: 0
   curMouseClickPos: {x: 0, y: 0, z: 0}
   animCon: []
   rigid: {fileID: 0}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!70 &7716041581111927625
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

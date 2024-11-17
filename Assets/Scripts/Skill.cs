@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditor.EditorTools;
+//using UnityEditor.EditorTools;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Text.RegularExpressions;
@@ -19,7 +19,9 @@ public class Skill : MonoBehaviour
 	public Image skillIcon;
 	Text textLevel;
 	int skillNum;
-
+	float[] coolValue = new float[] { 1.0f, 1.1f, 1.3f, 1.6f, 2.0f };
+	float baseCoolTime;
+	float curCoolTime = 1.0f;
 	private void Start()
 	{
 
@@ -28,15 +30,14 @@ public class Skill : MonoBehaviour
 		//poolManager = GameManager.instance.poolManager;
 		skillIcon = GetComponentsInChildren<Image>()[1];
         skillData = poolManager.skillDatas[GameManager.instance.selectSKillType];
+		baseCoolTime = skillData.cooldowns[skillNum];
 
-        Text[] texts = GetComponentsInChildren<Text>();
+		Text[] texts = GetComponentsInChildren<Text>();
 		textLevel = texts[0];
-		string numberPart = gameObject.name.Substring(5); // "item " 이후의 문자열 추출
-		if (int.TryParse(numberPart, out int number))
-		{
-			skillNum = number;
-		}
-
+		char c = gameObject.name[gameObject.name.Length - 1]; // "item " 이후의 문자열 추출
+		//Debug.Log(" c : " + c);
+		skillNum = (int)(c - '0');
+		//Debug.Log("gameObjectName : " + gameObject.name + "skillNum : " + skillNum);
 		level = 0;
 
 	}
@@ -54,15 +55,17 @@ public class Skill : MonoBehaviour
 			if (isOnCooldown)
 			{
 				cooldownTimer += Time.deltaTime;
+				curCoolTime = baseCoolTime / coolValue[level - 1];
 				//Debug.Log("Cooldown Timer : " + cooldownTimer + "Cooldown Target : " + skillData.cooldowns[level]);
-				if (cooldownTimer >= skillData.cooldowns[skillNum])
+				if (cooldownTimer >= curCoolTime)
 				{
 					isOnCooldown = false;
 					coolImage.fillAmount = 1;
 				}
 				else
 				{
-					coolImage.fillAmount = cooldownTimer / skillData.cooldowns[skillNum];
+					//Debug.Log("Num : " + skillNum);
+					coolImage.fillAmount = cooldownTimer / curCoolTime;
 					//Debug.Log("fill amount : " + coolImage.fillAmount);
 				}
 			}
@@ -85,7 +88,7 @@ public class Skill : MonoBehaviour
 		//Debug.Log(skillprojectile + "is NULL?");
 		skillprojectile.GetComponent<SkillProjectiles>().Init(level, mouseClickPos, skillData, selectedSkillIndex);
 
-
+		Debug.Log("usesskill : " + skillNum);
 		StartCoroutine(SkillCooldown(skillData.cooldowns[skillNum])); // 레벨에 따라 쿨타임 설정
 	}
 

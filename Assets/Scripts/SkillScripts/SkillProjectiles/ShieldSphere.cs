@@ -13,19 +13,13 @@ public class ShieldSphere : SkillProjectiles
 
 	public float delay;
     // Start is called before the first frame update
-    void Start()
-    {
-		delay = 5f;
-		speed = 70;
-		projectileNum = 5;
-		
-		//Invoke("DeactivateObject", delay);
-	}
 
 	private void OnEnable()
 	{
+		speed = 70;
+		//projectileNum = 4;
 		delay = 3f;
-		projectileNum = curlevel * 5;
+		projectileNum = 4 + curlevel * 2;
 		Batch();
 		// delay초 후 DeactivateObject 호출
 		Invoke("DeactivateObject", delay);
@@ -63,7 +57,7 @@ public class ShieldSphere : SkillProjectiles
 			CircleCollider2D circleCollider = bullet.AddComponent<CircleCollider2D>();
 			bullet.GetComponent<Collider2D>().isTrigger = true;
 			Animator animator = bullet.AddComponent<Animator>();
-			RuntimeAnimatorController controller = AssetDatabase.LoadAssetAtPath<RuntimeAnimatorController>("Assets/SkillSprite/S3L2.overrideController");
+			RuntimeAnimatorController controller = Resources.Load<RuntimeAnimatorController>("S3L2");
 			if (controller != null)
 				animator.runtimeAnimatorController = controller;
 			else
@@ -79,7 +73,7 @@ public class ShieldSphere : SkillProjectiles
 			circleCollider.radius = 1.3f;
 			bullet.transform.localScale = new Vector3(1f, 1f, 0f);
 
-			bullet.tag = "SkillProjectile";
+			bullet.tag = "continuousDamage";
 			
 			bullet.transform.localPosition = Vector3.zero;
 			bullet.transform.localRotation = Quaternion.identity;

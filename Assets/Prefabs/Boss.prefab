@@ -213,14 +213,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  health: 500
-  maxHealth: 500
+  health: 2000
+  maxHealth: 2000
   target: {fileID: 0}
-  meleeDamage: 40
+  damageInterval: 0.5
+  meleeDamage: 300
   meleeCooldown: 5
   meleeConeAngle: 90
   meleeRange: 4
-  aoeDamage: 40
+  aoeDamage: 300
   aoeRadius: 3
   aoeCooldown: 7
   aoeMarkerPrefab: {fileID: 3950841626174604852, guid: a9107c73272297948b62764b467baf1e, type: 3}
@@ -238,6 +239,7 @@ MonoBehaviour:
   dashDuration: 0.5
   dashCooldown: 6
   collisionDamage: 10
+  isLive: 1
 --- !u!114 &5225899953631559466
 MonoBehaviour:
   m_ObjectHideFlags: 0

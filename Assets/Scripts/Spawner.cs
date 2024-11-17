@@ -13,7 +13,7 @@ public class Spawner : MonoBehaviour
     List<int> enemyPrefabIndexes;
     int currentPrefabIndex;
     int currentWave = 1;
-    float waveDuration = 10f;
+    float waveDuration = 6f;
     int maxWave = 10;
     public GameObject bossPrefab; 
     private GameObject bossInstance; 
@@ -41,7 +41,7 @@ public class Spawner : MonoBehaviour
         for (int i = 0; i < maxWave; i++)
         {
             float spawnTime = Mathf.Max(0.1f, 5.0f - (i * 0.05f));
-            int health = 10 + (i * 10);
+            int health = 10 + (i * 5);
             float speed = 1.0f + (i * 0.1f);
             spawnData[i] = new SpawnData { spawnTime = spawnTime, spriteType = i % enemyPrefabIndexes.Count, health = health, speed = speed };
         }
@@ -89,7 +89,7 @@ public class Spawner : MonoBehaviour
 
     void Spawn()
     {
-        int enemiesToSpawn = currentWave * 6;
+        int enemiesToSpawn = currentWave * 4;
 
         for (int i = 0; i < enemiesToSpawn; i++)
         {
@@ -97,7 +97,7 @@ public class Spawner : MonoBehaviour
             enemy.transform.position = spawnPoint[Random.Range(1, spawnPoint.Length)].position;
             var enemyComponent = enemy.GetComponent<Enemy>();
             enemyComponent.Init(spawnData[level]);
-            enemyComponent.health = spawnData[level].health + (currentWave * 1.5f);
+            enemyComponent.health = spawnData[level].health + (currentWave * 1.2f);
             enemyComponent.speed = spawnData[level].speed - (currentWave * 0.1f);
         }
     }

@@ -26,7 +26,7 @@ public class SkillController : MonoBehaviour
 				break;
 			}
 		} // 여기서 스킬이 선택되야 함.
-		if (selectedSkillIndex == -1)
+		if (selectedSkillIndex == -1 || selectedSkillIndex >= 4)
 			return;
 		Debug.Log("selectedSkill Index : " + selectedSkillIndex  + ", " + skillRangeInstance);
 		// 즉시 시전 스킬

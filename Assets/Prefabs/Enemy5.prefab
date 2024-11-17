@@ -131,7 +131,7 @@ MonoBehaviour:
   animCon:
   - {fileID: 22100000, guid: f17b72d5aa2434a76918e1529ded8336, type: 2}
   target: {fileID: 0}
-  damageInterval: 1
+  damageInterval: 0.5
   projectilePrefab: {fileID: 8508082470719964619, guid: 7bb9852bf0f29c6449deb76d4761b799, type: 3}
   attackRange: 5
 --- !u!114 &5447534441046626984

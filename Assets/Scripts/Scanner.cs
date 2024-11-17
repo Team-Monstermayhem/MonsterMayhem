@@ -13,13 +13,31 @@ public class Scanner : MonoBehaviour
     public GameObject projectilePrefab;  // 발사체 프리팹
     public float attackInterval = 0.4f;  // 공격 주기
     public float projectileSpeed = 10f;  // 발사체 속도
+	public float currentAttackInterval;
+	private void Start()
+	{
+		// 초기 호출
+		StartAutoAttack();
+	}
 
-    private void Start()
-    {
-        InvokeRepeating("AutoAttack", 3f, attackInterval);
-    }
+	private void Update()
+	{
+		// level에 따라 attackInterval이 변경될 때 확인 및 재설정
+		if (currentAttackInterval != attackInterval)
+		{
+			StartAutoAttack();
+		}
+	}
 
-    private void FixedUpdate()
+	private void StartAutoAttack()
+	{
+		CancelInvoke("AutoAttack"); // 기존 호출 취소
+		currentAttackInterval = attackInterval; // 현재 간격 업데이트
+		InvokeRepeating("AutoAttack", 0f, attackInterval); // 새로운 간격으로 재설정
+	}
+
+
+	private void FixedUpdate()
 	{
 		targets = Physics2D.CircleCastAll(transform.position, scanRange, Vector2.zero, 0, targetLayer);
 		nearestTarget = GetNearest();
@@ -47,7 +65,7 @@ public class Scanner : MonoBehaviour
 
     void AutoAttack()
     {
-        if (nearestTarget != null)
+        if (nearestTarget != null && GameManager.instance.isLive)
         {
 			GameObject projectile = GameManager.instance.poolManager.GetObject(44);
 			projectile.transform.position = GameManager.instance.player.transform.position;
