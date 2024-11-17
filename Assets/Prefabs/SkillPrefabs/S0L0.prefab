@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 315679571703926430}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1.04, y: 0, z: 0}
   m_LocalScale: {x: 13, y: 10, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -103,12 +103,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a717e49826802d45becef7da1b142fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 0}
+  data: {fileID: 11400000, guid: 53de92a984bc8e44eb20945bf1f7ba20, type: 2}
   curlevel: 0
   curDamage: 0
   curPer: 0
   curSpeed: 0
-  curCoolTime: 0
   curMouseClickPos: {x: 0, y: 0, z: 0}
 --- !u!95 &-1097636484780941521
 Animator:
@@ -144,7 +143,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54913cf749144734ea5fe8fc43b60164, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: 53de92a984bc8e44eb20945bf1f7ba20, type: 2}
+  curlevel: 0
+  curDamage: 0
+  curPer: 0
+  curSpeed: 0
+  curMouseClickPos: {x: 0, y: 0, z: 0}
+  scanner: {fileID: 0}
   dieTime: 3
+  direction: {x: 0, y: 0, z: 0}
 --- !u!61 &4959741293894179818
 BoxCollider2D:
   m_ObjectHideFlags: 0

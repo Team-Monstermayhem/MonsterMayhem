@@ -10,6 +10,7 @@ public class Item : MonoBehaviour
     public Weapon weapon;
     public Gear gear;
     public GameObject itemUI;
+	public Player player;
 
     Image icon;
     Text textLevel;
@@ -18,10 +19,10 @@ public class Item : MonoBehaviour
 
     void Awake()
     {
+		
         icon = GetComponentsInChildren<Image>()[1];
         icon.sprite = data.itemIcon;
-
-        Text[] texts = GetComponentsInChildren<Text>();
+		Text[] texts = GetComponentsInChildren<Text>();
         textLevel = texts[0];
         textName = texts[1];
         textDesc = texts[2];
@@ -75,8 +76,10 @@ public class Item : MonoBehaviour
                 break;
             case ItemData.ItemType.Glove:
 				Scanner scanner = GameManager.instance.player.GetComponent<Scanner>();
-				scanner.attackInterval -= level * 0.2f;  // 공격 주기
-				scanner.projectileSpeed += 2f;  // 발사체 속도
+				scanner.attackInterval /= 1.5f;  // 공격 주기
+				scanner.projectileSpeed += 0.5f;  // 발사체 속도
+				player = GameManager.instance.player.GetComponent<Player>();
+				player.attack *= 1.3f;
 				break;
             case ItemData.ItemType.Shoe:
                 if(level == 0)
