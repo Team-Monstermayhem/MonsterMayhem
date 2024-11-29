@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
@@ -32,8 +33,10 @@ public class Player : MonoBehaviour
 	{
 		if (!GameManager.instance.isLive)
 			return;
-		inputVec.x = Input.GetAxis("Horizontal");
-		inputVec.y = Input.GetAxis("Vertical");
+		//아래 두 줄은 키보드 Input 시스템 관련
+		//inputVec.x = Input.GetAxis("Horizontal");
+		//inputVec.y = Input.GetAxis("Vertical");
+
 		/*f (Input.GetKeyDown(KeyCode.Alpha1))
 		{
 			
@@ -56,6 +59,13 @@ public class Player : MonoBehaviour
             return;
         Vector2 nextVec = inputVec.normalized * speed * Time.fixedDeltaTime;
 		rigid.MovePosition(rigid.position + nextVec);
+	}
+
+	//조이스틱
+	void OnMove(InputValue value)
+	{
+        Debug.Log($"Move Input: {value.Get<Vector2>()}");
+        inputVec = value.Get<Vector2>();
 	}
 
 	private void LateUpdate()
