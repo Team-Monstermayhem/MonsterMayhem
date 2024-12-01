@@ -27,9 +27,11 @@ public class GameManager : MonoBehaviour
     public Player player;
     public LevelUp uiLevelUp;
     public Result uiResult;
+    public Transform uiJoy;
     public Enhance enhance;
     public GameObject enemyCleaner;
     public GameObject uiEnhance;
+    public GameObject uiMainButton;
 
     private void Awake()
     {
@@ -146,9 +148,24 @@ public class GameManager : MonoBehaviour
         //PlayerPrefs.DeleteAll();
     }
 
+    public void GameQuit()
+    {
+        Application.Quit();
+    }
+
     public void DoEnhance()
     {
         uiEnhance.SetActive(true);
+    }
+
+    public void SelectType()
+    {
+        uiMainButton.SetActive(false);
+    }
+
+    public void StartTutorial()
+    {
+
     }
 
     private void Update()
@@ -184,11 +201,13 @@ public class GameManager : MonoBehaviour
     {
         isLive = false;
         Time.timeScale = 0;
+        uiJoy.localScale = Vector3.zero;
     }
 
     public void Resume()
     {
         isLive = true;
         Time.timeScale = 1;
+        uiJoy.localScale = Vector3.one;
     }
 }
