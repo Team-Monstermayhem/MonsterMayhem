@@ -20,7 +20,7 @@ public class Boss : MonoBehaviour
 
     public float aoeDamage; // ���Ÿ� ���� ���� ���� ����
     public float aoeRadius = 3f; // ���Ÿ� ���� ����
-    public float aoeCooldown = 8f; // ���Ÿ� ���� ���� ��Ÿ��
+    public float aoeCooldown = 7f; // ���Ÿ� ���� ���� ��Ÿ��
     private float lastAoeTime;
 
     public GameObject aoeMarkerPrefab; // ���� ���� ��Ŀ ������
@@ -31,18 +31,18 @@ public class Boss : MonoBehaviour
 
     public GameObject projectilePrefab; // ����ü ������
     public float projectileSpeed = 10f; // ����ü �ӵ�
-    public float projectileCooldown = 6f; // ����ü ��Ÿ��
+    public float projectileCooldown = 2f; // ����ü ��Ÿ��
     private float lastProjectileTime;
 
     // ������� �����ϴ� ���� �Ѿ�
     public float projectile2Speed = 5f; // �Ѿ� �ӵ�
     public int projectile2Count = 12; // �߻��� �Ѿ� ��
-    public float projectile2Cooldown = 6f;
+    public float projectile2Cooldown = 4f;
     private float lastProjectile2Time;
 
     public float dashSpeedMultiplier = 3f; // ��� �� �ӵ� ����
     public float dashDuration = 0.5f; // ��� ���� �ð�
-    public float dashCooldown = 10f; // ��� ��Ÿ��
+    public float dashCooldown = 6f; // ��� ��Ÿ��
     private float lastDashTime;
     private bool isDashing = false;
 
@@ -75,6 +75,11 @@ public class Boss : MonoBehaviour
     {
         spawnTime = Time.time;  // ���� ���� ���� ���
 		isLive = true;
+        meleeCooldown = 5f;
+        aoeCooldown = 7f;
+        projectileCooldown = 2f;
+        projectile2Cooldown = 4f;
+        dashCooldown = 6f;
     }
 
     void FixedUpdate()
@@ -89,6 +94,14 @@ public class Boss : MonoBehaviour
             Vector2 nextVec = dirVec.normalized * speed * Time.fixedDeltaTime;
             rigid.MovePosition(rigid.position + nextVec);
             rigid.velocity = Vector2.zero;
+        }
+        if(health <= maxHealth / 2)
+        {
+            meleeCooldown = 3f;
+            aoeCooldown = 4f;
+            projectileCooldown = 1f;
+            projectile2Cooldown = 2f;
+            dashCooldown = 3f;
         }
 
         // ���� ���� ����
