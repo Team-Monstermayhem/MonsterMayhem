@@ -86,7 +86,7 @@ public class GameManager : MonoBehaviour
         skillController.skills = new Skill[5];
         for (int i = 0; i < 3; i++)
         {
-            skillController.skills[i] = GameObject.Find("ItemUI " + i).GetComponent<Skill>();
+            skillController.skills[i] = GameObject.Find("SkillButton " + i).GetComponent<Skill>();
             skillController.skills[i].skillData = poolManager.skillDatas[selectSKillType];
             Image skillIcon = skillController.skills[i].transform.GetChild(0).GetComponent<Image>();
             skillIcon.sprite = poolManager.skillDatas[selectSKillType].skillIcons[i];
