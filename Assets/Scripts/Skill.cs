@@ -19,10 +19,11 @@ public class Skill : MonoBehaviour
 	public Image skillIcon;
 	Text textLevel;
 	int skillNum;
+	public bool skillUsed;
 
 	private void Start()
 	{
-
+		skillUsed = false;
 		poolManager = GameManager.instance.poolManager;
 		coolImage = transform.GetChild(0).GetComponent<Image>();
 		//poolManager = GameManager.instance.poolManager;
@@ -83,8 +84,9 @@ public class Skill : MonoBehaviour
 		GameObject skillprojectile = poolManager.GetObject(28 + (int)skillData.skillType * 4 + selectedSkillIndex); //0 : enemy 1~25 : skill range 26~50 : skill projectile
 		//Debug.Log(skillprojectile + "is NULL?");
 		skillprojectile.GetComponent<SkillProjectiles>().Init(level, mouseClickPos, skillData, selectedSkillIndex);
+		skillUsed = true;
 
-		Debug.Log("usesskill : " + skillNum);
+        Debug.Log("usesskill : " + skillNum);
 		StartCoroutine(SkillCooldown(skillData.cooldowns[skillNum])); // 레벨에 따라 쿨타임 설정
 	}
 

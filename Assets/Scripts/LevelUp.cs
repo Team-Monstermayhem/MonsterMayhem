@@ -16,12 +16,15 @@ public class LevelUp : MonoBehaviour
     int sec;
     bool isCountDownActive = false;
 
+    public bool tutorialSkillSelected;
+
     // Start is called before the first frame update
     void Awake()
     {
         rect = GetComponent<RectTransform>();
         items = GetComponentsInChildren<Item>(true);
         skills = GetComponentsInChildren<Skill>(true);
+        tutorialSkillSelected = false;
     }
 
     public void Show()
@@ -56,6 +59,7 @@ public class LevelUp : MonoBehaviour
 
     public void Hide()
     {
+        tutorialSkillSelected = true;
         rect.localScale = Vector3.zero;
         GameManager.instance.Resume();
         AudioManager.instance.PlaySfx(AudioManager.Sfx.Select);
@@ -64,7 +68,7 @@ public class LevelUp : MonoBehaviour
 
     public void Select(int index)
     {
-        items[index].OnClick();
+        items[index].OnClick();   
     }
 
     void Next()
@@ -89,6 +93,27 @@ public class LevelUp : MonoBehaviour
 
             if (ran[0] != ran[1] && ran[1] != ran[2] && ran[0] != ran[2])
                 break;
+        }
+        if (GameManager.instance.isTutorial)
+        {
+            if(GameManager.instance.level == 0)
+            {
+                ran[0] = 3;
+                ran[1] = 4;
+                ran[2] = 5;
+            }
+            if (GameManager.instance.level == 1)
+            {
+                ran[0] = 1;
+                ran[1] = 1;
+                ran[2] = 1;
+            }
+            if (GameManager.instance.level == 2)
+            {
+                ran[0] = 3;
+                ran[1] = 3;
+                ran[2] = 3;
+            }
         }
 
         for (int index = 0; index < ran.Length; index++)
