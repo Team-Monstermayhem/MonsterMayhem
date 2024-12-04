@@ -37,12 +37,13 @@ public class GameManager : MonoBehaviour
     public GameObject tutorialUI;
     public Text tutorialText;
     public Skill[] tutorialSkill;
+	public int tutorialSkillUsed;
     public LevelUp tutorialLevelUp;
     public GameObject JoyArrow;
     public GameObject SkillArrow;
 
-
-    [Header("# Spawner Reference")]
+	public SkillController skillController;
+	[Header("# Spawner Reference")]
     public Spawner spawner;
 
 
@@ -54,7 +55,9 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        if (spawner == null)
+		tutorialSkillUsed = 0;
+
+		if (spawner == null)
         {
             spawner = Object.FindAnyObjectByType<Spawner>(); 
             if (spawner == null)
@@ -76,6 +79,11 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.DeleteAll();
     }
 
+	public void initSkillButton()
+	{
+
+	}
+
     public void GameStart(int id)
     {
         selectSKillType = id;
@@ -83,7 +91,8 @@ public class GameManager : MonoBehaviour
         gameTime = 0;
         if (isTutorial)
         {
-            tutorialText.text = "조이스틱을 이용하여 캐릭터를 이동시켜 보세요.";
+			
+            tutorialText.text = "Use the joystick to move the player";
             JoyArrow.SetActive(true);
             StartCoroutine(MoveEffect(JoyArrow));
         }
@@ -95,10 +104,10 @@ public class GameManager : MonoBehaviour
         isLive = true;
 
         player.gameObject.SetActive(true);
-        SkillController skillController = player.AddComponent<SkillController>();
+        skillController = player.AddComponent<SkillController>();
         player.GetComponent<SkillController>().selectSkillType = selectSKillType;
-
-        skillController.skills = new Skill[5];
+		Debug.Log("tutorial?");
+		skillController.skills = new Skill[5];
         for (int i = 0; i < 3; i++)
         {
             skillController.skills[i] = GameObject.Find("SkillButton " + i).GetComponent<Skill>();
@@ -204,38 +213,53 @@ public class GameManager : MonoBehaviour
     IEnumerator TutorialSequence()
     {
         // 속성 선택 튜토리얼
-        tutorialText.text = "플레이 할 속성을 선택하세요. 선택한 속성에 따라 스킬이 달라집니다.";
+        tutorialText.text = "Choose an attribute to play with. \nThe skills will vary based on the selected attribute.";
 
         // 이동 튜토리얼
         yield return new WaitUntil(() => player.inputVec != Vector2.zero); // 플레이어가 조이스틱을 조작하면 다음 단계로 진행
         JoyArrow.SetActive(false);
         yield return new WaitForSeconds(2f); // 2초 대기
 
-        // ----------------몬스터 삽입---------------------
-        tutorialText.text = "몬스터를 잡아보세요! 몬스터를 잡으면 경험치를 얻을 수 있습니다.";
-    
-        spawner.SpawnTutorialWave(1);
+		// ----------------몬스터 삽입---------------------
+		tutorialText.text = "Try catching the monsters! \nDefeating monsters will earn you experience points.";
 
-        yield return new WaitUntil(() => GameManager.instance.kill >= 2); 
-        yield return new WaitForSeconds(1f);
+		spawner.SpawnTutorialWave(1);
 
-/*
-        // 스킬 선택 튜토리얼
-        tutorialText.text = "몬스터를 잡아 경험치를 얻어 레벨업을 하면 스킬이나 효과를 선택할 수 있습니다.";
-        uiLevelUp.Show();
-        level++;
-        yield return new WaitUntil(() => tutorialLevelUp.tutorialSkillSelected); // 고를 때까지 대기
+        yield return new WaitUntil(() => level >= 1); 
+        //yield return new WaitForSeconds(1f);
 
-        // 스킬 사용 튜토리얼
-        tutorialText.text = "활성화 된 스킬을 터치&드래그 해 사용하세요.";
-        SkillArrow.SetActive(true);
-        StartCoroutine(MoveEffect(SkillArrow));
-        yield return new WaitUntil(() => tutorialSkill[0].skillUsed || tutorialSkill[1].skillUsed || tutorialSkill[2].skillUsed);
-        SkillArrow.SetActive(false);
-        yield return new WaitForSeconds(2f); // 2초 대기
-*/
 
-        tutorialText.text = "튜토리얼 종료!";
+		// 스킬 선택 튜토리얼
+		tutorialText.text = "Defeat monsters to gain experience points, \nlevel up, and choose skills or effects.";
+		//uiLevelUp.Show();
+		//level++;
+		yield return new WaitUntil(() => tutorialLevelUp.tutorialSkillSelected); // 고를 때까지 대기
+
+		// 스킬 사용 튜토리얼
+		tutorialText.text = "Touch the activated skill to use it.";
+		SkillArrow.SetActive(true);
+		StartCoroutine(MoveEffect(SkillArrow));
+		yield return new WaitUntil(() => (tutorialSkillUsed != 0));
+		SkillArrow.SetActive(false);
+		yield return new WaitForSeconds(2f); // 2초 대기
+
+		tutorialText.text = "Try out all the skills and survive through three waves!";
+		spawner.SpawnTutorialWave(1);
+		yield return new WaitUntil(() => level >= 2);
+		yield return new WaitForSeconds(8f);
+
+
+		spawner.SpawnTutorialWave(3);
+		//yield return new WaitUntil(() => level >= 3);
+		yield return new WaitForSeconds(7f);
+
+		spawner.SpawnTutorialWave(5);
+		//yield return new WaitUntil(() => level >= 4);
+		yield return new WaitForSeconds(6f);
+
+		yield return new WaitUntil(() => (tutorialSkill[0].level >= 0) && (tutorialSkill[1].level >=0) && (tutorialSkill[2].level >= 0));
+
+		tutorialText.text = "Tutorial Completed!";
         yield return new WaitForSeconds(2f); // 2초 대기
 
         GameRetry();
@@ -305,4 +329,20 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
         uiJoy.localScale = Vector3.one;
     }
+
+	public void clickSkill0Button()
+	{
+		skillController.selectedSkillIndex = 0;
+		skillController.ButtonClick();
+	}
+	public void clickSkill1Button()
+	{
+		skillController.selectedSkillIndex = 1;
+		skillController.ButtonClick();
+	}
+	public void clickSkill2Button()
+	{
+		skillController.selectedSkillIndex = 2;
+		skillController.ButtonClick();
+	}
 }

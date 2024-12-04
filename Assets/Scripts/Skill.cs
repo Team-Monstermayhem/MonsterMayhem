@@ -84,7 +84,8 @@ public class Skill : MonoBehaviour
 		GameObject skillprojectile = poolManager.GetObject(28 + (int)skillData.skillType * 4 + selectedSkillIndex); //0 : enemy 1~25 : skill range 26~50 : skill projectile
 		//Debug.Log(skillprojectile + "is NULL?");
 		skillprojectile.GetComponent<SkillProjectiles>().Init(level, mouseClickPos, skillData, selectedSkillIndex);
-		skillUsed = true;
+		if (GameManager.instance.isTutorial)
+			GameManager.instance.tutorialSkillUsed = 1;
 
         Debug.Log("usesskill : " + skillNum);
 		StartCoroutine(SkillCooldown(skillData.cooldowns[skillNum])); // 레벨에 따라 쿨타임 설정

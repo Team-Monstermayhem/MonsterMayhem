@@ -126,7 +126,7 @@ public class Spawner : MonoBehaviour
             return;
         }
 
-        int enemiesToSpawn = 4;
+        int enemiesToSpawn = waveLevel * 5;
 
         for (int i = 0; i < enemiesToSpawn; i++)
         {

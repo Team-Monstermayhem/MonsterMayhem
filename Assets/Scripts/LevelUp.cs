@@ -96,23 +96,23 @@ public class LevelUp : MonoBehaviour
         }
         if (GameManager.instance.isTutorial)
         {
-            if(GameManager.instance.level == 0)
+            if(GameManager.instance.level == 1)
+            {
+                ran[0] = 4;
+                ran[1] = 4;
+                ran[2] = 4;
+            }
+            if (GameManager.instance.level == 2)
             {
                 ran[0] = 3;
                 ran[1] = 4;
                 ran[2] = 5;
             }
-            if (GameManager.instance.level == 1)
-            {
-                ran[0] = 1;
-                ran[1] = 1;
-                ran[2] = 1;
-            }
-            if (GameManager.instance.level == 2)
+            if (GameManager.instance.level == 3)
             {
                 ran[0] = 3;
-                ran[1] = 3;
-                ran[2] = 3;
+                ran[1] = 4;
+                ran[2] = 5;
             }
         }
 

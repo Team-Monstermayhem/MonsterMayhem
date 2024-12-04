@@ -8332,7 +8332,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 8.305555
+  orthographic size: 8.263889
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -19643,12 +19643,15 @@ MonoBehaviour:
   tutorialUI: {fileID: 1188528053}
   tutorialText: {fileID: 1080001048}
   tutorialSkill:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1119198117}
+  - {fileID: 182197037}
+  - {fileID: 1486211872}
+  tutorialSkillUsed: 0
   tutorialLevelUp: {fileID: 1713977786}
   JoyArrow: {fileID: 903483861}
   SkillArrow: {fileID: 514689257}
+  skillController: {fileID: 0}
+  spawner: {fileID: 0}
 --- !u!4 &882164750
 Transform:
   m_ObjectHideFlags: 0
@@ -29380,7 +29383,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1495359431}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 882164749}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: clickSkill1Button
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1495359431
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29879,10 +29894,12 @@ MonoBehaviour:
     spriteType: 0
     health: 20
     speed: 1.5
+    damage: 0
   - spawnTime: 0.2
     spriteType: 1
     health: 30
     speed: 2.6
+    damage: 0
   bossPrefab: {fileID: 8381279460803962438, guid: 8f970df189d712649af6aeaed963f2f8, type: 3}
 --- !u!1 &1588166757
 GameObject:
@@ -30171,7 +30188,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1615400707}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 882164749}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: clickSkill0Button
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1615400707
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33148,7 +33177,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2117711750}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 882164749}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: clickSkill2Button
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2117711750
 MonoBehaviour:
   m_ObjectHideFlags: 0
