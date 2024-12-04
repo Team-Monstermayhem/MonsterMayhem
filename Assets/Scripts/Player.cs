@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
     WaitForFixedUpdate wait;
 
 	public SkillController skillController;
-	public ParticleSystem dustEffect; // ¸ÕÁö ÆÄÆ¼Å¬ ½Ã½ºÅÛ
+	public ParticleSystem dustEffect; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ¼Å¬ ï¿½Ã½ï¿½ï¿½ï¿½
 	private void Start()
 	{
 		rigid = GetComponent<Rigidbody2D>();
@@ -33,7 +33,7 @@ public class Player : MonoBehaviour
 	{
 		if (!GameManager.instance.isLive)
 			return;
-		//¾Æ·¡ µÎ ÁÙÀº Å°º¸µå Input ½Ã½ºÅÛ °ü·Ã
+		//ï¿½Æ·ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å°ï¿½ï¿½ï¿½ï¿½ Input ï¿½Ã½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		//inputVec.x = Input.GetAxis("Horizontal");
 		//inputVec.y = Input.GetAxis("Vertical");
 
@@ -61,7 +61,7 @@ public class Player : MonoBehaviour
 		rigid.MovePosition(rigid.position + nextVec);
 	}
 
-	//Á¶ÀÌ½ºÆ½
+	//ï¿½ï¿½ï¿½Ì½ï¿½Æ½
 	void OnMove(InputValue value)
 	{
         Debug.Log($"Move Input: {value.Get<Vector2>()}");
@@ -96,7 +96,7 @@ public class Player : MonoBehaviour
 
 		if (collision.gameObject.CompareTag("Enemy"))
     	{
-    	    GameManager.instance.health -= Time.deltaTime * 10;
+    	    GameManager.instance.health -= Time.deltaTime * 100;
     	}
         if (collision.gameObject.CompareTag("Boss"))
         {
@@ -107,7 +107,7 @@ public class Player : MonoBehaviour
     {
         if (!collision.CompareTag("Bullet2") || !GameManager.instance.isLive)
             return;
-        GameManager.instance.health -= collision.GetComponent<Bullet2>().damage;
+      //  GameManager.instance.health -= collision.GetComponent<Bullet2>().damage;
         StartCoroutine(KnockBack());
     }
     IEnumerator KnockBack()

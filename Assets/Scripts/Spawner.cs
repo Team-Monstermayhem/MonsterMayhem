@@ -70,37 +70,56 @@ public class Spawner : MonoBehaviour
         }
     }
 
-    void NextWave()
-    {
-        if (currentWave < maxWave)
-        {
-            currentWave++;
-            int nextIndex = (enemyPrefabIndexes.IndexOf(currentPrefabIndex) + 1) % enemyPrefabIndexes.Count;
-            currentPrefabIndex = enemyPrefabIndexes[nextIndex];
-            Debug.Log("웨이브 " + currentWave + " 시작!");
-        }
-        else if (currentWave == maxWave && bossInstance == null) 
-        {
-            Debug.Log("Boss is spawning as wave " + maxWave + " has been reached!");
-            bossInstance = Instantiate(bossPrefab, spawnPoint[0].position, Quaternion.identity);
-            bossInstance.SetActive(true);
-        }
-    }
-
     void Spawn()
-    {
-        int enemiesToSpawn = currentWave * 4;
+{
+    int enemiesToSpawn = currentWave * 4; // 웨이브마다 증가하는 몬스터 수
+    int currentWaveEnemies = Mathf.CeilToInt(enemiesToSpawn * 0.6f); // 현재 웨이브 몬스터 비율 (60%)
+    int previousWaveEnemies = enemiesToSpawn - currentWaveEnemies; // 이전 웨이브 몬스터 비율 (40%)
 
-        for (int i = 0; i < enemiesToSpawn; i++)
+    for (int i = 0; i < enemiesToSpawn; i++)
+    {
+        int spawnWaveLevel;
+        if (i < currentWaveEnemies)
         {
-            GameObject enemy = GameManager.instance.poolManager.GetObject(currentPrefabIndex);
-            enemy.transform.position = spawnPoint[Random.Range(1, spawnPoint.Length)].position;
-            var enemyComponent = enemy.GetComponent<Enemy>();
-            enemyComponent.Init(spawnData[level]);
-            enemyComponent.health = spawnData[level].health + (currentWave * 1.2f);
-            enemyComponent.speed = spawnData[level].speed - (currentWave * 0.1f);
+            spawnWaveLevel = currentWave - 1; // 현재 웨이브 몬스터
         }
+        else
+        {
+            spawnWaveLevel = Random.Range(0, currentWave - 1); // 이전 웨이브 몬스터 랜덤 선택
+        }
+
+        // 적 프리팹 가져오기
+        int prefabIndex = spawnData[spawnWaveLevel].spriteType;
+        GameObject enemy = GameManager.instance.poolManager.GetObject(enemyPrefabIndexes[prefabIndex]);
+
+        // 스폰 위치 랜덤 설정
+        enemy.transform.position = spawnPoint[Random.Range(1, spawnPoint.Length)].position;
+
+        // 몬스터 초기화
+        var enemyComponent = enemy.GetComponent<Enemy>();
+        enemyComponent.Init(spawnData[spawnWaveLevel]);
+        enemyComponent.health = spawnData[spawnWaveLevel].health + (currentWave * 1.2f);
+        enemyComponent.speed = spawnData[spawnWaveLevel].speed - (currentWave * 0.1f);
     }
+}
+
+void NextWave()
+{
+    if (currentWave < maxWave)
+    {
+        currentWave++;
+        int nextIndex = (enemyPrefabIndexes.IndexOf(currentPrefabIndex) + 1) % enemyPrefabIndexes.Count;
+        currentPrefabIndex = enemyPrefabIndexes[nextIndex];
+        Debug.Log("웨이브 " + currentWave + " 시작!");
+    }
+    else if (currentWave == maxWave && bossInstance == null)
+    {
+        Debug.Log("Boss is spawning as wave " + maxWave + " has been reached!");
+        bossInstance = Instantiate(bossPrefab, spawnPoint[0].position, Quaternion.identity);
+        bossInstance.SetActive(true);
+    }
+}
+
 }
 
 [System.Serializable]
