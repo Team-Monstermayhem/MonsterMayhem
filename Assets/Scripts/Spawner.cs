@@ -101,22 +101,48 @@ public class Spawner : MonoBehaviour
     }
 }
 
-void NextWave()
-{
-    if (currentWave < maxWave)
+    void NextWave()
     {
-        currentWave++;
-        int nextIndex = (enemyPrefabIndexes.IndexOf(currentPrefabIndex) + 1) % enemyPrefabIndexes.Count;
-        currentPrefabIndex = enemyPrefabIndexes[nextIndex];
-        Debug.Log("웨이브 " + currentWave + " 시작!");
+        if (currentWave < maxWave)
+        {
+            currentWave++;
+            int nextIndex = (enemyPrefabIndexes.IndexOf(currentPrefabIndex) + 1) % enemyPrefabIndexes.Count;
+            currentPrefabIndex = enemyPrefabIndexes[nextIndex];
+            Debug.Log("웨이브 " + currentWave + " 시작!");
+        }
+        else if (currentWave == maxWave && bossInstance == null)
+        {
+            Debug.Log("Boss is spawning as wave " + maxWave + " has been reached!");
+            bossInstance = Instantiate(bossPrefab, spawnPoint[0].position, Quaternion.identity);
+            bossInstance.SetActive(true);
+        }
     }
-    else if (currentWave == maxWave && bossInstance == null)
+
+    public void SpawnTutorialWave(int waveLevel)
     {
-        Debug.Log("Boss is spawning as wave " + maxWave + " has been reached!");
-        bossInstance = Instantiate(bossPrefab, spawnPoint[0].position, Quaternion.identity);
-        bossInstance.SetActive(true);
+        if (spawnData == null || waveLevel - 1 >= spawnData.Length)
+        {
+            Debug.LogError("SpawnData가 null이거나 잘못된 인덱스를 참조하고 있습니다.");
+            return;
+        }
+
+        int enemiesToSpawn = 4;
+
+        for (int i = 0; i < enemiesToSpawn; i++)
+        {
+            int prefabIndex = spawnData[waveLevel - 1].spriteType;
+
+            GameObject enemy = GameManager.instance.poolManager.GetObject(enemyPrefabIndexes[prefabIndex]);
+
+            enemy.transform.position = spawnPoint[Random.Range(1, spawnPoint.Length)].position;
+            var enemyComponent = enemy.GetComponent<Enemy>();
+            enemyComponent.Init(spawnData[waveLevel - 1]);
+        }
     }
-}
+
+
+
+
 
 }
 

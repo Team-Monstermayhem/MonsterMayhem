@@ -11,6 +11,9 @@ public class PoolManager : MonoBehaviour
 	public SkillData[] skillDatas;
     List<GameObject>[] pools;
 
+
+
+
     private void Awake()
     {
 		for (int i = 0; i < 4; i++)

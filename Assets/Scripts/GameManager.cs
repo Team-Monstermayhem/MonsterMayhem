@@ -41,6 +41,12 @@ public class GameManager : MonoBehaviour
     public GameObject JoyArrow;
     public GameObject SkillArrow;
 
+
+    [Header("# Spawner Reference")]
+    public Spawner spawner;
+
+
+
     private void Awake()
     {
         instance = this;
@@ -48,6 +54,15 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        if (spawner == null)
+        {
+            spawner = Object.FindAnyObjectByType<Spawner>(); 
+            if (spawner == null)
+            {
+                Debug.LogError("Spawner를 찾을 수 없음");
+            }
+        }
+
         enhance = uiEnhance.GetComponent<Enhance>();
         maxhealth = PlayerPrefs.GetFloat("maxHealth", maxhealth);
         player.attack = PlayerPrefs.GetFloat("attack", player.attack);
@@ -195,10 +210,16 @@ public class GameManager : MonoBehaviour
         yield return new WaitUntil(() => player.inputVec != Vector2.zero); // 플레이어가 조이스틱을 조작하면 다음 단계로 진행
         JoyArrow.SetActive(false);
         yield return new WaitForSeconds(2f); // 2초 대기
-       
 
         // ----------------몬스터 삽입---------------------
+        tutorialText.text = "몬스터를 잡아보세요! 몬스터를 잡으면 경험치를 얻을 수 있습니다.";
+    
+        spawner.SpawnTutorialWave(1);
 
+        yield return new WaitUntil(() => GameManager.instance.kill >= 2); 
+        yield return new WaitForSeconds(1f);
+
+/*
         // 스킬 선택 튜토리얼
         tutorialText.text = "몬스터를 잡아 경험치를 얻어 레벨업을 하면 스킬이나 효과를 선택할 수 있습니다.";
         uiLevelUp.Show();
@@ -212,6 +233,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitUntil(() => tutorialSkill[0].skillUsed || tutorialSkill[1].skillUsed || tutorialSkill[2].skillUsed);
         SkillArrow.SetActive(false);
         yield return new WaitForSeconds(2f); // 2초 대기
+*/
 
         tutorialText.text = "튜토리얼 종료!";
         yield return new WaitForSeconds(2f); // 2초 대기
