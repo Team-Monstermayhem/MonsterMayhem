@@ -107,7 +107,7 @@ public class Player : MonoBehaviour
     {
         if (!collision.CompareTag("Bullet2") || !GameManager.instance.isLive)
             return;
-      //  GameManager.instance.health -= collision.GetComponent<Bullet2>().damage;
+        GameManager.instance.health -= collision.GetComponent<Bullet2>().damage;
         StartCoroutine(KnockBack());
     }
     IEnumerator KnockBack()
@@ -117,4 +117,15 @@ public class Player : MonoBehaviour
         Vector3 dirVec = transform.position - playerPos;
         rigid.AddForce(dirVec.normalized * 3, ForceMode2D.Impulse);
     }
+	
+	public void TakeDamage(float damage)
+	{
+		GameManager.instance.health -= damage;
+
+		if (GameManager.instance.health <= 0)
+		{
+			anim.SetTrigger("Dead");
+			GameManager.instance.GameOver();
+		}
+	}
 }

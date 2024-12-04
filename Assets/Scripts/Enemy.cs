@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour
 	public GameObject projectilePrefab; 
     public float attackRange = 5f; 
     private bool hasFired = false;
+	public float damage;
 
 	bool isLive;
 
@@ -59,6 +60,11 @@ public class Enemy : MonoBehaviour
         Rigidbody2D projRigid = projectile.GetComponent<Rigidbody2D>();
         Vector2 direction = (target.position - rigid.position).normalized;
         projRigid.velocity = direction * 3f; 
+
+
+		Bullet2 bullet = projectile.GetComponent<Bullet2>();
+    	bullet.Init(damage, direction, 3f);
+
         Destroy(projectile, 5f);
     }
 
@@ -89,6 +95,7 @@ public class Enemy : MonoBehaviour
 		speed = data.speed;
 		maxHealth = data.health;
 		health = data.health;
+		damage = data.damage;
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision)
@@ -156,6 +163,11 @@ public class Enemy : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
 	{
+		if (collision.gameObject.CompareTag("Player") && isLive)
+		{
+			collision.gameObject.GetComponent<Player>().TakeDamage(damage); // 데미지 적용
+		}
+		
 		// 충돌한 오브젝트가 벽일 경우
 		if (collision.gameObject.CompareTag("continuousDamage") && isLive)
 			damageTimer = 0f;	

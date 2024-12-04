@@ -26,7 +26,7 @@ public class Bullet2 : MonoBehaviour
             return;
 
         // 플레이어에게 데미지를 주기
-     //   GameManager.instance.health -= damage;
+        GameManager.instance.health -= damage;
 
         // 총알의 속도를 멈추고 비활성화
         rigid.velocity = Vector2.zero;

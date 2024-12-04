@@ -43,7 +43,8 @@ public class Spawner : MonoBehaviour
             float spawnTime = Mathf.Max(0.1f, 5.0f - (i * 0.05f));
             int health = 10 + (i * 5);
             float speed = 1.0f + (i * 0.1f);
-            spawnData[i] = new SpawnData { spawnTime = spawnTime, spriteType = i % enemyPrefabIndexes.Count, health = health, speed = speed };
+            float damage = 5.0f + (i * 1.0f); //데미지 세지는 거 조절
+            spawnData[i] = new SpawnData { spawnTime = spawnTime, spriteType = i % enemyPrefabIndexes.Count, health = health, speed = speed, damage = damage };
         }
     }
 
@@ -72,30 +73,27 @@ public class Spawner : MonoBehaviour
 
     void Spawn()
 {
-    int enemiesToSpawn = currentWave * 4; // 웨이브마다 증가하는 몬스터 수
-    int currentWaveEnemies = Mathf.CeilToInt(enemiesToSpawn * 0.6f); // 현재 웨이브 몬스터 비율 (60%)
-    int previousWaveEnemies = enemiesToSpawn - currentWaveEnemies; // 이전 웨이브 몬스터 비율 (40%)
+    int enemiesToSpawn = currentWave * 4; 
+    int currentWaveEnemies = Mathf.CeilToInt(enemiesToSpawn * 0.6f); 
+    int previousWaveEnemies = enemiesToSpawn - currentWaveEnemies; 
 
     for (int i = 0; i < enemiesToSpawn; i++)
     {
         int spawnWaveLevel;
         if (i < currentWaveEnemies)
         {
-            spawnWaveLevel = currentWave - 1; // 현재 웨이브 몬스터
+            spawnWaveLevel = currentWave - 1; 
         }
         else
         {
-            spawnWaveLevel = Random.Range(0, currentWave - 1); // 이전 웨이브 몬스터 랜덤 선택
+            spawnWaveLevel = Random.Range(0, currentWave - 1);
         }
 
-        // 적 프리팹 가져오기
         int prefabIndex = spawnData[spawnWaveLevel].spriteType;
         GameObject enemy = GameManager.instance.poolManager.GetObject(enemyPrefabIndexes[prefabIndex]);
 
-        // 스폰 위치 랜덤 설정
         enemy.transform.position = spawnPoint[Random.Range(1, spawnPoint.Length)].position;
 
-        // 몬스터 초기화
         var enemyComponent = enemy.GetComponent<Enemy>();
         enemyComponent.Init(spawnData[spawnWaveLevel]);
         enemyComponent.health = spawnData[spawnWaveLevel].health + (currentWave * 1.2f);
@@ -129,4 +127,5 @@ public class SpawnData
     public int spriteType;
     public int health;
     public float speed;
+    public float damage;
 }
